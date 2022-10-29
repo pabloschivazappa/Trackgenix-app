@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './list.module.css';
 
-const List = ({ list }) => {
+const List = ({ list, deleteTask }) => {
   return (
     <div className={styles.container}>
-      <h2>Tasks</h2>
       <table>
         <thead>
           <tr>
@@ -13,11 +12,15 @@ const List = ({ list }) => {
           </tr>
         </thead>
         <tbody>
-          {list.data.map((task) => {
+          {list.map((task) => {
             return (
               <tr key={task._id}>
                 <td>{task._id}</td>
                 <td>{task.description}</td>
+                <td>
+                  <button>Edit</button>
+                  <button onClick={() => deleteTask(task._id)}>X</button>
+                </td>
               </tr>
             );
           })}

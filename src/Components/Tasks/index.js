@@ -10,7 +10,7 @@ function Tasks() {
     const fetchData = async () => {
       const response = await fetch('http://localhost:5000/tasks');
       const data = await response.json();
-      setTasks(data);
+      setTasks(data.data);
     };
     try {
       fetchData();
@@ -19,19 +19,18 @@ function Tasks() {
     }
   }, []);
 
-  if (tasks.data) {
-    return (
-      <section className={styles.container}>
-        <List list={tasks} setList={setTasks} />
-      </section>
-    );
-  } else {
-    return (
-      <section className={styles.container}>
-        <Spinner />
-      </section>
-    );
-  }
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' });
+    const filteredTasks = tasks.filter((task) => task._id !== id);
+    setTasks(filteredTasks);
+  };
+
+  return (
+    <section className={styles.container}>
+      <h2>Tasks</h2>
+      {tasks ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
+    </section>
+  );
 }
 
 export default Tasks;
