@@ -6,7 +6,3 @@
   align-items: center;
 }
 
-.container div {
-  display: flex;
-  flex-direction: column;
-}
