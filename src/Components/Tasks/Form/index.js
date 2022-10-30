@@ -5,7 +5,6 @@ function Form() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const urlID = urlParams.get('id');
-  const [taskData, setTaskData] = useState({ description: '' });
 
   const [descpritionValue, setDescrpitionValue] = useState('');
 
@@ -13,20 +12,15 @@ function Form() {
     try {
       const response = await fetch(`http://localhost:5000/tasks/${urlID}`);
       const data = await response.json();
-      setTaskData(data.data);
-      console.log(taskData.description);
+      setDescrpitionValue(data.data.description);
     } catch (error) {
       console.log(error);
     }
   }, []);
 
-  useEffect(() => {
-    console.log(taskData.description);
-  }, [taskData]);
-
   const editTask = async (urlID) => {
     if (confirm('Edit task?')) {
-      await fetch(`http://localhost:5000/tasks/form/${urlID}`, {
+      await fetch(`http://localhost:5000/tasks/${urlID}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ description: descpritionValue })
