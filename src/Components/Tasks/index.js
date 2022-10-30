@@ -4,13 +4,13 @@ import List from './List';
 import styles from './tasks.module.css';
 
 function Tasks() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, saveTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('http://localhost:5000/tasks');
       const data = await response.json();
-      setTasks(data.data);
+      saveTasks(data.data);
     };
     try {
       fetchData();
@@ -20,9 +20,11 @@ function Tasks() {
   }, []);
 
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' });
-    const filteredTasks = tasks.filter((task) => task._id !== id);
-    setTasks(filteredTasks);
+    if (confirm('¿Delete task?')) {
+      await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' });
+      const filteredTasks = tasks.filter((task) => task._id !== id);
+      saveTasks(filteredTasks);
+    }
   };
 
   return (

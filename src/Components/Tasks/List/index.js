@@ -18,7 +18,9 @@ const List = ({ list, deleteTask }) => {
                 <td>{task._id}</td>
                 <td>{task.description}</td>
                 <td>
-                  <button>Edit</button>
+                  <a href={`tasks/form?id=${task._id}`}>
+                    <button>Edit</button>
+                  </a>
                   <button onClick={() => deleteTask(task._id)}>X</button>
                 </td>
               </tr>
