@@ -1,10 +1,14 @@
-import React from 'react';
 import ListItem from '../Listitem';
-import './projectsTable.module.css';
+import { FaPlusCircle } from 'react-icons/fa';
+import styles from './projectsTable.module.css';
+import { Modal } from '../Modals/modal';
+import { useState } from 'react';
 
-const ProjectTable = ({ list }) => {
+const ProjectTable = ({ list, deleteItem }) => {
+  const [modalState, changeModalState] = useState(false);
+
   return (
-    <div calssName="table-container">
+    <div>
       <table>
         <thead>
           <tr>
@@ -21,10 +25,22 @@ const ProjectTable = ({ list }) => {
         </thead>
         <tbody>
           {list.map((item) => (
-            <ListItem key={item.id} listItem={item} />
+            <ListItem key={item.id} listItem={item} deleteItem={deleteItem} />
           ))}
+          <tr>
+            <td className={styles.addLogoTd}>
+              <div>
+                <FaPlusCircle
+                  className={styles.addLogo}
+                  onClick={() => changeModalState(!modalState)}
+                />
+              </div>
+              <p className="addProjectp">Add project</p>
+            </td>
+          </tr>
         </tbody>
       </table>
+      <Modal state={modalState} changeState={changeModalState} />
     </div>
   );
 };

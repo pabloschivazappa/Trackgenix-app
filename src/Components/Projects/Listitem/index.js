@@ -1,7 +1,13 @@
-import React from 'react';
 import { FaTimes, FaEdit } from 'react-icons/fa';
+import styles from './listItem.module.css';
 
-const ListItem = ({ listItem }) => {
+const ListItem = ({ listItem, deleteItem }) => {
+  const employee = listItem.employees.find((employee) => employee);
+
+  const handleDelete = () => {
+    deleteItem(listItem.id);
+  };
+
   return (
     <tr className="rows">
       <td>{listItem.name}</td>
@@ -11,19 +17,12 @@ const ListItem = ({ listItem }) => {
       <td>{listItem.startDate}</td>
       <td>{listItem.updatedAt}</td>
       <td>{listItem.endDate}</td>
-      <td>{listItem.endDate}</td>
       <td>
-        <FaTimes
-          style={{
-            color: 'red',
-            cursor: 'pointer',
-            padding: '5px',
-            width: '20px',
-            height: '20px',
-            paddingRight: '15px'
-          }}
-        />
-        <FaEdit style={{ cursor: 'pointer', padding: '5px', width: '20px', height: '20px' }} />
+        {employee.employee.name} {employee.employee.last_name}
+      </td>
+      <td>
+        <FaTimes className={styles.crossLogo} onClick={() => handleDelete(listItem.id)} />
+        <FaEdit className={styles.editLogo} />
       </td>
     </tr>
   );

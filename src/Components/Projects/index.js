@@ -3,7 +3,7 @@ import styles from './projects.module.css';
 import ProjectTable from './Table';
 
 function Projects() {
-  const [projects, saveProject] = useState([]);
+  const [projects, saveProject, setList] = useState([]);
 
   useEffect(async () => {
     try {
@@ -14,11 +14,14 @@ function Projects() {
       console.error(error);
     }
   }, []);
-  console.log(projects);
+
+  const deleteItem = (id) => {
+    setList([...projects.filter((listItem) => listItem.id !== id)]);
+  };
 
   return (
     <section className={styles.container}>
-      <ProjectTable list={projects} />
+      <ProjectTable list={projects} setList={setList} deleteItem={deleteItem} />
     </section>
   );
 }
