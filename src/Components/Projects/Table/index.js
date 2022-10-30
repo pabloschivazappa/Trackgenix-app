@@ -1,5 +1,6 @@
 import React from 'react';
 import ListItem from '../Listitem';
+import './projectsTable.module.css';
 
 const ProjectTable = ({ list }) => {
   return (
@@ -15,6 +16,7 @@ const ProjectTable = ({ list }) => {
             <th id="lastupdate">Last Update</th>
             <th id="endDate">End Date</th>
             <th id="employee">Employee</th>
+            <th id="actions">Actions</th>
           </tr>
         </thead>
         <tbody>

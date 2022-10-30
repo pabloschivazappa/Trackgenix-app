@@ -1,0 +1,19 @@
+.table-container{
+
+}
+
+table{
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.2);
+}
+th{
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+td{
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
