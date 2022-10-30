@@ -34,6 +34,9 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
           })}
         </tbody>
       </table>
+      <a href={'super-admins/form'}>
+        <button>Add</button>
+      </a>
     </div>
   );
 };

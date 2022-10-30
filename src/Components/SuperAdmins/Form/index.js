@@ -5,14 +5,11 @@ function Form() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   var product = urlParams.get('id');
-  const [superAdminData, setSuperAdminData] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: '',
-    dni: '',
-    phone: ''
-  });
+  console.log(urlValues);
+  console.log(urlParams);
+  console.log(product);
+  console.log(typeof product);
+  const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
   const [nameValue, setNameValue] = useState('');
   const [lastNameValue, setLastNameValue] = useState('');
@@ -21,21 +18,44 @@ function Form() {
   const [dniValue, setDniValue] = useState('');
   const [phoneValue, setPhoneValue] = useState('');
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/super-admins/${product}`);
-      const data = await response.json();
-      setSuperAdminData(data.data);
-      console.log(superAdminData.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  if (idRegEx.test(product)) {
+    useEffect(async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/super-admins/${product}`);
+        const data = await response.json();
+        setNameValue(data.data.name);
+        setLastNameValue(data.data.lastName);
+        setEmailValue(data.data.email);
+        setPasswordValue(data.data.password);
+        setDniValue(data.data.dni);
+        setPhoneValue(data.data.phone);
+      } catch (error) {
+        console.error(error);
+      }
+    }, []);
+  }
 
   const editEmployee = async (product) => {
     if (confirm('¿Edit super admin?')) {
       await fetch(`http://localhost:5000/super-admins/${product}`, {
         method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nameValue,
+          lastName: lastNameValue,
+          email: emailValue,
+          password: passwordValue,
+          dni: dniValue,
+          phone: phoneValue
+        })
+      });
+    }
+  };
+
+  const createEmployee = async () => {
+    if (confirm('Create super admin?')) {
+      await fetch(`http://localhost:5000/super-admins/`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: nameValue,
@@ -111,7 +131,10 @@ function Form() {
           <input id="input-phone" name="phone" required value={phoneValue} onChange={changePhone} />
         </div>
       </form>
-      <button type="submit" onClick={() => editEmployee(product)}>
+      <button
+        type="submit"
+        onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
+      >
         Save
       </button>
     </div>
