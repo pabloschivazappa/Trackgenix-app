@@ -14,14 +14,16 @@ function SuperAdmins() {
       console.error(error);
     }
   }, []);
-
+  console.log(superAdmins);
   const deleteSuperAdmin = async (id) => {
-    await fetch(`http://localhost:5000/super-admins/${id}`, {
-      method: 'DELETE'
-    });
-    const newSuperAdmins = superAdmins.filter((superAdmin) => superAdmin._id !== id);
-    console.log(newSuperAdmins);
-    saveSuperAdmins(newSuperAdmins);
+    if (confirm('¿Delete super admin?')) {
+      await fetch(`http://localhost:5000/super-admins/${id}`, {
+        method: 'DELETE'
+      });
+      const newSuperAdmins = superAdmins.filter((superAdmin) => superAdmin._id !== id);
+      console.log(newSuperAdmins);
+      saveSuperAdmins(newSuperAdmins);
+    }
   };
 
   return (

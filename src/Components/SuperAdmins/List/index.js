@@ -24,7 +24,9 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
                 <td>{superAdmin.dni}</td>
                 <td>{superAdmin.phone}</td>
                 <td>
-                  <button>Edit</button>
+                  <a href={`super-admins/form?id=${superAdmin._id}`}>
+                    <button>Edit</button>
+                  </a>
                   <button onClick={() => deleteSuperAdmin(superAdmin._id)}>X</button>
                 </td>
               </tr>
