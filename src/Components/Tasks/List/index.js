@@ -28,6 +28,9 @@ const List = ({ list, deleteTask }) => {
           })}
         </tbody>
       </table>
+      <a href="tasks/form">
+        <button>Add</button>
+      </a>
     </div>
   );
 };
