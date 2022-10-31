@@ -1,6 +1,8 @@
 import styles from './time-sheets.module.css';
+import Spinner from '../Spinner';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import ShowList from './ShowList/ShowList';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
@@ -9,23 +11,18 @@ function TimeSheets() {
     try {
       const response = await fetch(`http://localhost:5000/timesheets`);
       const data = await response.json();
-      setTimesheets(data);
+      setTimesheets(data.data);
+      console.log(timesheets);
     } catch (error) {
       console.error(error);
     }
   }, []);
+  console.log(timesheets);
 
-  console.log(timesheets.data);
   return (
     <section className={styles.container}>
       <h2>TimeSheets</h2>
-      <div>
-        {timesheets.data
-          ? timesheets.data.map((timesheet) => {
-              return <div key={timesheet._id}>{timesheet.description}</div>;
-            })
-          : console.log()}
-      </div>
+      {timesheets.length !== 0 ? <ShowList list={timesheets} /> : <Spinner />}
     </section>
   );
 }
