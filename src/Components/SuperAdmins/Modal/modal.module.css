@@ -1,7 +1,7 @@
 :root {
   --main-color: #373867;
   --close-color: var(--main-color);
-  --hover-close-color: #1e1e4f;
+  --hover-close-color: #252646;
   --color-soft: #000000ca;
 }
 
@@ -59,14 +59,15 @@ h3 {
   height: 100%;
   width: 85%;
   margin-block: 20px;
+  gap: 1.2em;
 }
 
 .content__message {
   margin: 0;
   font-size: 15px;
-  width: 100%;
+  max-width: 100%;
   color: var(--color-soft);
-  white-space: pre;
+  white-space: pre-line;
 }
 
 .options {

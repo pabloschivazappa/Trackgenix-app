@@ -21,11 +21,11 @@ function Form() {
 
   const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
     return ` ${contentSubTitle}:\n
-  Name: ${name},
-  Last Name: ${lastName},
-  Email: ${email},
-  Password: ${password},
-  Dni: ${dni},
+  Name: ${name}
+  Last Name: ${lastName}
+  Email: ${email}
+  Password: ${password}
+  Dni: ${dni}
   Phone: ${phone}
   `;
   };
@@ -199,13 +199,13 @@ function Form() {
           <button>Cancel</button>
         </a>
       </div>
-      {modalDisplay && (
+      {modalDisplay ? (
         <Modal
           title={modalTitle}
           contentMessage={contentMessage}
           setModalDisplay={setModalDisplay}
         />
-      )}
+      ) : null}
     </>
   );
 }

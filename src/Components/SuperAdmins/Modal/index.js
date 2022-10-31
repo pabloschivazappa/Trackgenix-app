@@ -6,7 +6,7 @@ console.log(styles);
 const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
   return (
     <div id="id-screen" className={styles.screen}>
-      <div className={styles.modal}>
+      <div className={styles.modal} onBlur={() => console.log(1)}>
         <header className={styles.header}>
           <h3 className={styles.header__title}>{title}</h3>
           <button className={styles.header__button} onClick={() => setModalDisplay(false)}>
