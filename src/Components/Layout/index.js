@@ -5,6 +5,7 @@ import SuperAdmins from '../SuperAdmins/index';
 import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
+import EmployeesForm from '../Employees/Form';
 import Projects from '../Projects';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
@@ -20,6 +21,9 @@ function Layout() {
       break;
     case '/employees':
       currentScreen = <Employees />;
+      break;
+    case '/employees/form':
+      currentScreen = <EmployeesForm />;
       break;
     case '/projects':
       currentScreen = <Projects />;
