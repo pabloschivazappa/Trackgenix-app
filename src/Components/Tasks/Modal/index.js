@@ -1,15 +1,20 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-console.log(styles);
-
 const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
   return (
     <div id="id-screen" className={styles.screen}>
       <div className={styles.modal}>
         <header className={styles.header}>
           <h3 className={styles.header__title}>{title}</h3>
-          <button className={styles.header__button}>X</button>
+          <button
+            className={styles.header__button}
+            onClick={() => {
+              setModalDisplay(false);
+            }}
+          >
+            X
+          </button>
         </header>
         <div className={styles.content}>
           {content ?? null}
