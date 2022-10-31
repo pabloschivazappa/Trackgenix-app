@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Modal from '../Modal';
 
 function Form() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   var product = urlParams.get('id');
-  console.log(urlValues);
-  console.log(urlParams);
-  console.log(product);
-  console.log(typeof product);
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
   const [nameValue, setNameValue] = useState('');
@@ -69,6 +66,10 @@ function Form() {
     }
   };
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+
   const changeName = (e) => {
     setNameValue(e.target.value);
   };
@@ -90,54 +91,72 @@ function Form() {
   };
 
   return (
-    <div className={styles.container}>
-      <form>
-        <h2>Form</h2>
-        <div>
-          <label htmlFor="input-name">Name</label>
-          <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
-        </div>
-        <div>
-          <label htmlFor="input-lastName">Last Name</label>
-          <input
-            id="input-lastName"
-            name="lastName"
-            required
-            value={lastNameValue}
-            onChange={changeLastName}
-          />
-        </div>
-        <div>
-          <label htmlFor="input-email">Email</label>
-          <input id="input-email" name="email" required value={emailValue} onChange={changeEmail} />
-        </div>
-        <div>
-          <label htmlFor="input-password">Password</label>
-          <input
-            id="input-password"
-            type="password"
-            name="password"
-            required
-            value={passwordValue}
-            onChange={changePassword}
-          />
-        </div>
-        <div>
-          <label htmlFor="input-dni">DNI</label>
-          <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
-        </div>
-        <div>
-          <label htmlFor="input-phone">Phone</label>
-          <input id="input-phone" name="phone" required value={phoneValue} onChange={changePhone} />
-        </div>
-      </form>
-      <button
-        type="submit"
-        onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
-      >
-        Save
-      </button>
-    </div>
+    <>
+      <div className={styles.container}>
+        <form onSubmit={onSubmit}>
+          <h2>Form</h2>
+          <div>
+            <label htmlFor="input-name">Name</label>
+            <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
+          </div>
+          <div>
+            <label htmlFor="input-lastName">Last Name</label>
+            <input
+              id="input-lastName"
+              name="lastName"
+              required
+              value={lastNameValue}
+              onChange={changeLastName}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-email">Email</label>
+            <input
+              id="input-email"
+              name="email"
+              required
+              value={emailValue}
+              onChange={changeEmail}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-password">Password</label>
+            <input
+              id="input-password"
+              type="password"
+              name="password"
+              required
+              value={passwordValue}
+              onChange={changePassword}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-dni">DNI</label>
+            <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
+          </div>
+          <div>
+            <label htmlFor="input-phone">Phone</label>
+            <input
+              id="input-phone"
+              name="phone"
+              required
+              value={phoneValue}
+              onChange={changePhone}
+            />
+          </div>
+          <button
+            type="submit"
+            onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
+          >
+            Save
+          </button>
+        </form>
+        <a href={'http://localhost:3000/super-admins'}>
+          <button>Cancel</button>
+        </a>
+      </div>
+      <Modal title="Probando" contentMessage="Super Admin created" />
+    </>
   );
 }
 
