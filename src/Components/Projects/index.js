@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import ProjectTable from './Table';
+import AddItem from './Additem';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -20,9 +21,39 @@ function Projects() {
     setProjects([...projects.filter((listItem) => listItem._id !== id)]);
   };
 
+  const createItem = async ({
+    name,
+    description,
+    clientName,
+    createdAt,
+    startDate,
+    updateAt,
+    endDate,
+    employees: [{ employeeId, role, rate }]
+  }) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/projects/`, { method: 'POST' });
+    const newProject = {
+      name,
+      description,
+      clientName,
+      createdAt,
+      startDate,
+      updateAt,
+      endDate,
+      employees: [{ employeeId, role, rate }]
+    };
+    setProjects([...projects, newProject]);
+  };
+
   return (
     <section className={styles.container}>
-      <ProjectTable list={projects} setProjects={setProjects} deleteItem={deleteItem} />
+      <AddItem createItem={createItem} />
+      <ProjectTable
+        list={projects}
+        setProjects={setProjects}
+        deleteItem={deleteItem}
+        createItem={createItem}
+      />
     </section>
   );
 }
