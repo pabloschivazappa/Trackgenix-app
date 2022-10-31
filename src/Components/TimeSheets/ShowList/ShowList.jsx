@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ShowList.module.css';
 import ListItem from '../ListItem/ListItem';
 
-const ShowList = ({ list, deleteItem }) => {
+const ShowList = ({ list, deleteTimesheet }) => {
   return (
     <div className={styles.container}>
       <table>
@@ -19,7 +19,9 @@ const ShowList = ({ list, deleteItem }) => {
         </thead>
         <tbody>
           {list.map((timesheet) => {
-            return <ListItem key={timesheet._id} item={timesheet} deleteItem={deleteItem} />;
+            return (
+              <ListItem key={timesheet._id} item={timesheet} deleteTimesheet={deleteTimesheet} />
+            );
           })}
         </tbody>
       </table>

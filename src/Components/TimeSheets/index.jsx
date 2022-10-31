@@ -17,7 +17,7 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteItem = async (id) => {
+  const deleteTimesheet = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
         method: 'DELETE'
@@ -38,10 +38,15 @@ function TimeSheets() {
     <section className={styles.container}>
       <h2>TimeSheets</h2>
       {timesheets.length !== 0 ? (
-        <ShowList list={timesheets} deleteItem={deleteItem} />
+        <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} />
       ) : (
         <Spinner />
       )}
+      <a href="/time-sheets/form">
+        <button>
+          <i className="fa-solid fa-plus"></i>Add
+        </button>
+      </a>
     </section>
   );
 }

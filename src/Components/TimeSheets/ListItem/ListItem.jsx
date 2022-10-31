@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ListItem = ({ item, deleteItem }) => {
+const ListItem = ({ item, deleteTimesheet }) => {
   const handleDelete = () => {
-    deleteItem(item._id);
+    deleteTimesheet(item._id);
   };
   return (
     <tr className="rows">
@@ -13,10 +13,14 @@ const ListItem = ({ item, deleteItem }) => {
       <td>{item.employee.name}</td>
       <td>{item.project.name}</td>
       <td>
-        <button onClick={() => handleDelete(item.id)}>
+        <button onClick={() => handleDelete(item._id)}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <i className="fa-solid fa-pen-to-square"></i>
+        <a href={`/time-sheets/form?id=${item._id}`}>
+          <button>
+            <i className="fa-solid fa-pen-to-square"></i>
+          </button>
+        </a>
       </td>
     </tr>
   );
