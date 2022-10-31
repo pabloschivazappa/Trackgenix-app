@@ -15,6 +15,21 @@ function Form() {
   const [dniValue, setDniValue] = useState('');
   const [phoneValue, setPhoneValue] = useState('');
 
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const editAndCreateMessage = (contentSubTitle) => {
+    return ` ${contentSubTitle}:\n
+  Name: ${nameValue},
+  Last Name: ${lastNameValue},
+  Email: ${emailValue},
+  Password: ${passwordValue},
+  Dni: ${dniValue},
+  Phone: ${phoneValue}
+  `;
+  };
+
   if (idRegEx.test(product)) {
     useEffect(async () => {
       try {
@@ -32,26 +47,27 @@ function Form() {
     }, []);
   }
 
-  const editEmployee = async (product) => {
-    if (confirm('¿Edit super admin?')) {
-      await fetch(`http://localhost:5000/super-admins/${product}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: nameValue,
-          lastName: lastNameValue,
-          email: emailValue,
-          password: passwordValue,
-          dni: dniValue,
-          phone: phoneValue
-        })
-      });
-    }
+  const editSuperAdmin = async (product) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameValue,
+        lastName: lastNameValue,
+        email: emailValue,
+        password: passwordValue,
+        dni: dniValue,
+        phone: phoneValue
+      })
+    });
+    setModalTitle('Edit super admin');
+    setContentMessage(() => editAndCreateMessage('Super admin edited'));
+    setModalDisplay(true);
   };
 
-  const createEmployee = async () => {
-    if (confirm('Create super admin?')) {
-      await fetch(`http://localhost:5000/super-admins/`, {
+  const createSuperAdmin = async () => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -63,7 +79,12 @@ function Form() {
           phone: phoneValue
         })
       });
+    } catch (error) {
+      console.log(error);
+      setModalTitle('Edit super admin');
+      setContentMessage(error);
     }
+    setModalDisplay(true);
   };
 
   const onSubmit = (event) => {
@@ -146,7 +167,9 @@ function Form() {
           </div>
           <button
             type="submit"
-            onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
+            onClick={
+              idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
+            }
           >
             Save
           </button>
@@ -155,7 +178,13 @@ function Form() {
           <button>Cancel</button>
         </a>
       </div>
-      <Modal title="Probando" contentMessage="Super Admin created" />
+      {modalDisplay && (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      )}
     </>
   );
 }
