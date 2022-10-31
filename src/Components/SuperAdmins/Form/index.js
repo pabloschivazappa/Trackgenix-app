@@ -19,14 +19,14 @@ function Form() {
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
-  const editAndCreateMessage = (contentSubTitle) => {
+  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
     return ` ${contentSubTitle}:\n
-  Name: ${nameValue},
-  Last Name: ${lastNameValue},
-  Email: ${emailValue},
-  Password: ${passwordValue},
-  Dni: ${dniValue},
-  Phone: ${phoneValue}
+  Name: ${name},
+  Last Name: ${lastName},
+  Email: ${email},
+  Password: ${password},
+  Dni: ${dni},
+  Phone: ${phone}
   `;
   };
 
@@ -48,21 +48,42 @@ function Form() {
   }
 
   const editSuperAdmin = async (product) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: nameValue,
-        lastName: lastNameValue,
-        email: emailValue,
-        password: passwordValue,
-        dni: dniValue,
-        phone: phoneValue
-      })
-    });
-    setModalTitle('Edit super admin');
-    setContentMessage(() => editAndCreateMessage('Super admin edited'));
-    setModalDisplay(true);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nameValue,
+          lastName: lastNameValue,
+          email: emailValue,
+          password: passwordValue,
+          dni: dniValue,
+          phone: phoneValue
+        })
+      });
+      const data = await response.json();
+      console.log(data);
+      setModalTitle('Edit super admin');
+      if (data.error === true) {
+        setContentMessage(data.message);
+      } else {
+        setContentMessage(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
+      }
+
+      setModalDisplay(true);
+    } catch (error) {
+      setContentMessage(error);
+    }
   };
 
   const createSuperAdmin = async () => {

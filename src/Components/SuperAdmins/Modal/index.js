@@ -9,7 +9,9 @@ const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
       <div className={styles.modal}>
         <header className={styles.header}>
           <h3 className={styles.header__title}>{title}</h3>
-          <button className={styles.header__button}>X</button>
+          <button className={styles.header__button} onClick={() => setModalDisplay(false)}>
+            X
+          </button>
         </header>
         <div className={styles.content}>
           {content ?? null}
