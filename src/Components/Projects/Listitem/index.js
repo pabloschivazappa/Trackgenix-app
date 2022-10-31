@@ -1,11 +1,11 @@
 import { FaTimes, FaEdit } from 'react-icons/fa';
-import styles from './listItem.module.css';
+import './listItem.module.css';
 
 const ListItem = ({ listItem, deleteItem }) => {
   const employee = listItem.employees.find((employee) => employee);
 
-  const handleDelete = () => {
-    deleteItem(listItem.id);
+  const handleDelete = (id) => {
+    deleteItem(id);
   };
 
   return (
@@ -21,8 +21,8 @@ const ListItem = ({ listItem, deleteItem }) => {
         {employee.employee.name} {employee.employee.last_name}
       </td>
       <td>
-        <FaTimes className={styles.crossLogo} onClick={() => handleDelete(listItem.id)} />
-        <FaEdit className={styles.editLogo} />
+        <FaTimes className="crossLogo" onClick={() => handleDelete(listItem._id)} />
+        <FaEdit className="editLogo" />
       </td>
     </tr>
   );

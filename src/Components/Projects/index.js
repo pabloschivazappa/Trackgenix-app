@@ -3,25 +3,26 @@ import styles from './projects.module.css';
 import ProjectTable from './Table';
 
 function Projects() {
-  const [projects, saveProject, setList] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       const data = await response.json();
-      saveProject(data.data);
+      setProjects(data.data);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
-  const deleteItem = (id) => {
-    setList([...projects.filter((listItem) => listItem.id !== id)]);
+  const deleteItem = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, { method: 'DELETE' });
+    setProjects([...projects.filter((listItem) => listItem._id !== id)]);
   };
 
   return (
     <section className={styles.container}>
-      <ProjectTable list={projects} setList={setList} deleteItem={deleteItem} />
+      <ProjectTable list={projects} setProjects={setProjects} deleteItem={deleteItem} />
     </section>
   );
 }
