@@ -9,6 +9,7 @@ const ShowList = ({ list, deleteItem }) => {
         <thead>
           <tr>
             <th>Description</th>
+            <th>Date</th>
             <th>Hours</th>
             <th>Task description</th>
             <th>Employees names</th>

@@ -9,7 +9,7 @@ function TimeSheets() {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`http://localhost:5000/timesheets`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`);
       const data = await response.json();
       setTimesheets(data.data);
     } catch (error) {
@@ -17,20 +17,21 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteItem = (id) => {
-    fetch(`http://localhost:5000/timesheets/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => {
-        return response.ok ? response.json() : Promise.reject(response);
-      })
-      .then((json) => {
-        setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
-        alert(json.message);
-      })
-      .catch((error) => {
-        alert(`Error ${error.status} : ${error.statusText}`);
+  const deleteItem = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
+        method: 'DELETE'
       });
+      const data = await response.json();
+      if (response.ok) {
+        setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
+        alert(data.message);
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

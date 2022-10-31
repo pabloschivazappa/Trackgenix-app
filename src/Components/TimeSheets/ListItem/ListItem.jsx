@@ -7,6 +7,7 @@ const ListItem = ({ item, deleteItem }) => {
   return (
     <tr className="rows">
       <td>{item.description}</td>
+      <td>{item.date}</td>
       <td>{item.hours}</td>
       <td>{item.task.description}</td>
       <td>{item.employee.name}</td>
