@@ -12,17 +12,35 @@ function TimeSheets() {
       const response = await fetch(`http://localhost:5000/timesheets`);
       const data = await response.json();
       setTimesheets(data.data);
-      console.log(timesheets);
     } catch (error) {
       console.error(error);
     }
   }, []);
-  console.log(timesheets);
+
+  const deleteItem = (id) => {
+    fetch(`http://localhost:5000/timesheets/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        return response.ok ? response.json() : Promise.reject(response);
+      })
+      .then((json) => {
+        setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
+        alert(json.message);
+      })
+      .catch((error) => {
+        alert(`Error ${error.status} : ${error.statusText}`);
+      });
+  };
 
   return (
     <section className={styles.container}>
       <h2>TimeSheets</h2>
-      {timesheets.length !== 0 ? <ShowList list={timesheets} /> : <Spinner />}
+      {timesheets.length !== 0 ? (
+        <ShowList list={timesheets} deleteItem={deleteItem} />
+      ) : (
+        <Spinner />
+      )}
     </section>
   );
 }

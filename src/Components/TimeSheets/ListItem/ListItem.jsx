@@ -1,6 +1,9 @@
 import React from 'react';
 
-const ListItem = ({ item }) => {
+const ListItem = ({ item, deleteItem }) => {
+  const handleDelete = () => {
+    deleteItem(item._id);
+  };
   return (
     <tr className="rows">
       <td>{item.description}</td>
@@ -9,7 +12,9 @@ const ListItem = ({ item }) => {
       <td>{item.employee.name}</td>
       <td>{item.project.name}</td>
       <td>
-        <i className="fa-solid fa-xmark"></i>
+        <button onClick={() => handleDelete(item.id)}>
+          <i className="fa-solid fa-xmark"></i>
+        </button>
         <i className="fa-solid fa-pen-to-square"></i>
       </td>
     </tr>
