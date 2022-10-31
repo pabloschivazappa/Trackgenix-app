@@ -7,12 +7,12 @@ function Form() {
   const urlID = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
-  const [descpritionValue, setDescrpitionValue] = useState('');
+  const [descriptionValue, setDescrpitionValue] = useState('');
 
   if (idRegEx.test(urlID)) {
     useEffect(async () => {
       try {
-        const response = await fetch(`http://localhost:5000/tasks/${urlID}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
         setDescrpitionValue(data.data.description);
       } catch (error) {
@@ -23,20 +23,20 @@ function Form() {
 
   const editTask = async (urlID) => {
     if (confirm('Edit task?')) {
-      await fetch(`http://localhost:5000/tasks/${urlID}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ description: descpritionValue })
+        body: JSON.stringify({ description: descriptionValue })
       });
     }
   };
 
   const createTask = async () => {
     if (confirm('Create task?')) {
-      await fetch('http://localhost:5000/tasks', {
+      await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ description: descpritionValue })
+        body: JSON.stringify({ description: descriptionValue })
       });
     }
   };
@@ -55,7 +55,7 @@ function Form() {
             id="input-name"
             name="description"
             required
-            value={descpritionValue}
+            value={descriptionValue}
             onChange={changeDescription}
           />
         </div>
@@ -66,6 +66,9 @@ function Form() {
       >
         Save
       </button>
+      <a href="http://localhost:3000/tasks">
+        <button>Cancel</button>
+      </a>
     </div>
   );
 }

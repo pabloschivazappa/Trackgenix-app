@@ -8,7 +8,7 @@ function Tasks() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/tasks');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
       const data = await response.json();
       saveTasks(data.data);
     };
@@ -21,7 +21,7 @@ function Tasks() {
 
   const deleteTask = async (id) => {
     if (confirm('¿Delete task?')) {
-      await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' });
+      await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, { method: 'DELETE' });
       const filteredTasks = tasks.filter((task) => task._id !== id);
       saveTasks(filteredTasks);
     }
