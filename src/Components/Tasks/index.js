@@ -11,7 +11,7 @@ function Tasks() {
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
-  const editAndCreateMessage = (contentSubTitle, description) => {
+  const deleteMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
     Description: ${description}`;
   };
@@ -34,16 +34,13 @@ function Tasks() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'DELETE'
       });
-      console.log(response.ok);
       const filteredTasks = tasks.filter((task) => task._id !== id);
       saveTasks(filteredTasks);
       setModalTitle('Delete Task');
       if (response.ok) {
         setContentMessage('The task has been deleted');
       } else {
-        setContentMessage(() =>
-          editAndCreateMessage('Cannot Delete Task', 'The task id was not found')
-        );
+        setContentMessage(() => deleteMessage('Cannot Delete Task', 'The task id was not found'));
       }
       setModalDisplay(true);
     } catch (error) {
