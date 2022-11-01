@@ -5,7 +5,7 @@ import Modal from '../Modal';
 function Form() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
-  var product = urlParams.get('id');
+  const product = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
   const [nameValue, setNameValue] = useState('');
@@ -33,7 +33,7 @@ function Form() {
   if (idRegEx.test(product)) {
     useEffect(async () => {
       try {
-        const response = await fetch(`http://localhost:5000/super-admins/${product}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`);
         const data = await response.json();
         setNameValue(data.data.name);
         setLastNameValue(data.data.lastName);
@@ -79,7 +79,6 @@ function Form() {
           )
         );
       }
-
       setModalDisplay(true);
     } catch (error) {
       setContentMessage(error);
@@ -88,7 +87,7 @@ function Form() {
 
   const createSuperAdmin = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -100,9 +99,25 @@ function Form() {
           phone: phoneValue
         })
       });
+
+      const data = await response.json();
+      setModalTitle('Create super admin');
+      if (data.error === true) {
+        setContentMessage(data.message);
+      } else {
+        setContentMessage(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
+      }
     } catch (error) {
-      console.log(error);
-      setModalTitle('Edit super admin');
       setContentMessage(error);
     }
     setModalDisplay(true);

@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-console.log(styles);
-
 const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
   return (
-    <div id="id-screen" className={styles.screen}>
-      <div className={styles.modal} onBlur={() => console.log(1)}>
+    <>
+      <div id="id-screen" onClick={() => setModalDisplay(false)} className={styles.screen}></div>
+      <div id="id-modal" className={styles.modal}>
         <header className={styles.header}>
           <h3 className={styles.header__title}>{title}</h3>
           <button className={styles.header__button} onClick={() => setModalDisplay(false)}>
@@ -24,7 +23,7 @@ const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

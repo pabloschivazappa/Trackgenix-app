@@ -3,8 +3,8 @@ import styles from './list.module.css';
 
 const List = ({ superAdmins, deleteSuperAdmin }) => {
   return (
-    <div className={styles.container}>
-      <table>
+    <>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th id="name">Name</th>
@@ -12,6 +12,7 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
             <th id="email">Email</th>
             <th id="dni">DNI</th>
             <th id="phone">Phone</th>
+            <th id="actions">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -25,9 +26,13 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
                 <td>{superAdmin.phone}</td>
                 <td>
                   <a href={`super-admins/form?id=${superAdmin._id}`}>
-                    <button>Edit</button>
+                    <button>
+                      <i className="fa-solid fa-pen-to-square fa-lg"></i>
+                    </button>
                   </a>
-                  <button onClick={() => deleteSuperAdmin(superAdmin._id)}>X</button>
+                  <button onClick={() => deleteSuperAdmin(superAdmin._id)}>
+                    <i className="fa-solid fa-xmark fa-lg"></i>
+                  </button>
                 </td>
               </tr>
             );
@@ -35,9 +40,12 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
         </tbody>
       </table>
       <a href={'super-admins/form'}>
-        <button>Add</button>
+        <button className={styles.addbutton}>
+          <p>Add super admin</p>
+          <i className="fa-solid fa-plus fa-lg"></i>
+        </button>
       </a>
-    </div>
+    </>
   );
 };
 
