@@ -1,6 +1,7 @@
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import Admins from '../Admins/index';
+import AddAdmins from '../Admins/AddAdmins';
 import SuperAdmins from '../SuperAdmins/index';
 import Home from '../Home/index';
 import styles from './layout.module.css';
@@ -14,6 +15,9 @@ function Layout() {
   switch (window.location.pathname) {
     case '/admins':
       currentScreen = <Admins />;
+      break;
+    case '/admins/add-admins':
+      currentScreen = <AddAdmins />;
       break;
     case '/super-admins':
       currentScreen = <SuperAdmins />;
