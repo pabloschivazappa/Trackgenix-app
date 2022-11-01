@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import List from './List';
 import Modal from './Modal';
+import Spinner from '../Spinner';
 
 function SuperAdmins() {
   const [superAdmins, saveSuperAdmins] = useState([]);
@@ -69,7 +70,7 @@ function SuperAdmins() {
       {superAdmins.length > 0 ? (
         <List superAdmins={superAdmins} deleteSuperAdmin={deleteSuperAdmin} />
       ) : (
-        <h2>Loading...</h2>
+        <Spinner />
       )}
       {modalDisplay ? (
         <Modal
