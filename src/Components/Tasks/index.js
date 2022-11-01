@@ -34,14 +34,16 @@ function Tasks() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'DELETE'
       });
+      console.log(response.ok);
       const filteredTasks = tasks.filter((task) => task._id !== id);
       saveTasks(filteredTasks);
-      const data = await response.json();
       setModalTitle('Delete Task');
-      if (data.error === true) {
-        setContentMessage(data.message);
+      if (response.ok) {
+        setContentMessage('The task has been deleted');
       } else {
-        setContentMessage(() => editAndCreateMessage(data.message, data.data.description));
+        setContentMessage(() =>
+          editAndCreateMessage('Cannot Delete Task', 'The task id was not found')
+        );
       }
       setModalDisplay(true);
     } catch (error) {
