@@ -15,7 +15,8 @@ function Form() {
   const [modalTitle, setModalTitle] = useState('');
 
   const editAndCreateMessage = (contentSubTitle, description) => {
-    return ` ${contentSubTitle}:\n Description: ${description}`;
+    return `${contentSubTitle}:\n
+     Description: ${description}`;
   };
 
   if (idRegEx.test(urlID)) {
@@ -82,7 +83,7 @@ function Form() {
     <>
       <div className={styles.container}>
         <form onSubmit={onSubmit}>
-          <h1>Form</h1>
+          <h2>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
           <div>
             <label htmlFor="input-description">Description</label>
             <input
@@ -93,16 +94,21 @@ function Form() {
               onChange={changeDescription}
             />
           </div>
+          <div>
+            <a href={'http://localhost:3000/tasks'}>
+              <button type="button" className={styles.buttonCancel}>
+                Cancel
+              </button>
+            </a>
+            <button
+              type="submit"
+              className={styles.buttonSave}
+              onClick={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
+            >
+              Save
+            </button>
+          </div>
         </form>
-        <button
-          type="submit"
-          onClick={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
-        >
-          Save
-        </button>
-        <a href="http://localhost:3000/tasks">
-          <button>Cancel</button>
-        </a>
       </div>
       {modalDisplay ? (
         <Modal

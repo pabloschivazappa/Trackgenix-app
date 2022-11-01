@@ -3,12 +3,13 @@ import styles from './list.module.css';
 
 const List = ({ list, deleteTask }) => {
   return (
-    <div className={styles.container}>
-      <table>
+    <>
+      <table className={styles.table}>
         <thead>
           <tr>
-            <th id="id">ID</th>
-            <th id="descprition">Description</th>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -19,9 +20,13 @@ const List = ({ list, deleteTask }) => {
                 <td>{task.description}</td>
                 <td>
                   <a href={`tasks/form?id=${task._id}`}>
-                    <button>Edit</button>
+                    <button>
+                      <i className="fa-solid fa-pen-to-square fa-lg"></i>
+                    </button>
                   </a>
-                  <button onClick={() => deleteTask(task._id)}>X</button>
+                  <button onClick={() => deleteTask(task._id)}>
+                    <i className="fa-solid fa-xmark fa-lg"></i>
+                  </button>
                 </td>
               </tr>
             );
@@ -29,9 +34,12 @@ const List = ({ list, deleteTask }) => {
         </tbody>
       </table>
       <a href="tasks/form">
-        <button>Add</button>
+        <button className={styles.addButton}>
+          <p>Add Task</p>
+          <i className="fa-solid fa-plus fa-lg"></i>
+        </button>
       </a>
-    </div>
+    </>
   );
 };
 

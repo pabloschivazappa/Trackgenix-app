@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner';
 import List from './List';
-import Modal from '../Tasks/Modal';
+import Modal from './Modal';
 import styles from './tasks.module.css';
 
 function Tasks() {
@@ -12,7 +12,8 @@ function Tasks() {
   const [modalTitle, setModalTitle] = useState('');
 
   const editAndCreateMessage = (contentSubTitle, description) => {
-    return ` ${contentSubTitle}:\n Description: ${description}`;
+    return `${contentSubTitle}:\n
+    Description: ${description}`;
   };
 
   useEffect(() => {
