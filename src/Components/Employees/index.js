@@ -7,7 +7,7 @@ function Employees() {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`http://localhost:5000/employees`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
       const data = await response.json();
       saveEmployees(data.data);
     } catch (error) {
@@ -17,7 +17,7 @@ function Employees() {
   console.log(employees);
   const deleteEmployee = async (id) => {
     if (confirm('¿Delete employee?')) {
-      await fetch(`http://localhost:5000/employees/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'DELETE'
       });
       const newEmployees = employees.filter((employee) => employee._id !== id);
@@ -29,7 +29,7 @@ function Employees() {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      {employees ? (
+      {employees.length > 0 ? (
         <List employees={employees} deleteEmployee={deleteEmployee} />
       ) : (
         <h2>Loading...</h2>

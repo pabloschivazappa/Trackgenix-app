@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Modal from '../Modal';
 
 function Form() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   var product = urlParams.get('id');
-  console.log(urlValues);
-  console.log(urlParams);
-  console.log(product);
-  console.log(typeof product);
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
   const [nameValue, setNameValue] = useState('');
@@ -18,10 +15,25 @@ function Form() {
   const [dniValue, setDniValue] = useState('');
   const [phoneValue, setPhoneValue] = useState('');
 
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
+    return ` ${contentSubTitle}:\n
+  Name: ${name}
+  Last Name: ${lastName}
+  Email: ${email}
+  Password: ${password}
+  Dni: ${dni}
+  Phone: ${phone}
+  `;
+  };
+
   if (idRegEx.test(product)) {
     useEffect(async () => {
       try {
-        const response = await fetch(`http://localhost:5000/employees/${product}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
         const data = await response.json();
         setNameValue(data.data.name);
         setLastNameValue(data.data.lastName);
@@ -36,8 +48,8 @@ function Form() {
   }
 
   const editEmployee = async (product) => {
-    if (confirm('¿Edit employee?')) {
-      await fetch(`http://localhost:5000/employees/${product}`, {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -49,12 +61,34 @@ function Form() {
           phone: phoneValue
         })
       });
+      const data = await response.json();
+      console.log(data);
+      setModalTitle('Edit employee');
+      if (data.error === true) {
+        setContentMessage(data.message);
+      } else {
+        setContentMessage(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
+      }
+
+      setModalDisplay(true);
+    } catch (error) {
+      setContentMessage(error);
     }
   };
 
   const createEmployee = async () => {
-    if (confirm('Create employee?')) {
-      await fetch(`http://localhost:5000/employees/`, {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -66,7 +100,33 @@ function Form() {
           phone: phoneValue
         })
       });
+      const data = await response.json();
+      console.log(data);
+      setModalTitle('Edit employee');
+      if (data.error === true) {
+        setContentMessage(data.message);
+      } else {
+        setContentMessage(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
+      }
+
+      setModalDisplay(true);
+    } catch (error) {
+      setContentMessage(error);
     }
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
   };
 
   const changeName = (e) => {
@@ -90,54 +150,78 @@ function Form() {
   };
 
   return (
-    <div className={styles.container}>
-      <form>
-        <h2>Form</h2>
-        <div>
-          <label htmlFor="input-name">Name</label>
-          <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
-        </div>
-        <div>
-          <label htmlFor="input-lastName">Last Name</label>
-          <input
-            id="input-lastName"
-            name="lastName"
-            required
-            value={lastNameValue}
-            onChange={changeLastName}
-          />
-        </div>
-        <div>
-          <label htmlFor="input-email">Email</label>
-          <input id="input-email" name="email" required value={emailValue} onChange={changeEmail} />
-        </div>
-        <div>
-          <label htmlFor="input-password">Password</label>
-          <input
-            id="input-password"
-            type="password"
-            name="password"
-            required
-            value={passwordValue}
-            onChange={changePassword}
-          />
-        </div>
-        <div>
-          <label htmlFor="input-dni">DNI</label>
-          <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
-        </div>
-        <div>
-          <label htmlFor="input-phone">Phone</label>
-          <input id="input-phone" name="phone" required value={phoneValue} onChange={changePhone} />
-        </div>
-      </form>
-      <button
-        type="submit"
-        onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
-      >
-        Save
-      </button>
-    </div>
+    <>
+      <div className={styles.container}>
+        <form onSubmit={onSubmit}>
+          <h2>Form</h2>
+          <div>
+            <label htmlFor="input-name">Name</label>
+            <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
+          </div>
+          <div>
+            <label htmlFor="input-lastName">Last Name</label>
+            <input
+              id="input-lastName"
+              name="lastName"
+              required
+              value={lastNameValue}
+              onChange={changeLastName}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-email">Email</label>
+            <input
+              id="input-email"
+              name="email"
+              required
+              value={emailValue}
+              onChange={changeEmail}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-password">Password</label>
+            <input
+              id="input-password"
+              type="password"
+              name="password"
+              required
+              value={passwordValue}
+              onChange={changePassword}
+            />
+          </div>
+          <div>
+            <label htmlFor="input-dni">DNI</label>
+            <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
+          </div>
+          <div>
+            <label htmlFor="input-phone">Phone</label>
+            <input
+              id="input-phone"
+              name="phone"
+              required
+              value={phoneValue}
+              onChange={changePhone}
+            />
+          </div>
+          <button
+            type="submit"
+            onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
+          >
+            Save
+          </button>
+        </form>
+        <a href={'../employees'}>
+          <button>Back</button>
+        </a>
+      </div>
+      {modalDisplay ? (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      ) : null}
+    </>
   );
 }
 
