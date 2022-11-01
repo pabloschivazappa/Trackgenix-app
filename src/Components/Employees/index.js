@@ -11,15 +11,9 @@ function Employees() {
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
-  const deleteMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
-    return ` ${contentSubTitle}:\n
-  Name: ${name}
-  Last Name: ${lastName}
-  Email: ${email}
-  Password: ${password}
-  Dni: ${dni}
-  Phone: ${phone}
-  `;
+  const deleteMessage = (contentSubTitle, description) => {
+    return `${contentSubTitle}:\n
+    Description: ${description}`;
   };
 
   useEffect(async () => {
@@ -40,28 +34,19 @@ function Employees() {
         });
         const newEmployees = employees.filter((employee) => employee._id !== id);
         saveEmployees(newEmployees);
-
-        const data = await response.json();
         setModalTitle('Delete employee');
-        if (data.error === true) {
-          setContentMessage(data.message);
+
+        if (response.ok) {
+          setContentMessage('Employee deleted');
         } else {
           setContentMessage(() =>
-            deleteMessage(
-              data.message,
-              data.data.name,
-              data.data.lastName,
-              data.data.email,
-              data.data.password,
-              data.data.dni,
-              data.data.phone
-            )
+            deleteMessage('Error while deleting Employee', 'Employee id not found.')
           );
         }
+        setModalDisplay(true);
       } catch (error) {
         setContentMessage(error);
       }
-      setModalDisplay(true);
     }
   };
 
