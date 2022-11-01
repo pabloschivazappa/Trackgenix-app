@@ -1,7 +1,3 @@
-* {
-  color: var(--main-color)
-}
-
 .h2__form {
   width: var(--form-width);
   margin: 0 0 15px 0;
@@ -26,6 +22,7 @@
   width: var(--form-width);
   gap: 13px;
   padding: 20px;
+  color: var(--main-color);
   margin: 0 0 0 0;
   box-shadow: 1px -1px 3px 2px rgba(0,0,0,0.06);
 }
@@ -75,6 +72,7 @@
 }
 
 .button__save {
+  color: var(--main-color);
   background-color: var(--header-table);
 }
 
