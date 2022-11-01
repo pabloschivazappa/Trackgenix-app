@@ -2,8 +2,8 @@
   background-color: #8787A4;
   margin: 0;
   color: white;
+  width: 55%;
   text-align: center;
-  width: var(--width);
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   font-weight: 400;
@@ -16,5 +16,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #373867;
+  padding-block: 90px;
 }

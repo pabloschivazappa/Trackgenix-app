@@ -1,39 +1,34 @@
-table {
+.table {
   border-collapse: collapse;
 }
 
-thead tr {
+.table thead tr {
   padding-block: 10.48px;
   border-radius: 15px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+.table th {
+  background: var(--header-table);
+  font-weight: 500;
   padding-block: 10px;
+}
+
+.table td {
+  font-weight: 300;
+  padding-block: 15px;
+}
+
+.table th, td {
   text-align: center;
 }
 
-th {
-  background: var(--header-table);
-  font-weight: 500;
-}
-
-td {
-  font-weight: 300;
-}
-
-button {
+.table__button {
+  padding: 0 8px;
   border: none;
   background-color: white;
   color: var(--main-color);
   cursor: pointer;
-}
-
-button p {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 15px;
-  font-weight: 600;
 }
 
 th:first-child, td:first-child{
@@ -45,24 +40,35 @@ th:last-child, td:last-child{
 }
 
 .table {
-  width: var(--width);
+  width: var(--table--width);
 }
 
-.addbutton {
-  padding: 0 12px;
+.add__button {
+  padding: 0 20px;
   margin-left: 3px;
-  margin-top: 10px;
-  border-radius: 40px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 15px;
+  color: var(--main-color);
   background-color: var(--header-table);
+  cursor: pointer;
+  box-shadow: 1px 1px 7px 0px rgba(0,0,0,0.28);
 }
 
-.addbutton:hover{
-  background-color: #8787A4;
+.add__button p {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.add__button:hover{
+  background-color: #dadde9;
   transition: 0.2s;
 }
 
 :root {
   --main-color: #373867;
-  --width: 60%;
+  --table--width: 55%;
   --header-table: #EBECF0
 }

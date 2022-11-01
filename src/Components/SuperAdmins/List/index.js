@@ -26,11 +26,14 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
                 <td>{superAdmin.phone}</td>
                 <td>
                   <a href={`super-admins/form?id=${superAdmin._id}`}>
-                    <button>
+                    <button className={styles.table__button}>
                       <i className="fa-solid fa-pen-to-square fa-lg"></i>
                     </button>
                   </a>
-                  <button onClick={() => deleteSuperAdmin(superAdmin._id)}>
+                  <button
+                    className={styles.table__button}
+                    onClick={() => deleteSuperAdmin(superAdmin._id)}
+                  >
                     <i className="fa-solid fa-xmark fa-lg"></i>
                   </button>
                 </td>
@@ -40,7 +43,7 @@ const List = ({ superAdmins, deleteSuperAdmin }) => {
         </tbody>
       </table>
       <a href={'super-admins/form'}>
-        <button className={styles.addbutton}>
+        <button className={styles.add__button}>
           <p>Add super admin</p>
           <i className="fa-solid fa-plus fa-lg"></i>
         </button>
