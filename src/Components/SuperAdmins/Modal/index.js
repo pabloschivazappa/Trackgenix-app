@@ -9,7 +9,7 @@ const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
         <header className={styles.header}>
           <h3 className={styles.header__title}>{title}</h3>
           <button className={styles.header__button} onClick={() => setModalDisplay(false)}>
-            X
+            <i className="fa-solid fa-square-xmark fa-2xl"></i>
           </button>
         </header>
         <div className={styles.content}>
