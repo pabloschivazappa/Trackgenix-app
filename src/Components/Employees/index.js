@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import List from './List';
 import Modal from './Modal';
+import Spinner from '../Spinner';
 
 function Employees() {
   const [employees, saveEmployees] = useState([]);
@@ -70,7 +71,8 @@ function Employees() {
       {employees.length > 0 ? (
         <List employees={employees} deleteEmployee={deleteEmployee} />
       ) : (
-        <h2>Loading...</h2>
+        //<h2>Loading...</h2>
+        <Spinner />
       )}
       {modalDisplay ? (
         <Modal

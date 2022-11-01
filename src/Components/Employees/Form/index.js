@@ -123,6 +123,7 @@ function Form() {
     } catch (error) {
       setContentMessage(error);
     }
+    setModalDisplay(true);
   };
 
   const onSubmit = (event) => {
@@ -153,12 +154,12 @@ function Form() {
     <>
       <div className={styles.container}>
         <form onSubmit={onSubmit}>
-          <h2>Form</h2>
-          <div>
+          <h2>{idRegEx.test(product) ? 'Edit Employee' : 'Create Employee'}</h2>
+          <div className="form-item">
             <label htmlFor="input-name">Name</label>
             <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
           </div>
-          <div>
+          <div className="form-item">
             <label htmlFor="input-lastName">Last Name</label>
             <input
               id="input-lastName"
@@ -168,7 +169,7 @@ function Form() {
               onChange={changeLastName}
             />
           </div>
-          <div>
+          <div className="form-item">
             <label htmlFor="input-email">Email</label>
             <input
               id="input-email"
@@ -178,7 +179,7 @@ function Form() {
               onChange={changeEmail}
             />
           </div>
-          <div>
+          <div className="form-item">
             <label htmlFor="input-password">Password</label>
             <input
               id="input-password"
@@ -189,11 +190,11 @@ function Form() {
               onChange={changePassword}
             />
           </div>
-          <div>
+          <div className="form-item">
             <label htmlFor="input-dni">DNI</label>
             <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
           </div>
-          <div>
+          <div className="form-item">
             <label htmlFor="input-phone">Phone</label>
             <input
               id="input-phone"
@@ -203,16 +204,21 @@ function Form() {
               onChange={changePhone}
             />
           </div>
-          <button
-            type="submit"
-            onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
-          >
-            Save
-          </button>
+          <div>
+            <a href={'../employees'}>
+              <button type="button" className={styles.buttonCancel}>
+                Cancel
+              </button>
+            </a>
+            <button
+              type="submit"
+              className={styles.buttonSave}
+              onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
+            >
+              Save
+            </button>
+          </div>
         </form>
-        <a href={'../employees'}>
-          <button>Back</button>
-        </a>
       </div>
       {modalDisplay ? (
         <Modal
