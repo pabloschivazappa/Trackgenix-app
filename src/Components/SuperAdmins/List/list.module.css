@@ -1,7 +1,3 @@
-section {
-  color: var(--main-color);
-}
-
 table {
   border-collapse: collapse;
 }
@@ -38,6 +34,10 @@ button p {
   margin-right: 10px;
   font-size: 15px;
   font-weight: 600;
+}
+
+.section {
+  color: var(--main-color);
 }
 
 th:first-child, td:first-child{

@@ -151,7 +151,7 @@ function Form() {
     <>
       <div className={styles.container}>
         <form onSubmit={onSubmit}>
-          <h2>Form</h2>
+          <h2>{idRegEx.test(product) ? 'Edit super admin' : 'Create super admin'}</h2>
           <div>
             <label htmlFor="input-name">Name</label>
             <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
@@ -201,18 +201,23 @@ function Form() {
               onChange={changePhone}
             />
           </div>
-          <button
-            type="submit"
-            onClick={
-              idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
-            }
-          >
-            Save
-          </button>
+          <div>
+            <a href={'http://localhost:3000/super-admins'}>
+              <button type="button" className={styles.buttonCancel}>
+                Cancel
+              </button>
+            </a>
+            <button
+              type="submit"
+              className={styles.buttonSave}
+              onClick={
+                idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
+              }
+            >
+              Save
+            </button>
+          </div>
         </form>
-        <a href={'http://localhost:3000/super-admins'}>
-          <button>Cancel</button>
-        </a>
       </div>
       {modalDisplay ? (
         <Modal
