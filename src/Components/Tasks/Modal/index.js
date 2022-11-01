@@ -13,7 +13,7 @@ const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
               setModalDisplay(false);
             }}
           >
-            X
+            <i className="fa-solid fa-square-xmark fa-2xl"></i>
           </button>
         </header>
         <div className={styles.content}>

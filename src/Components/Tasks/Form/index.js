@@ -82,8 +82,8 @@ function Form() {
   return (
     <>
       <div className={styles.container}>
-        <form onSubmit={onSubmit}>
-          <h2>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
+        <h2 className={styles.h2__form}>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
+        <form onSubmit={onSubmit} className={styles.form__tasks}>
           <div>
             <label htmlFor="input-description">Description</label>
             <input
@@ -96,13 +96,13 @@ function Form() {
           </div>
           <div>
             <a href={'http://localhost:3000/tasks'}>
-              <button type="button" className={styles.buttonCancel}>
+              <button type="button" className={`${styles.button__cancel} ${styles.form__button}`}>
                 Cancel
               </button>
             </a>
             <button
               type="submit"
-              className={styles.buttonSave}
+              className={`${styles.button__save} ${styles.form__button}`}
               onClick={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
             >
               Save
