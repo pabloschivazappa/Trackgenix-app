@@ -36,10 +36,6 @@ button p {
   font-weight: 600;
 }
 
-.section {
-  color: var(--main-color);
-}
-
 th:first-child, td:first-child{
   border-radius: 15px 0 0 15px ;
 }
