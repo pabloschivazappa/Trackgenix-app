@@ -20,7 +20,12 @@ const ShowList = ({ list, deleteTimesheet }) => {
         <tbody>
           {list.map((timesheet) => {
             return (
-              <ListItem key={timesheet._id} item={timesheet} deleteTimesheet={deleteTimesheet} />
+              <ListItem
+                key={timesheet._id}
+                item={timesheet}
+                deleteTimesheet={deleteTimesheet}
+                className={styles.container}
+              />
             );
           })}
         </tbody>

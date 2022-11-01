@@ -18,30 +18,28 @@ function TimeSheets() {
   }, []);
 
   const deleteTimesheet = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
-        alert(data.message);
-      } else {
-        alert(`Error: ${data.message}`);
+    if (confirm('Are you sure that you want to delete the task?')) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
+          alert(data.message);
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
     }
   };
 
   return (
     <section className={styles.container}>
       <h2>TimeSheets</h2>
-      {timesheets.length !== 0 ? (
-        <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} />
-      ) : (
-        <Spinner />
-      )}
+      {timesheets ? <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} /> : <Spinner />}
       <a href="/time-sheets/form">
         <button>
           <i className="fa-solid fa-plus"></i>Add

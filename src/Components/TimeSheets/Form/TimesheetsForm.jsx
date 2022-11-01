@@ -1,14 +1,18 @@
 import React from 'react';
 import styles from './Form.module.css';
-import { useState } from 'react';
-/* import { useState } from 'react'; */
-const urlValues = window.location.search;
-const urlParams = new URLSearchParams(urlValues);
-const product = urlParams.get('id');
-console.log(product);
-/* const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i; */
+import { useState, useEffect } from 'react';
+
+const fixDate = (date) => {
+  return date.substring(0, 10);
+};
 
 const TimesheetsForm = () => {
+  const urlValues = window.location.search;
+  const urlParams = new URLSearchParams(urlValues);
+  const id = urlParams.get('id');
+  const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const haveId = idRegEx.test(id);
+
   const [timesheetInput, setTimesheetsInput] = useState({
     date: '',
     description: '',
@@ -18,33 +22,74 @@ const TimesheetsForm = () => {
     project: ''
   });
 
-  const onChange = (e) => {
-    setTimesheetsInput({ ...timesheetInput, [e.target.name]: e.target.value });
-  };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    console.log(timesheetInput);
+  if (haveId) {
+    useEffect(async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
+        const data = await response.json();
+        setTimesheetsInput({
+          description: data.data.description,
+          hours: data.data.hours,
+          date: fixDate(data.data.date),
+          task: data.data.task._id,
+          employee: data.data.employee._id,
+          project: data.data.project._id
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }, []);
+  }
+
+  const createTimesheet = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(timesheetInput)
       });
-      console.log(response);
       if (response.ok) {
         const data = await response.json();
-        alert(data);
+        alert(data.message);
       } else {
         alert('Error');
       }
     } catch (error) {
-      alert(error.message);
+      alert(error);
     }
+  };
+
+  const editTimesheet = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(timesheetInput)
+      });
+      if (response.ok) {
+        const data = await response.json();
+        alert(data.message);
+      } else {
+        alert('Error');
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const onChange = (e) => {
+    setTimesheetsInput({ ...timesheetInput, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    haveId ? editTimesheet() : createTimesheet();
   };
 
   return (
     <div className={styles.container}>
       <form onSubmit={onSubmit}>
+        <h2>{haveId ? 'Edit' : 'Create'}</h2>
         <label>
           Description:
           <input
@@ -110,7 +155,7 @@ const TimesheetsForm = () => {
             required
           />
         </label>
-        <button type="submit">Create</button>
+        <button type="submit">{haveId ? 'Edit' : 'Create'}</button>
       </form>
     </div>
   );
