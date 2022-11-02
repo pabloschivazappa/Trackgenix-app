@@ -1,18 +1,17 @@
-.crossLogo{
-    color: 'red';
-    cursor: 'pointer';
-    padding: '5px';
-    width: '20px';
-    height: '20px';
-    padding-right: '7px';
-    padding-left: '7px';
+button {
+    position: relative;
 }
 
-.editLogo{
-    cursor: 'pointer';
-    padding: '5px';
-    width: '20px';
-    height: '20px';
-    padding-right: '7px';
-    padding-left: '7px';
+.actions{
+    display: flex;
+    justify-content: space-around;
+}
+
+.crossLogo{
+    color:red;
+    cursor: pointer;
+}
+
+.edit{
+    cursor: pointer;
 }

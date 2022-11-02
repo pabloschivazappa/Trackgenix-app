@@ -1,33 +1,52 @@
-import { FaTimes, FaEdit } from 'react-icons/fa';
-import { useState } from 'react';
-import { DeleteModal } from '../Modals/deleteModal';
-import { EditModal } from '../Modals/editModal';
-import './listItem.module.css';
+import { useState, useEffect } from 'react';
+import { Modal } from '../Modals/modal';
+import listItemStyles from './listItem.module.css';
 
-const ListItem = ({ listItem }) => {
-  const employee = listItem.employees.find((employee) => employee);
+const ListItem = ({ listItem, deleteItem }) => {
+  const [employeeData, setEmployeeData] = useState([]);
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
+      const data = await response.json();
+      setEmployeeData(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [employeeData]);
 
-  const [crossmodalState, crossChangeModalState] = useState(false);
-  const [editModalState, editChangeModalState] = useState(false);
+  const handleDelete = (id) => {
+    deleteItem(id);
+  };
+
+  const [modalState, ChangeModalState] = useState(false);
+
+  const projectsEmployee = listItem.employees.map((e) => e.employeeId);
 
   return (
-    <tr className="rows">
+    <tr className="rows" key={listItem._id}>
       <td>{listItem.name}</td>
       <td>{listItem.description}</td>
       <td>{listItem.clientName}</td>
-      <td>{listItem.createdAt}</td>
       <td>{listItem.startDate}</td>
-      <td>{listItem.updatedAt}</td>
       <td>{listItem.endDate}</td>
+      <td>{projectsEmployee}</td>
+      <td>{listItem.active ? 'true' : 'false'}</td>
       <td>
-        {employee.employee.name} {employee.employee.last_name}
+        <div className={listItemStyles.actions}>
+          <a className={listItemStyles.crossLogo} onClick={() => handleDelete(listItem._id)}>
+            <i className="fa-solid fa-x"></i>
+          </a>
+          <a
+            className={listItemStyles.edit}
+            onClick={() => {
+              window.location.assign(`/projects/form?id=${listItem._id}`);
+            }}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </a>
+        </div>
       </td>
-      <td>
-        <FaTimes className="crossLogo" onClick={() => crossChangeModalState(!crossmodalState)} />
-        <FaEdit className="editLogo" onClick={() => editChangeModalState(!editModalState)} />
-      </td>
-      <DeleteModal state={crossmodalState} changeState={crossChangeModalState} />
-      <EditModal state={editModalState} changeState={editChangeModalState} />
+      <Modal state={modalState} changeState={ChangeModalState} />
     </tr>
   );
 };

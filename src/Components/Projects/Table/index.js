@@ -1,12 +1,7 @@
 import ListItem from '../Listitem';
-import { FaPlusCircle } from 'react-icons/fa';
-import styles from './projectsTable.module.css';
-import { Modal } from '../Modals/modal';
-import { useState } from 'react';
+import tableStyles from './projectsTable.module.css';
 
 const ProjectTable = ({ list, deleteItem }) => {
-  const [modalState, changeModalState] = useState(false);
-
   return (
     <div>
       <table>
@@ -15,11 +10,10 @@ const ProjectTable = ({ list, deleteItem }) => {
             <th id="projectName">Project Name</th>
             <th id="description">Description</th>
             <th id="clientName">Client Name</th>
-            <th id="createdAt">Created At</th>
             <th id="startingDate">Starting Date</th>
-            <th id="lastupdate">Last Update</th>
             <th id="endDate">End Date</th>
             <th id="employee">Employee</th>
+            <th id="active">Active</th>
             <th id="actions">Actions</th>
           </tr>
         </thead>
@@ -28,19 +22,17 @@ const ProjectTable = ({ list, deleteItem }) => {
             <ListItem key={item.id} listItem={item} deleteItem={deleteItem} />
           ))}
           <tr>
-            <td className={styles.addLogoTd}>
+            <td className={tableStyles.addLogoTd}>
               <div>
-                <FaPlusCircle
-                  className={styles.addLogo}
-                  onClick={() => changeModalState(!modalState)}
-                />
+                <a className={tableStyles.addLogo}>
+                  <i className="fa-solid fa-plus"></i>
+                </a>
               </div>
               <p className="addProjectp">Add project</p>
             </td>
           </tr>
         </tbody>
       </table>
-      <Modal state={modalState} changeState={changeModalState} />
     </div>
   );
 };
