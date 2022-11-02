@@ -20,7 +20,7 @@ const FormAdmins = () => {
   if (rowId) {
     useEffect(async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}admins/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
         setAdminInput({
           name: data.data.name,
@@ -38,7 +38,7 @@ const FormAdmins = () => {
 
   const createAdmin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}admins`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
@@ -64,7 +64,7 @@ const FormAdmins = () => {
 
   const editAdmin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
