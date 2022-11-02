@@ -11,17 +11,6 @@ function SuperAdmins() {
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
-  const deleteMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
-    return ` ${contentSubTitle}:\n
-  Name: ${name}
-  Last Name: ${lastName}
-  Email: ${email}
-  Password: ${password}
-  Dni: ${dni}
-  Phone: ${phone}
-  `;
-  };
-
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
@@ -45,17 +34,7 @@ function SuperAdmins() {
         if (data.error === true) {
           setContentMessage(data.message);
         } else {
-          setContentMessage(() =>
-            deleteMessage(
-              data.message,
-              data.data.name,
-              data.data.lastName,
-              data.data.email,
-              data.data.password,
-              data.data.dni,
-              data.data.phone
-            )
-          );
+          setContentMessage('Super Admin deleted successfully');
         }
       } catch (error) {
         setContentMessage(error);
@@ -66,7 +45,7 @@ function SuperAdmins() {
 
   return (
     <section className={styles.container}>
-      <h2>Super Admins</h2>
+      <h2 className={styles.super__admin__h2}>Super Admins</h2>
       {superAdmins.length > 0 ? (
         <List superAdmins={superAdmins} deleteSuperAdmin={deleteSuperAdmin} />
       ) : (
