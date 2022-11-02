@@ -19,8 +19,8 @@ function Form() {
      Description: ${description}`;
   };
 
-  if (idRegEx.test(urlID)) {
-    useEffect(async () => {
+  useEffect(async () => {
+    if (idRegEx.test(urlID)) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
@@ -28,8 +28,8 @@ function Form() {
       } catch (error) {
         console.log(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const editTask = async (urlID) => {
     try {
