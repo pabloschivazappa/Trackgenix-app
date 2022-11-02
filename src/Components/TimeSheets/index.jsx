@@ -33,13 +33,16 @@ function TimeSheets() {
         if (response.ok) {
           setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
           setModalTitle('Success');
+          setContentMessage('The timesheet was successfully deleted');
         } else {
           setModalTitle('Error');
+          setContentMessage('Cannot delete the timesheet');
         }
-        setModalDisplay(true);
       } catch (error) {
-        alert(error);
+        setModalTitle('Error');
+        setContentMessage(error);
       }
+      setModalDisplay(true);
     }
   };
 

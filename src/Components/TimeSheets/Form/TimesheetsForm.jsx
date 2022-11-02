@@ -60,10 +60,11 @@ const TimesheetsForm = () => {
       } else {
         setModalTitle('Error');
       }
-      setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setModalTitle('Error');
+      setContentMessage(error);
     }
+    setModalDisplay(true);
   };
 
   const editTimesheet = async () => {
@@ -80,10 +81,11 @@ const TimesheetsForm = () => {
       } else {
         setModalTitle('Error');
       }
-      setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setModalTitle('Error');
+      setContentMessage(error);
     }
+    setModalDisplay(true);
   };
 
   const onChange = (e) => {
