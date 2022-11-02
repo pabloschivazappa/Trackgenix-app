@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './admins.module.css';
+import styles from './Admins.module.css';
 import List from './List/index';
 
 const Admins = () => {
@@ -7,7 +7,7 @@ const Admins = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`http://localhost:5000/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}admins`);
       const data = await response.json();
       setAdmins(data);
     } catch (error) {
@@ -16,9 +16,9 @@ const Admins = () => {
   }, [admins]);
 
   // eslint-disable-next-line no-unused-vars
-  const deleteItem = (id) => {
+  const deleteAdmin = (id) => {
     try {
-      fetch(`http://localhost:5000/admins/${id}`, { method: 'DELETE' });
+      fetch(`${process.env.REACT_APP_API_URL}admins/${id}`, { method: 'DELETE' });
     } catch (error) {
       console.error(error);
     }
@@ -28,7 +28,7 @@ const Admins = () => {
     <section className={styles.container}>
       <h2>Admins</h2>
       <div>
-        <List list={admins} setList={setAdmins} deleteItem={deleteItem} />
+        <List list={admins} setList={setAdmins} deleteAdmin={deleteAdmin} />
       </div>
     </section>
   );

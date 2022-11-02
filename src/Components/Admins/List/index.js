@@ -12,6 +12,7 @@ const List = ({ list, deleteAdmin }) => {
             <th id="name">Name</th>
             <th id="lastName">Last Name</th>
             <th id="email">Email</th>
+            <th id="password">Password</th>
             <th id="dni">DNI</th>
             <th id="phone">Phone</th>
           </tr>
@@ -22,7 +23,7 @@ const List = ({ list, deleteAdmin }) => {
           })}
         </tbody>
       </table>
-      <a href="./admins/add-admins">
+      <a href="./admins/form-admins">
         <button>Add a new Admin</button>
       </a>
     </div>

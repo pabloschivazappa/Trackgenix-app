@@ -6,20 +6,20 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
   };
   return (
     <tr className="rows">
-      <td>{listAdmin.id}</td>
+      <td>{listAdmin._id}</td>
       <td>{listAdmin.name}</td>
       <td>{listAdmin.lastName}</td>
       <td>{listAdmin.email}</td>
+      <td>{listAdmin.password}</td>
       <td>{listAdmin.dni}</td>
       <td>{listAdmin.phone}</td>
       <td>
         <button onClick={() => handleDelete(listAdmin._id)}>X</button>
-        <a href="./admins/add-admins">
+        <a href={`./admins/form-admins?id=${listAdmin._id}`}>
           <button>edit</button>
         </a>
       </td>
     </tr>
   );
 };
-
 export default ListAdmin;
