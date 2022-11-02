@@ -10,22 +10,11 @@ const initialValue = {
   startDate: '',
   endDate: '',
   employees: '',
-  active: ''
+  active: true
 };
-const AddItem = ({ onCreateItem }) => {
+const AddItem = () => {
   const [project, setProject] = useState(initialValue);
   const [employees, setEmployees] = useState([]);
-  const [employeeData, setEmployeeName] = useState([]);
-
-  const getProjects = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
-      const data = await response.json();
-      setProject(data.data);
-    } catch (error) {
-      alert('Could not GET Projects', error);
-    }
-  };
 
   useEffect(async () => {
     if (window.location.href.includes('id')) {
@@ -33,19 +22,14 @@ const AddItem = ({ onCreateItem }) => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
         setProject({
+          name: data.data.name,
           clientName: data.data.clientName,
           description: data.data.description,
           startDate: data.data.startDate.substr(0, 10),
           endDate: data.data.endDate.substr(0, 10),
-          employees: [
-            {
-              employeeId: data.data.employeeId,
-              rate: data.data.rate,
-              role: data.data.role
-            }
-          ],
-          name: data.data.name
+          active: true
         });
+        setEmployees(data.data.employees);
       } catch (error) {
         alert('Could not GET Project.', error);
       }
@@ -54,15 +38,7 @@ const AddItem = ({ onCreateItem }) => {
     }
   }, []);
 
-  const editItem = async ({
-    name,
-    description,
-    clientName,
-    startDate,
-    endDate,
-    employees: employees,
-    active
-  }) => {
+  const editItem = async ({ name, description, clientName, startDate, endDate, active }) => {
     await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'PUT',
       headers: {
@@ -78,18 +54,9 @@ const AddItem = ({ onCreateItem }) => {
         active
       })
     });
-    getProjects();
   };
 
-  const createProject = async ({
-    name,
-    description,
-    clientName,
-    startDate,
-    endDate,
-    employees: employees,
-    active
-  }) => {
+  const createProject = async ({ name, description, clientName, startDate, endDate, active }) => {
     await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
       method: 'POST',
       headers: {
@@ -105,19 +72,8 @@ const AddItem = ({ onCreateItem }) => {
         active
       })
     });
-    onCreateItem();
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      setEmployeeName(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-  console.log(employeeData);
   const cleanInputs = () => {
     setProject(initialValue);
     setEmployees([]);
@@ -146,7 +102,7 @@ const AddItem = ({ onCreateItem }) => {
               type="text"
               name="name"
               value={project.name}
-              onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+              onChange={(e) => setProject({ ...project, name: e.target.value })}
             />
           </div>
           <div className={formStyles.formRaws}>
@@ -156,7 +112,7 @@ const AddItem = ({ onCreateItem }) => {
               type="text"
               name="description"
               value={project.description}
-              onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+              onChange={(e) => setProject({ ...project, description: e.target.value })}
             />
           </div>
           <div className={formStyles.formRaws}>
@@ -176,7 +132,7 @@ const AddItem = ({ onCreateItem }) => {
               type="date"
               name="startDate"
               value={project.startDate}
-              onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+              onChange={(e) => setProject({ ...project, startDate: e.target.value })}
             />
           </div>
           <div className={formStyles.formRaws}>
@@ -186,38 +142,46 @@ const AddItem = ({ onCreateItem }) => {
               type="date"
               name="endDate"
               value={project.endDate}
-              onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+              onChange={(e) => setProject({ ...project, endDate: e.target.value })}
             />
           </div>
-          <div className={formStyles.formRaws}>
-            <label>Add Employees </label>
+          <div>
+            <label> Add Employees</label>
             {employees.map((employee, index) => (
               <div key={index} id="employee-form">
                 <label>Employee</label>
-                <select
+                <input
                   type="text"
-                  name="employeeId"
-                  value={project.employees}
+                  name="employee"
                   onChange={(e) =>
                     setEmployees([
                       ...employees.slice(0, index),
                       {
                         ...employee,
-                        employeeId: e.target.value.slice(-24)
+                        employee: e.target.value.slice(-24)
                       },
                       ...employees.slice(index + 1)
                     ])
                   }
-                >
-                  {setEmployeeName.map((e, idx) => (
-                    <option key={idx}>{e}</option>
-                  ))}
-                </select>
-                <label>Role</label>
-                <select
+                ></input>
+                <label>rate</label>
+                <input
+                  type="text"
+                  name="rate"
+                  onChange={(e) =>
+                    setEmployees([
+                      ...employees.slice(0, index),
+                      {
+                        ...employee,
+                        rate: e.target.value
+                      },
+                      ...employees.slice(index + 1)
+                    ])
+                  }
+                />
+                <input
                   type="text"
                   name="role"
-                  value={project.employees}
                   onChange={(e) =>
                     setEmployees([
                       ...employees.slice(0, index),
@@ -228,25 +192,37 @@ const AddItem = ({ onCreateItem }) => {
                       ...employees.slice(index + 1)
                     ])
                   }
+                ></input>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.target.closest('div').remove();
+                  }}
                 >
-                  <option></option>
-                  <option>DEV</option>
-                  <option>QA</option>
-                  <option>PM</option>
-                  <option>TL</option>
-                </select>
-                <label>Rate</label>
-                <input
-                  type="text"
-                  name="rate"
-                  value={project.employees[0].rate}
-                  onChange={(e) => setProject({ ...project, clientName: e.target.value })}
-                />
+                  Delete
+                </button>
               </div>
             ))}
             <div>
-              <input className={formStyles.submit} type="submit" value="submit" />
+              <button
+                onClick={() =>
+                  setEmployees([
+                    ...employees,
+                    {
+                      employee: '',
+                      rate: 0,
+                      role: ''
+                    }
+                  ])
+                }
+                type="button"
+              >
+                Add Employee
+              </button>
             </div>
+          </div>
+          <div>
+            <input className={formStyles.submit} type="submit" value="submit" />
           </div>
         </form>
       </div>

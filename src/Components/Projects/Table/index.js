@@ -24,7 +24,7 @@ const ProjectTable = ({ list, deleteItem }) => {
           <tr>
             <td className={tableStyles.addLogoTd}>
               <div>
-                <a className={tableStyles.addLogo}>
+                <a className={tableStyles.addLogo} href={'/projects/form'}>
                   <i className="fa-solid fa-plus"></i>
                 </a>
               </div>

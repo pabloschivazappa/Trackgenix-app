@@ -36,12 +36,7 @@ const ListItem = ({ listItem, deleteItem }) => {
           <a className={listItemStyles.crossLogo} onClick={() => handleDelete(listItem._id)}>
             <i className="fa-solid fa-x"></i>
           </a>
-          <a
-            className={listItemStyles.edit}
-            onClick={() => {
-              window.location.assign(`/projects/form?id=${listItem._id}`);
-            }}
-          >
+          <a className={listItemStyles.edit} href={`/projects/form?id=${listItem._id}`}>
             <i className="fa-solid fa-pen-to-square"></i>
           </a>
         </div>
