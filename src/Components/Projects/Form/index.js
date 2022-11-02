@@ -146,11 +146,12 @@ const AddItem = () => {
             />
           </div>
           <div>
-            <label> Add Employees</label>
+            <label className={formStyles.form}> Add Employees</label>
             {employees.map((employee, index) => (
               <div key={index} id="employee-form">
                 <label>Employee</label>
                 <input
+                  className={formStyles.inputs}
                   type="text"
                   name="employee"
                   onChange={(e) =>
@@ -164,8 +165,9 @@ const AddItem = () => {
                     ])
                   }
                 ></input>
-                <label>rate</label>
+                <label>Rate</label>
                 <input
+                  className={formStyles.inputs}
                   type="text"
                   name="rate"
                   onChange={(e) =>
@@ -179,7 +181,9 @@ const AddItem = () => {
                     ])
                   }
                 />
+                <label>Role</label>
                 <input
+                  className={formStyles.inputs}
                   type="text"
                   name="role"
                   onChange={(e) =>
@@ -203,7 +207,7 @@ const AddItem = () => {
                 </button>
               </div>
             ))}
-            <div>
+            <div className={formStyles.addEmployeeButton}>
               <button
                 onClick={() =>
                   setEmployees([
@@ -221,7 +225,7 @@ const AddItem = () => {
               </button>
             </div>
           </div>
-          <div>
+          <div className={formStyles.submitDiv}>
             <input className={formStyles.submit} type="submit" value="submit" />
           </div>
         </form>
