@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Form.module.css';
 import { useState, useEffect } from 'react';
+import Modal from '../Modal/Modal.jsx';
 
 const fixDate = (date) => {
-  return date.substring(0, 10);
+  return date.slice(0, 10);
 };
 
 const TimesheetsForm = () => {
@@ -21,6 +22,10 @@ const TimesheetsForm = () => {
     employee: '',
     project: ''
   });
+
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   if (haveId) {
     useEffect(async () => {
@@ -48,12 +53,14 @@ const TimesheetsForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(timesheetInput)
       });
+      const data = await response.json();
+      setContentMessage(data.message);
       if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
+        setModalTitle('Success');
       } else {
-        alert('Error');
+        setModalTitle('Error');
       }
+      setModalDisplay(true);
     } catch (error) {
       alert(error);
     }
@@ -66,12 +73,14 @@ const TimesheetsForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(timesheetInput)
       });
+      const data = await response.json();
+      setContentMessage(data.message);
       if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
+        setModalTitle('Success');
       } else {
-        alert('Error');
+        setModalTitle('Error');
       }
+      setModalDisplay(true);
     } catch (error) {
       alert(error);
     }
@@ -87,77 +96,86 @@ const TimesheetsForm = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={onSubmit}>
-        <h2>{haveId ? 'Edit' : 'Create'}</h2>
-        <label>
-          Description:
-          <input
-            type="text"
-            name="description"
-            value={timesheetInput.description}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <label>
-          Date:
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={timesheetInput.date}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <label>
-          Hours:
-          <input
-            type="text"
-            id="hours"
-            name="hours"
-            value={timesheetInput.hours}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <label>
-          Task ID:
-          <input
-            type="text"
-            id="task"
-            name="task"
-            value={timesheetInput.task}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <label>
-          Employee ID:
-          <input
-            type="text"
-            id="employee"
-            name="employee"
-            value={timesheetInput.employee}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <label>
-          Project ID:
-          <input
-            type="text"
-            id="project"
-            name="project"
-            value={timesheetInput.project}
-            onChange={onChange}
-            required
-          />
-        </label>
-        <button type="submit">{haveId ? 'Edit' : 'Create'}</button>
-      </form>
-    </div>
+    <>
+      <div className={styles.container}>
+        <form onSubmit={onSubmit}>
+          <h2>{haveId ? 'Edit' : 'Create'}</h2>
+          <label>
+            Description:
+            <input
+              type="text"
+              name="description"
+              value={timesheetInput.description}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <label>
+            Date:
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={timesheetInput.date}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <label>
+            Hours:
+            <input
+              type="text"
+              id="hours"
+              name="hours"
+              value={timesheetInput.hours}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <label>
+            Task ID:
+            <input
+              type="text"
+              id="task"
+              name="task"
+              value={timesheetInput.task}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <label>
+            Employee ID:
+            <input
+              type="text"
+              id="employee"
+              name="employee"
+              value={timesheetInput.employee}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <label>
+            Project ID:
+            <input
+              type="text"
+              id="project"
+              name="project"
+              value={timesheetInput.project}
+              onChange={onChange}
+              required
+            />
+          </label>
+          <button type="submit">{haveId ? 'Edit' : 'Create'}</button>
+        </form>
+      </div>
+      {modalDisplay ? (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      ) : null}
+    </>
   );
 };
 

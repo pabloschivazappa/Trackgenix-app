@@ -3,9 +3,14 @@ import Spinner from '../Spinner';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowList from './ShowList/ShowList';
+import Modal from './Modal/Modal';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
+
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   useEffect(async () => {
     try {
@@ -13,7 +18,7 @@ function TimeSheets() {
       const data = await response.json();
       setTimesheets(data.data);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }, []);
 
@@ -24,12 +29,14 @@ function TimeSheets() {
           method: 'DELETE'
         });
         const data = await response.json();
+        setContentMessage(data.message);
         if (response.ok) {
           setTimesheets(timesheets.filter((timesheet) => timesheet._id !== id));
-          alert(data.message);
+          setModalTitle('Success');
         } else {
-          alert(`Error: ${data.message}`);
+          setModalTitle('Error');
         }
+        setModalDisplay(true);
       } catch (error) {
         alert(error);
       }
@@ -37,15 +44,28 @@ function TimeSheets() {
   };
 
   return (
-    <section className={styles.container}>
-      <h2>TimeSheets</h2>
-      {timesheets ? <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} /> : <Spinner />}
-      <a href="/time-sheets/form">
-        <button>
-          <i className="fa-solid fa-plus"></i>Add
-        </button>
-      </a>
-    </section>
+    <>
+      <section className={styles.container}>
+        <h2>TimeSheets</h2>
+        {timesheets ? (
+          <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} />
+        ) : (
+          <Spinner />
+        )}
+        <a href="/time-sheets/form">
+          <button>
+            <i className="fa-solid fa-plus"></i>Add
+          </button>
+        </a>
+      </section>
+      {modalDisplay ? (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      ) : null}
+    </>
   );
 }
 

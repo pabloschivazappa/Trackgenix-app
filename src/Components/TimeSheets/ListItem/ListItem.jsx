@@ -7,7 +7,7 @@ const ListItem = ({ item, deleteTimesheet }) => {
   return (
     <tr className="rows">
       <td>{item.description}</td>
-      <td>{item.date}</td>
+      <td>{item.date.slice(0, 10)}</td>
       <td>{item.hours}</td>
       <td>{item.task.description}</td>
       <td>{item.employee.name}</td>

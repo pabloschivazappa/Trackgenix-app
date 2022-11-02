@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ShowList.module.css';
+import styles from './ShowList.css';
 import ListItem from '../ListItem/ListItem';
 
 const ShowList = ({ list, deleteTimesheet }) => {
