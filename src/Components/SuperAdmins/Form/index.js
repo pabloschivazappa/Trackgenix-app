@@ -30,8 +30,8 @@ function Form() {
   `;
   };
 
-  if (idRegEx.test(product)) {
-    useEffect(async () => {
+  useEffect(async () => {
+    if (idRegEx.test(product)) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`);
         const data = await response.json();
@@ -44,8 +44,8 @@ function Form() {
       } catch (error) {
         console.error(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const editSuperAdmin = async (product) => {
     try {
