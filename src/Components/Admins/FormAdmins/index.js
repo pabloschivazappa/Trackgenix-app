@@ -43,7 +43,6 @@ const FormAdmins = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
       });
-      console.log(adminInput);
       if (response.ok) {
         const data = await response.json();
         alert(data);

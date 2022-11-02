@@ -4,8 +4,8 @@ import styles from './List.module.css';
 
 const List = ({ list, deleteAdmin }) => {
   return (
-    <div className={styles.container}>
-      <table>
+    <>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th id="id">ID</th>
@@ -26,7 +26,7 @@ const List = ({ list, deleteAdmin }) => {
       <a href="./admins/form-admins">
         <button>Add a new Admin</button>
       </a>
-    </div>
+    </>
   );
 };
 

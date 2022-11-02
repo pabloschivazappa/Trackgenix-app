@@ -5,7 +5,7 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
     deleteAdmin(listAdmin._id);
   };
   return (
-    <tr className="rows">
+    <tr>
       <td>{listAdmin._id}</td>
       <td>{listAdmin.name}</td>
       <td>{listAdmin.lastName}</td>
