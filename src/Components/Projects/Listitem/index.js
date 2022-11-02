@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Modal } from '../Modals/modal';
 import listItemStyles from './listItem.module.css';
 
 const ListItem = ({ listItem, deleteItem }) => {
@@ -17,8 +16,6 @@ const ListItem = ({ listItem, deleteItem }) => {
   const handleDelete = (id) => {
     deleteItem(id);
   };
-
-  const [modalState, ChangeModalState] = useState(false);
 
   const projectsEmployee = listItem.employees.map((e) => e.employeeId);
 
@@ -41,7 +38,6 @@ const ListItem = ({ listItem, deleteItem }) => {
           </a>
         </div>
       </td>
-      <Modal state={modalState} changeState={ChangeModalState} />
     </tr>
   );
 };

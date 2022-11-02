@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import ProjectTable from './Table';
+import Modal from './Modals/modal.js';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   const getProjects = async () => {
     try {
@@ -20,8 +25,25 @@ function Projects() {
   }, []);
 
   const deleteItem = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, { method: 'DELETE' });
-    setProjects([...projects.filter((listItem) => listItem._id !== id)]);
+    if (confirm('Are you sure that you want to delete the task?')) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+          method: 'DELETE'
+        });
+        setProjects([...projects.filter((listItem) => listItem._id !== id)]);
+        const data = await response.json();
+        setContentMessage(data.message);
+        if (response.ok) {
+          setProjects(projects.filter((projects) => projects._id !== id));
+          setModalTitle('Success');
+        } else {
+          setModalTitle('Error');
+        }
+        setModalDisplay(true);
+      } catch (error) {
+        alert(error);
+      }
+    }
   };
 
   return (
@@ -29,6 +51,13 @@ function Projects() {
       <section className={styles.container}>
         <ProjectTable list={projects} deleteItem={deleteItem} />
       </section>
+      {modalDisplay ? (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      ) : null}
     </>
   );
 }
