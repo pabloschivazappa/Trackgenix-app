@@ -62,7 +62,6 @@ function Form() {
         })
       });
       const data = await response.json();
-      console.log(data);
       setModalTitle('Edit super admin');
       if (data.error === true) {
         setContentMessage(data.message);
