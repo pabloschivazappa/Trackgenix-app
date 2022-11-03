@@ -1,6 +1,6 @@
 import React from 'react';
 import ListAdmin from '../ListAdmin';
-import styles from './List.module.css';
+import styles from './list.module.css';
 
 const List = ({ list, deleteAdmin }) => {
   return (
