@@ -30,8 +30,8 @@ function Form() {
   `;
   };
 
-  if (idRegEx.test(product)) {
-    useEffect(async () => {
+  useEffect(async () => {
+    if (idRegEx.test(product)) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
         const data = await response.json();
@@ -44,8 +44,8 @@ function Form() {
       } catch (error) {
         console.error(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const editEmployee = async (product) => {
     try {
@@ -62,7 +62,6 @@ function Form() {
         })
       });
       const data = await response.json();
-      console.log(data);
       setModalTitle('Edit employee');
       if (data.error === true) {
         setContentMessage(data.message);
@@ -101,7 +100,6 @@ function Form() {
         })
       });
       const data = await response.json();
-      console.log(data);
       setModalTitle('Edit employee');
       if (data.error === true) {
         setContentMessage(data.message);
