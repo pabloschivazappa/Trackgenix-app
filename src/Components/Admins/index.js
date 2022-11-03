@@ -7,7 +7,7 @@ const Admins = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
       const data = await response.json();
       setAdmins(data);
     } catch (error) {
@@ -15,10 +15,9 @@ const Admins = () => {
     }
   }, [admins]);
 
-  // eslint-disable-next-line no-unused-vars
   const deleteAdmin = (id) => {
     try {
-      fetch(`${process.env.REACT_APP_API_URL}admins/${id}`, { method: 'DELETE' });
+      fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, { method: 'DELETE' });
     } catch (error) {
       console.error(error);
     }

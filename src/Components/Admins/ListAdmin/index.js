@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './ListAdmin.module.css';
 
 const ListAdmin = ({ listAdmin, deleteAdmin }) => {
   const handleDelete = () => {
@@ -14,9 +15,11 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.dni}</td>
       <td>{listAdmin.phone}</td>
       <td>
-        <button onClick={() => handleDelete(listAdmin._id)}>X</button>
+        <button onClick={() => handleDelete(listAdmin._id)} className={styles.table__button}>
+          X
+        </button>
         <a href={`./admins/form-admins?id=${listAdmin._id}`}>
-          <button>edit</button>
+          <button className={styles.table__button}>edit</button>
         </a>
       </td>
     </tr>
