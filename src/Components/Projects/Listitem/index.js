@@ -1,23 +1,14 @@
-import { useState, useEffect } from 'react';
 import listItemStyles from './listItem.module.css';
 
 const ListItem = ({ listItem, deleteItem }) => {
-  const [employeeData, setEmployeeData] = useState([]);
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      setEmployeeData(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [employeeData]);
-
   const handleDelete = (id) => {
     deleteItem(id);
   };
 
-  const projectsEmployee = listItem.employees.map((e) => e.employeeId);
+  const projectsEmployee = listItem.employees
+    .map((e) => e.employee)
+    .map((e) => [e.name, ' ', e.last_name ? e.last_name : e.lastName]);
+  console.log(listItem.employees);
 
   return (
     <tr className="rows" key={listItem._id}>

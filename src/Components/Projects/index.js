@@ -25,7 +25,7 @@ function Projects() {
   }, []);
 
   const deleteItem = async (id) => {
-    if (confirm('Are you sure that you want to delete the task?')) {
+    if (confirm('Are you sure that you want to delete this project?')) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
           method: 'DELETE'
