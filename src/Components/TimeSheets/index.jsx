@@ -23,7 +23,7 @@ function TimeSheets() {
   }, []);
 
   const deleteTimesheet = async (id) => {
-    if (confirm('Are you sure that you want to delete the task?')) {
+    if (confirm('Are you sure that you want to delete the timesheet?')) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
           method: 'DELETE'
