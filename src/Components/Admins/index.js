@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Admins.module.css';
+import styles from './admins.module.css';
 import List from './List/index';
 
 const Admins = () => {
@@ -15,9 +15,16 @@ const Admins = () => {
     }
   }, [admins]);
 
-  const deleteAdmin = (id) => {
+  const deleteAdmin = async (id) => {
     try {
-      fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        alert('Admin successfully deleted');
+      } else {
+        alert('Cannot delete the admin');
+      }
     } catch (error) {
       console.error(error);
     }
