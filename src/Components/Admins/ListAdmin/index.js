@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './listAdmin.module.css';
+import styles from './ListAdmin.module.css';
 
 const ListAdmin = ({ listAdmin, deleteAdmin }) => {
   const handleDelete = () => {

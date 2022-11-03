@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './formAdmins.module.css';
+import styles from './FormAdmins.module.css';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
