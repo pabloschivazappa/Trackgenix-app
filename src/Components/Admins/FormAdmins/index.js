@@ -92,9 +92,9 @@ const FormAdmins = () => {
   return (
     <div className={styles.container}>
       <div>
-        <h2>{rowId ? 'Edit' : 'Create'}</h2>
+        <h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
       </div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles.form__admins}>
         <div>
           <label>Name</label>
           <input
@@ -161,7 +161,9 @@ const FormAdmins = () => {
             required
           />
         </div>
-        <button type="submit">{rowId ? 'Edit' : 'Create'}</button>
+        <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
+          {rowId ? 'Edit' : 'Create'}
+        </button>
       </form>
     </div>
   );
