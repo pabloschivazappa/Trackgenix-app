@@ -45,9 +45,10 @@ const FormAdmins = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        alert(data);
+        alert(data.message);
       } else {
-        alert('Error');
+        const data = await response.json();
+        alert(data.message);
       }
     } catch (error) {
       alert(error.message);
@@ -73,7 +74,7 @@ const FormAdmins = () => {
         const data = await response.json();
         alert(data.message);
       } else {
-        alert('Error');
+        alert('Cannot edit an admin');
       }
     } catch (error) {
       alert(error);
