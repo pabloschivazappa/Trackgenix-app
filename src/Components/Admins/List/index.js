@@ -15,6 +15,7 @@ const List = ({ list, deleteAdmin }) => {
             <th id="password">Password</th>
             <th id="dni">DNI</th>
             <th id="phone">Phone</th>
+            <th id="phone">Actions</th>
           </tr>
         </thead>
         <tbody>

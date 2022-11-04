@@ -13,7 +13,7 @@ const Admins = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [admins]);
+  }, []);
 
   const deleteAdmin = async (id) => {
     try {
