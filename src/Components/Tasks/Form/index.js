@@ -95,11 +95,13 @@ function Form() {
             />
           </div>
           <div>
-            <a href={'http://localhost:3000/tasks'}>
-              <button type="button" className={`${styles.button__cancel} ${styles.form__button}`}>
-                Cancel
-              </button>
-            </a>
+            <button
+              onClick={() => window.location.assign('../tasks')}
+              type="button"
+              className={`${styles.button__cancel} ${styles.form__button}`}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className={`${styles.button__save} ${styles.form__button}`}
