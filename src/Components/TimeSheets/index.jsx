@@ -56,7 +56,7 @@ function TimeSheets() {
           <Spinner />
         )}
         <a href="/time-sheets/form">
-          <button>
+          <button className={styles.add__button}>
             <i className="fa-solid fa-plus"></i>Add
           </button>
         </a>

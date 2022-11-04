@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './ShowList.css';
+import styles from './ShowList.module.css';
 import ListItem from '../ListItem/ListItem';
 
 const ShowList = ({ list, deleteTimesheet }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.table}>
       <table>
         <thead>
           <tr>
