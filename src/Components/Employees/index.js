@@ -56,7 +56,6 @@ function Employees() {
       {employees.length > 0 ? (
         <List employees={employees} deleteEmployee={deleteEmployee} />
       ) : (
-        //<h2>Loading...</h2>
         <Spinner />
       )}
       {modalDisplay ? (
