@@ -100,8 +100,8 @@ const TimesheetsForm = () => {
   return (
     <>
       <div className={styles.container}>
-        <form onSubmit={onSubmit}>
-          <h2>{haveId ? 'Edit' : 'Create'}</h2>
+        <h2 className={styles.h2__form}>{haveId ? 'Edit' : 'Create'}</h2>
+        <form onSubmit={onSubmit} className={styles.form__timesheets}>
           <label>
             Description:
             <input
@@ -167,7 +167,9 @@ const TimesheetsForm = () => {
               required
             />
           </label>
-          <button type="submit">{haveId ? 'Edit' : 'Create'}</button>
+          <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
+            {haveId ? 'Edit' : 'Create'}
+          </button>
         </form>
       </div>
       {modalDisplay ? (
