@@ -184,6 +184,7 @@ const AddItem = () => {
                     className={formStyles.inputs}
                     type="text"
                     name="employee"
+                    value={employees.map((e) => e.employee).map((id) => id._id)}
                     onChange={(e) =>
                       setEmployees([
                         ...employees.slice(0, index),
@@ -200,6 +201,7 @@ const AddItem = () => {
                     className={formStyles.inputs}
                     type="text"
                     name="rate"
+                    value={employee.rate}
                     onChange={(e) =>
                       setEmployees([
                         ...employees.slice(0, index),
@@ -216,6 +218,7 @@ const AddItem = () => {
                     className={formStyles.inputs}
                     type="text"
                     name="role"
+                    value={employee.role}
                     onChange={(e) =>
                       setEmployees([
                         ...employees.slice(0, index),

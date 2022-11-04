@@ -8,7 +8,6 @@ const ListItem = ({ listItem, deleteItem }) => {
   const projectsEmployee = listItem.employees
     .map((e) => e.employee)
     .map((e) => [e.name, ' ', e.last_name ? e.last_name : e.lastName]);
-  console.log(listItem.employees);
 
   return (
     <tr className="rows" key={listItem._id}>
