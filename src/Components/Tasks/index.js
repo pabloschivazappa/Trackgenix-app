@@ -40,7 +40,7 @@ function Tasks() {
       if (response.ok) {
         setContentMessage('The task has been deleted');
       } else {
-        setContentMessage(() => deleteMessage('Cannot Delete Task', 'The task id was not found'));
+        setContentMessage(() => deleteMessage('Cannot delete task', 'The task id was not found'));
       }
       setModalDisplay(true);
     } catch (error) {
