@@ -29,10 +29,9 @@ function SuperAdmins() {
         });
         const newSuperAdmins = superAdmins.filter((superAdmin) => superAdmin._id !== id);
         saveSuperAdmins(newSuperAdmins);
-        const data = await response.json();
-        setModalTitle('Create super admin');
-        if (data.error === true) {
-          setContentMessage(data.message);
+        setModalTitle('Delete super admin');
+        if (!response.ok) {
+          setContentMessage('Cannot delete super admin');
         } else {
           setContentMessage('Super Admin deleted successfully');
         }
