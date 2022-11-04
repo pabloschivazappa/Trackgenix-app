@@ -6,7 +6,7 @@ const ListItem = ({ listItem, deleteItem }) => {
   };
 
   const projectsEmployee = listItem.employees
-    .map((e) => e.employee)
+    .map((e) => (e.employee ? e.employee : ''))
     .map((e) => [e.name, ' ', e.last_name ? e.last_name : e.lastName]);
 
   return (

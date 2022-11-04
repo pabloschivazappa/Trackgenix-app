@@ -184,7 +184,7 @@ const AddItem = () => {
                     className={formStyles.inputs}
                     type="text"
                     name="employee"
-                    value={employees.map((e) => e.employee).map((id) => id._id)}
+                    value={employees[index].employee._id}
                     onChange={(e) =>
                       setEmployees([
                         ...employees.slice(0, index),
