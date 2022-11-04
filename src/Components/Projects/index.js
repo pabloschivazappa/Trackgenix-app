@@ -3,6 +3,8 @@ import styles from './projects.module.css';
 import ProjectTable from './Table';
 import Modal from './Modals/modal.js';
 
+// fix
+
 function Projects() {
   const [projects, setProjects] = useState([]);
 
