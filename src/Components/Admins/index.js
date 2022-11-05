@@ -23,8 +23,7 @@ const Admins = () => {
         });
         const data = await response.json();
         if (!data.error) {
-          const newAdmins = admins.filter((admin) => admin._id !== id);
-          setAdmins(newAdmins);
+          setAdmins([...admins.filter((admin) => admin._id !== id)]);
           alert('Success');
         } else {
           alert('Error');
