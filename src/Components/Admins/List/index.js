@@ -19,7 +19,7 @@ const List = ({ list, deleteAdmin }) => {
           </tr>
         </thead>
         <tbody>
-          {list.data?.map((admin) => {
+          {list?.map((admin) => {
             return <ListAdmin key={admin._id} listAdmin={admin} deleteAdmin={deleteAdmin} />;
           })}
         </tbody>

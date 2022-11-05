@@ -9,24 +9,29 @@ const Admins = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
       const data = await response.json();
-      setAdmins(data);
+      setAdmins(data.data);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
   const deleteAdmin = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        alert('Admin successfully deleted');
-      } else {
-        alert('Cannot delete the admin');
+    if (confirm('Are you sure that you want to delete the Admin?')) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        if (!data.error) {
+          const newAdmins = admins.filter((admin) => admin._id !== id);
+          setAdmins(newAdmins);
+          alert('Success');
+        } else {
+          alert('Error');
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
