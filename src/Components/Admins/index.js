@@ -21,12 +21,13 @@ const Admins = () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
           method: 'DELETE'
         });
+        setAdmins([...admins.filter((admin) => admin._id !== id)]);
         const data = await response.json();
         if (!data.error) {
-          setAdmins([...admins.filter((admin) => admin._id !== id)]);
-          alert('Success');
+          setAdmins(admins.filter((admin) => admin._id !== id));
+          alert('Admin deleted');
         } else {
-          alert('Error');
+          alert('Can not delete admin');
         }
       } catch (error) {
         console.error(error);
