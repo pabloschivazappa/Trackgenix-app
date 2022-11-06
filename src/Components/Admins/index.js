@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import List from './List/index';
+import Spinner from '../Shared/Spinner';
 
 const Admins = () => {
   const [admins, setAdmins] = useState([]);
@@ -39,7 +40,11 @@ const Admins = () => {
     <section className={styles.container}>
       <h2>Admins</h2>
       <div>
-        <List list={admins} setList={setAdmins} deleteAdmin={deleteAdmin} />
+        {admins.length > 0 ? (
+          <List list={admins} setList={setAdmins} deleteAdmin={deleteAdmin} />
+        ) : (
+          <Spinner />
+        )}
       </div>
     </section>
   );

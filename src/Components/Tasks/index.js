@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Spinner from '../Spinner';
+import Spinner from '../Shared/Spinner';
 import List from './List';
 import Modal from './Modal';
 import styles from './tasks.module.css';
@@ -52,7 +52,7 @@ function Tasks() {
     <>
       <section className={styles.container}>
         <h2>Tasks</h2>
-        {tasks ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
+        {tasks.length > 0 ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
       </section>
       {modalDisplay ? (
         <Modal
