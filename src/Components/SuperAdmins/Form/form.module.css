@@ -1,0 +1,99 @@
+.h2__form {
+  width: var(--form-width);
+  margin: 0 0 15px 0;
+  padding: 5px 20px;
+  box-shadow: 1px -1px 5px 2px rgba(0,0,0,0.10);
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 60px 0;
+}
+
+.form__super__admins {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  width: var(--form-width);
+  gap: 13px;
+  padding: 20px;
+  color: var(--main-color);
+  margin: 0 0 0 0;
+  box-shadow: 1px -1px 3px 2px rgba(0,0,0,0.06);
+}
+
+.form__super__admins div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form__super__admins div:last-child {
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.form__super__admins input {
+  border: 1px solid transparent;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #eef0f5;
+  color: var(--main-color)
+}
+
+.form__super__admins input:focus {
+  outline: none !important;
+  background-color: #d0d4e4;
+  transition: 0.2s;
+}
+
+.form__super__admins label {
+  color: var(--main-color);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.form__button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form__button:hover{
+  transition: 0.2s;
+}
+
+.button__save {
+  color: var(--main-color);
+  background-color: var(--header-table);
+}
+
+.button__cancel {
+  background-color: var(--cancel-color);
+  color: white;
+}
+
+.button__save:hover {
+  background-color: rgb(220, 222, 228);
+}
+
+.button__cancel:hover{
+  background-color: #d44a4a;
+  color: white;
+}
+
+:root {
+  --main-color: #373867;
+  --form-width: 300px;
+  --cancel-color: #ff7c7c;
+  --header-table: #EBECF0;
+  --form-padding: 20px;
+}

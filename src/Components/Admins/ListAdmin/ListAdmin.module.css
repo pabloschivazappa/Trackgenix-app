@@ -1,0 +1,7 @@
+.table__button {
+    padding: 0 8px;
+    border: none;
+    background-color: white;
+    color: var(--main-color);
+    cursor: pointer;
+  }
