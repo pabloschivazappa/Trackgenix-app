@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import ProjectTable from './Table';
 import Modal from './Modals/modal.js';
-
-// fix
+import Spinner from '../Shared/Spinner';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -51,7 +50,11 @@ function Projects() {
   return (
     <>
       <section className={styles.container}>
-        <ProjectTable list={projects} deleteItem={deleteItem} />
+        {projects.length > 0 ? (
+          <ProjectTable list={projects} deleteItem={deleteItem} />
+        ) : (
+          <Spinner />
+        )}
       </section>
       {modalDisplay ? (
         <Modal

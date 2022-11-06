@@ -1,5 +1,5 @@
 import styles from './time-sheets.module.css';
-import Spinner from '../Spinner';
+import Spinner from '../Shared/Spinner';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowList from './ShowList/ShowList';
@@ -51,7 +51,7 @@ function TimeSheets() {
     <>
       <section className={styles.container}>
         <h2>TimeSheets</h2>
-        {timesheets ? (
+        {timesheets.length > 0 ? (
           <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} />
         ) : (
           <Spinner />

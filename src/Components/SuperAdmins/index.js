@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import List from './List';
 import Modal from './Modal';
-import Spinner from '../Spinner';
+import Spinner from '../Shared/Spinner';
 
 function SuperAdmins() {
   const [superAdmins, saveSuperAdmins] = useState([]);
