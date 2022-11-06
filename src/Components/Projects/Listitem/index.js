@@ -1,4 +1,5 @@
 import listItemStyles from './listItem.module.css';
+import { Link } from 'react-router-dom';
 
 const ListItem = ({ listItem, deleteItem }) => {
   const handleDelete = (id) => {
@@ -23,9 +24,9 @@ const ListItem = ({ listItem, deleteItem }) => {
           <a className={listItemStyles.crossLogo} onClick={() => handleDelete(listItem._id)}>
             <i className="fa-solid fa-x"></i>
           </a>
-          <a className={listItemStyles.edit} href={`/projects/form?id=${listItem._id}`}>
+          <Link to={`/projects/form?id=${listItem._id}`} className={listItemStyles.edit}>
             <i className="fa-solid fa-pen-to-square"></i>
-          </a>
+          </Link>
         </div>
       </td>
     </tr>

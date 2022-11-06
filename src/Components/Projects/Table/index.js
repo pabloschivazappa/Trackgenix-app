@@ -1,5 +1,6 @@
 import ListItem from '../Listitem';
 import tableStyles from './projectsTable.module.css';
+import { Link } from 'react-router-dom';
 
 const ProjectTable = ({ list, deleteItem }) => {
   return (
@@ -24,9 +25,9 @@ const ProjectTable = ({ list, deleteItem }) => {
           <tr>
             <td className={tableStyles.addLogoTd}>
               <div>
-                <a className={tableStyles.addLogo} href={'/projects/form'}>
+                <Link to={'/projects/form'} className={tableStyles.addLogo}>
                   <i className="fa-solid fa-plus"></i>
-                </a>
+                </Link>
               </div>
               <p className="addProjectp">Add project</p>
             </td>

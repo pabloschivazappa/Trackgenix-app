@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ListItem = ({ item, deleteTimesheet }) => {
   const handleDelete = () => {
@@ -9,18 +10,18 @@ const ListItem = ({ item, deleteTimesheet }) => {
       <td>{item.description}</td>
       <td>{item.date.slice(0, 10)}</td>
       <td>{item.hours}</td>
-      <td>{item.task.description}</td>
-      <td>{item.employee.name}</td>
-      <td>{item.project.name}</td>
+      <td>{item.task ? item.task.description : 'The task is not in the DB'}</td>
+      <td>{item.employee ? item.employee.name : 'The employee is not in the DB'}</td>
+      <td>{item.project ? item.project.name : 'The project is not in the DB'}</td>
       <td>
         <button onClick={() => handleDelete(item._id)}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <a href={`/time-sheets/form?id=${item._id}`}>
+        <Link to={`/time-sheets/form?id=${item._id}`}>
           <button>
             <i className="fa-solid fa-pen-to-square"></i>
           </button>
-        </a>
+        </Link>
       </td>
     </tr>
   );

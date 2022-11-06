@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './list.module.css';
+import { Link } from 'react-router-dom';
 
 const List = ({ employees, deleteEmployee }) => {
   return (
@@ -25,11 +26,11 @@ const List = ({ employees, deleteEmployee }) => {
                 <td>{employee.dni}</td>
                 <td>{employee.phone}</td>
                 <td>
-                  <a href={`employees/form?id=${employee._id}`}>
+                  <Link to={`employees/form?id=${employee._id}`}>
                     <button>
                       <i className="fa-solid fa-pen-to-square fa-lg"></i>
                     </button>
-                  </a>
+                  </Link>
                   <button onClick={() => deleteEmployee(employee._id)}>
                     <i className="fa-solid fa-xmark fa-lg"></i>
                   </button>
@@ -39,12 +40,12 @@ const List = ({ employees, deleteEmployee }) => {
           })}
         </tbody>
       </table>
-      <a href={'employees/form'}>
+      <Link to={'employees/form'}>
         <button className={styles.addbutton}>
           <p>Add employee</p>
           <i className="fa-solid fa-plus fa-lg"></i>
         </button>
-      </a>
+      </Link>
     </>
   );
 };

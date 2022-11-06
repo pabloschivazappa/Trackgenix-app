@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react';
 import formStyles from './form.module.css';
 import Modal from '../Modals/modal.js';
 
-const fullUrl = window.location.href;
-const id = fullUrl.substring(fullUrl.lastIndexOf('=') + 1);
-const initialValue = {
-  name: '',
-  description: '',
-  clientName: '',
-  startDate: '',
-  endDate: '',
-  employees: '',
-  active: true
-};
 const AddItem = () => {
+  const fullUrl = window.location.href;
+  console.log(fullUrl);
+  const id = fullUrl.substring(fullUrl.lastIndexOf('=') + 1);
+  const initialValue = {
+    name: '',
+    description: '',
+    clientName: '',
+    startDate: '',
+    endDate: '',
+    employees: '',
+    active: true
+  };
   const [project, setProject] = useState(initialValue);
   const [employees, setEmployees] = useState([]);
 
@@ -22,6 +23,7 @@ const AddItem = () => {
   const [modalTitle, setModalTitle] = useState('');
 
   useEffect(async () => {
+    console.log(id);
     if (window.location.href.includes('id')) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
@@ -34,7 +36,11 @@ const AddItem = () => {
           endDate: data.data.endDate.substr(0, 10),
           active: true
         });
-        setEmployees(data.data.employees);
+        setEmployees(
+          data.data.employees.filter((item) => {
+            item.employee !== null;
+          })
+        );
       } catch (error) {
         alert('Could not GET Project.', error);
       }

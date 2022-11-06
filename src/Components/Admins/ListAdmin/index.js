@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ListAdmin.module.css';
+import { Link } from 'react-router-dom';
 
 const ListAdmin = ({ listAdmin, deleteAdmin }) => {
   const handleDelete = () => {
@@ -18,9 +19,9 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
         <button onClick={() => handleDelete(listAdmin._id)} className={styles.table__button}>
           X
         </button>
-        <a href={`./admins/form-admins?id=${listAdmin._id}`}>
+        <Link to={`./admins/form?id=${listAdmin._id}`}>
           <button className={styles.table__button}>edit</button>
-        </a>
+        </Link>
       </td>
     </tr>
   );
