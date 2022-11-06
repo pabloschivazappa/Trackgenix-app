@@ -1,0 +1,68 @@
+table {
+  border-collapse: collapse;
+}
+
+thead tr {
+  padding-block: 10.48px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding-block: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--header-table);
+  font-weight: 500;
+}
+
+td {
+  font-weight: 300;
+}
+
+button {
+  border: none;
+  background-color: white;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
+button p {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+th:first-child, td:first-child{
+  border-radius: 15px 0 0 15px ;
+}
+
+th:last-child, td:last-child{
+  border-radius: 0 15px 15px 0 ;
+}
+
+.table {
+  width: var(--width);
+}
+
+.addbutton {
+  padding: 0 12px;
+  margin-left: 3px;
+  margin-top: 10px;
+  border-radius: 40px;
+  background-color: var(--header-table);
+}
+
+.addbutton:hover{
+  background-color: #8787A4;
+  transition: 0.2s;
+}
+
+:root {
+  --main-color: #373867;
+  --width: 60%;
+  --header-table: #EBECF0
+}
