@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowList from './ShowList/ShowList';
 import Modal from './Modal/Modal';
+import { Link } from 'react-router-dom';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
@@ -55,11 +56,11 @@ function TimeSheets() {
         ) : (
           <Spinner />
         )}
-        <a href="/time-sheets/form">
+        <Link to="/time-sheets/form">
           <button className={styles.add__button}>
             <i className="fa-solid fa-plus"></i>Add
           </button>
-        </a>
+        </Link>
       </section>
       {modalDisplay ? (
         <Modal

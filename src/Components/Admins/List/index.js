@@ -1,6 +1,7 @@
 import React from 'react';
 import ListAdmin from '../ListAdmin';
 import styles from './List.module.css';
+import { Link } from 'react-router-dom';
 
 const List = ({ list, deleteAdmin }) => {
   return (
@@ -24,11 +25,11 @@ const List = ({ list, deleteAdmin }) => {
           })}
         </tbody>
       </table>
-      <a href="./admins/form-admins">
+      <Link to="./admins/form-admins">
         <button className={styles.add__button}>
           <p>Add User</p>
         </button>
-      </a>
+      </Link>
     </>
   );
 };

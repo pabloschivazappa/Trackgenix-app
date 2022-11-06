@@ -36,9 +36,9 @@ const TimesheetsForm = () => {
           description: data.data.description,
           hours: data.data.hours,
           date: fixDate(data.data.date),
-          task: data.data.task._id,
-          employee: data.data.employee._id,
-          project: data.data.project._id
+          task: data.data.task ? data.data.task._id : 'not found',
+          employee: data.data.employee ? data.data.employee._id : 'not found',
+          project: data.data.project ? data.data.project._id : 'not found'
         });
       } catch (error) {
         console.error(error);
