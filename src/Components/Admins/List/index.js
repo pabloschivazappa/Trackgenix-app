@@ -26,7 +26,7 @@ const List = ({ list, deleteAdmin }) => {
       </table>
       <a href="./admins/form-admins">
         <button className={styles.add__button}>
-          <p>Add a new Admin</p>
+          <p>Add User</p>
         </button>
       </a>
     </>

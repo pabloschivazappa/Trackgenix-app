@@ -46,6 +46,14 @@ const FormAdmins = () => {
       if (response.ok) {
         const data = await response.json();
         alert(data.message);
+        setAdminInput({
+          name: '',
+          lastName: '',
+          email: '',
+          password: '',
+          dni: '',
+          phone: ''
+        });
       } else {
         const data = await response.json();
         alert(data.message);
@@ -53,14 +61,6 @@ const FormAdmins = () => {
     } catch (error) {
       alert(error.message);
     }
-    setAdminInput({
-      name: '',
-      lastName: '',
-      email: '',
-      password: '',
-      dni: '',
-      phone: ''
-    });
   };
 
   const editAdmin = async () => {
@@ -74,7 +74,8 @@ const FormAdmins = () => {
         const data = await response.json();
         alert(data.message);
       } else {
-        alert('Cannot edit an admin');
+        const data = await response.json();
+        alert(data.message);
       }
     } catch (error) {
       alert(error);
