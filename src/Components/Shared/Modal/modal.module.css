@@ -1,7 +1,3 @@
-.modal__display__none {
-  display: none;
-}
-
 .screen {
   position: fixed;
   width: 100vw;
