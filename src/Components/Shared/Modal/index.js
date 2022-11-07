@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-const Modal = ({ title, children, setModalDisplay }) => {
+const Modal = ({ title, children, setModalDisplay, isToConfirm = false, onClickFunction }) => {
   return (
     <>
       <div id="id-screen" onClick={() => setModalDisplay(false)} className={styles.screen}></div>
@@ -19,12 +19,22 @@ const Modal = ({ title, children, setModalDisplay }) => {
         </header>
         <div className={styles.content}>
           <p className={styles.content__message}>{children}</p>
-          <button
-            className={`${styles.options__button} ${styles.options__close}`}
-            onClick={() => setModalDisplay(false)}
-          >
-            Close
-          </button>
+          <span>
+            <button
+              className={`${styles.options__button} ${styles.options__close}`}
+              onClick={() => setModalDisplay(false)}
+            >
+              Close
+            </button>
+            {isToConfirm ? (
+              <button
+                className={`${styles.options__button} ${styles.options__close}`}
+                onClick={() => onClickFunction()}
+              >
+                Confirm
+              </button>
+            ) : null}
+          </span>
         </div>
       </div>
     </>
