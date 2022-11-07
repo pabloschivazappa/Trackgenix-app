@@ -5,3 +5,8 @@
   align-items: center;
   flex-direction: column;
 }
+
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
+}

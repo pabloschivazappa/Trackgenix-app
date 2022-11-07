@@ -44,6 +44,11 @@ border-radius: 0 15px 15px 0 ;
 width: var(--table--width);
 }
 
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
+}
+
 :root {
 --main-color: #373867;
 --table--width: 55%;

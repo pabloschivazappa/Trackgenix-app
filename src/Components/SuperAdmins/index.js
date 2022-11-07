@@ -10,12 +10,18 @@ function SuperAdmins() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
       const data = await response.json();
-      saveSuperAdmins(data.data);
+      if (response.ok) {
+        saveSuperAdmins(data.data);
+      } else {
+        saveSuperAdmins([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -45,7 +51,7 @@ function SuperAdmins() {
   return (
     <section className={styles.container}>
       <h2 className={styles.super__admin__h2}>Super Admins</h2>
-      {superAdmins.length > 0 ? (
+      {!fetching ? (
         <List superAdmins={superAdmins} deleteSuperAdmin={deleteSuperAdmin} />
       ) : (
         <Spinner />

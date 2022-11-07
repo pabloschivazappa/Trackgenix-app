@@ -56,6 +56,11 @@ th:last-child, td:last-child{
   box-shadow: 1px 1px 7px 0px rgba(0,0,0,0.28);
 }
 
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
+}
+
 .add__button p {
   display: inline-block;
   margin-right: 10px;

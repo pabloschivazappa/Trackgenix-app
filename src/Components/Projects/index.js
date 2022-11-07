@@ -10,12 +10,18 @@ function Projects() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   const getProjects = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       const data = await response.json();
-      setProjects(data.data);
+      if (response.ok) {
+        setProjects(data.data);
+      } else {
+        setProjects([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -50,11 +56,7 @@ function Projects() {
   return (
     <>
       <section className={styles.container}>
-        {projects.length > 0 ? (
-          <ProjectTable list={projects} deleteItem={deleteItem} />
-        ) : (
-          <Spinner />
-        )}
+        {!fetching ? <ProjectTable list={projects} deleteItem={deleteItem} /> : <Spinner />}
       </section>
       {modalDisplay ? (
         <Modal
