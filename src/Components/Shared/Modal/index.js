@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-const Modal = ({ title, children, setModalDisplay, isToConfirm = false, onClickFunction }) => {
+const Modal = ({ title, children, setModalDisplay, isToConfirm, onClickFunction }) => {
   return (
     <>
       <div id="id-screen" onClick={() => setModalDisplay(false)} className={styles.screen}></div>
