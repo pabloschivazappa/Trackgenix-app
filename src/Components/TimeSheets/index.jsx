@@ -3,7 +3,6 @@ import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
 import ShowList from './ShowList/ShowList';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
@@ -66,11 +65,6 @@ function TimeSheets() {
         ) : (
           <Spinner />
         )}
-        <Link to="/time-sheets/form">
-          <button className={styles.add__button}>
-            <i className="fa-solid fa-plus"></i>Add
-          </button>
-        </Link>
         {modalDisplay ? (
           <Modal
             title={'Delete super admin'}
