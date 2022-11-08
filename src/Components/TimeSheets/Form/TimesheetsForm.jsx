@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Form.module.css';
 import { useState, useEffect } from 'react';
-import Modal from '../Modal/Modal.jsx';
+import Modal from '../../Shared/Modal';
 
 const fixDate = (date) => {
   return date.slice(0, 10);
@@ -24,11 +24,30 @@ const TimesheetsForm = () => {
   });
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
+  const [children, setChildren] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
-  if (haveId) {
-    useEffect(async () => {
+  const editAndCreateMessage = (
+    contentSubTitle,
+    description,
+    hours,
+    date,
+    task,
+    employee,
+    project
+  ) => {
+    return ` ${contentSubTitle}:\n
+  Description: ${description}
+  Hours: ${hours}
+  Date: ${date}
+  Task: ${task}
+  Employee: ${employee}
+  Project: ${project}
+  `;
+  };
+
+  useEffect(async () => {
+    if (haveId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
         const data = await response.json();
@@ -43,8 +62,8 @@ const TimesheetsForm = () => {
       } catch (error) {
         console.error(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const createTimesheet = async () => {
     try {
@@ -54,15 +73,24 @@ const TimesheetsForm = () => {
         body: JSON.stringify(timesheetInput)
       });
       const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
+      setModalTitle('Create timesheet');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        setModalTitle('Error');
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.description,
+            data.data.hours,
+            fixDate(data.data.date),
+            data.data.task,
+            data.data.employee,
+            data.data.project
+          )
+        );
       }
     } catch (error) {
-      setModalTitle('Error');
-      setContentMessage(error);
+      setChildren(error);
     }
     setModalDisplay(true);
   };
@@ -75,15 +103,24 @@ const TimesheetsForm = () => {
         body: JSON.stringify(timesheetInput)
       });
       const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
+      setModalTitle('Edit timesheet');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        setModalTitle('Error');
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.description,
+            data.data.hours,
+            fixDate(data.data.date),
+            data.data.task,
+            data.data.employee,
+            data.data.project
+          )
+        );
       }
     } catch (error) {
-      setModalTitle('Error');
-      setContentMessage(error);
+      setChildren(error);
     }
     setModalDisplay(true);
   };
@@ -173,11 +210,9 @@ const TimesheetsForm = () => {
         </form>
       </div>
       {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
       ) : null}
     </>
   );
