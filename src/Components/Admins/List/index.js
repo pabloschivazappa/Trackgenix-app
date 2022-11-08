@@ -1,9 +1,12 @@
 import React from 'react';
 import ListAdmin from '../ListAdmin';
 import styles from './List.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const List = ({ list, deleteAdmin }) => {
+  let history = useHistory();
+  console.log(history);
+
   return (
     <>
       {list.length !== 0 ? (

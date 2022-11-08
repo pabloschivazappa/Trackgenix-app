@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './FormAdmins.module.css';
+import Form from '../../Shared/Form';
 import Modal from '../../Shared/Modal';
 import Input from '../../Shared/Input';
 
@@ -123,80 +123,33 @@ const FormAdmins = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div>
-        <h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
-      </div>
-      <form onSubmit={onSubmit} className={styles.form__admins}>
-        <div>
-          <Input type={'text'} name={'Name'} value={adminInput.name} onChange={onChange} />
-        </div>
-        <div>
-          <label>Last Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="lastName"
-            value={adminInput.lastName}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="email"
-            value={adminInput.email}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="password"
-            value={adminInput.password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>DNI</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="dni"
-            value={adminInput.dni}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Phone</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="phone"
-            value={adminInput.phone}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <button className={`${styles.button__save} ${styles.form__button}`}>Cancel</button>
-        <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
-          {rowId ? 'Edit' : 'Create'}
-        </button>
-      </form>
+    <>
+      <Form
+        onChange={() => onChange()}
+        onSubmitFunction={onSubmit}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
+      >
+        <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
+        <Input name="lastName" title="Last Name" value={adminInput.lastName} onChange={onChange} />
+        <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
+        <Input
+          name="password"
+          title="Password"
+          value={adminInput.password}
+          onChange={onChange}
+          type="password"
+        />
+        <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
+        <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
+      </Form>
+
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
         </Modal>
       ) : null}
-    </div>
+    </>
   );
 };
 export default FormAdmins;

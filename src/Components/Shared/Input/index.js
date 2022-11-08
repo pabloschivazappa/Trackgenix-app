@@ -1,10 +1,10 @@
 import Styles from './input.module.css';
 
-const Input = ({ type, name, value, onChange }) => {
+const Input = ({ type = 'text', name, title, value, onChange }) => {
   return (
     <label className={Styles.label}>
-      {name}
-      <input type={type} name={name} value={value} onChange={onChange} required />
+      {title}
+      <input type={type} name={name} value={value} onChange={onChange} />
     </label>
   );
 };
