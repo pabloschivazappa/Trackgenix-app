@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ShowList.module.css';
 import ListItem from '../ListItem/ListItem';
-import TableButton from '../../Shared/Buttons/TableButton';
+import RedirectButton from '../../Shared/Buttons/RedirectButton';
 
 const ShowList = ({ list, deleteTimesheet }) => {
   return (
@@ -35,7 +35,11 @@ const ShowList = ({ list, deleteTimesheet }) => {
       ) : (
         <p className={styles.empty__list}>Empty list</p>
       )}
-      <TableButton path={'/time-sheets/form'} />
+      <RedirectButton
+        path={'/time-sheets/form'}
+        title="Create "
+        icon={<i className="fa-solid fa-plus"></i>}
+      />
     </>
   );
 };

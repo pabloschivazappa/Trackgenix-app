@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/Modal.jsx';
+import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 
 const fixDate = (date) => {
   return date.slice(0, 10);
@@ -167,9 +168,14 @@ const TimesheetsForm = () => {
               required
             />
           </label>
-          <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
+          {/* <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
             {haveId ? 'Edit' : 'Create'}
-          </button>
+          </button> */}
+          <FunctionalButton
+            type="submit"
+            buttonType="button__save"
+            title={haveId ? 'Edit' : 'Save'}
+          />
         </form>
       </div>
       {modalDisplay ? (
