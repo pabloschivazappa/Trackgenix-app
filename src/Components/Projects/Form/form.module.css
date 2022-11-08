@@ -4,9 +4,9 @@
     align-items: center;
 }
 
-h2{
+/* h2{
     color: #EA3354;
-}
+} */
 
 .form{
     display: flex;
@@ -19,11 +19,11 @@ h2{
     flex-direction: column;
 }
 
-label{
+/* label{
     text-align: center;
     margin-bottom: 5px;
     font-weight: 500;
-}
+} */
 
 .inputs{
     height: 30px;
@@ -33,7 +33,7 @@ label{
     border-radius: 4px;
 }
 
-button{
+/* button{
     background-color: #EA3354;
     border: none;
     border-radius: 10px;
@@ -42,7 +42,7 @@ button{
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-}
+} */
 
 .addEmployeeButton{
     display: flex;

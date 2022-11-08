@@ -11,12 +11,18 @@ function Projects() {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   const getProjects = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       const data = await response.json();
-      setProjects(data.data);
+      if (response.ok) {
+        setProjects(data.data);
+      } else {
+        setProjects([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -48,7 +54,7 @@ function Projects() {
   return (
     <>
       <section className={styles.container}>
-        {projects.length > 0 ? (
+        {!fetching ? (
           <ProjectTable
             list={projects}
             deleteItem={(id) => {

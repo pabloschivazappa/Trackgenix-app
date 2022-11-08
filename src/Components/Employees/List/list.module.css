@@ -1,4 +1,4 @@
-table {
+/* table {
   border-collapse: collapse;
 }
 
@@ -42,7 +42,7 @@ th:first-child, td:first-child{
 
 th:last-child, td:last-child{
   border-radius: 0 15px 15px 0 ;
-}
+} */
 
 .table {
   width: var(--width);
@@ -54,6 +54,11 @@ th:last-child, td:last-child{
   margin-top: 10px;
   border-radius: 40px;
   background-color: var(--header-table);
+}
+
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
 }
 
 .addbutton:hover{

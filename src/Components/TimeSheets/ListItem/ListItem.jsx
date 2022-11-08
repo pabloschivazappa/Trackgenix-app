@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
+import RedirectButton from '../../Shared/Buttons/RedirectButton';
 
 const ListItem = ({ item, deleteTimesheet }) => {
   const handleDelete = () => {
@@ -14,14 +15,18 @@ const ListItem = ({ item, deleteTimesheet }) => {
       <td>{item.employee ? item.employee.name : 'The employee is not in the DB'}</td>
       <td>{item.project ? item.project.name : 'The project is not in the DB'}</td>
       <td>
-        <button onClick={() => handleDelete(item._id)}>
-          <i className="fa-solid fa-xmark"></i>
-        </button>
-        <Link to={`/time-sheets/form?id=${item._id}`}>
-          <button>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </button>
-        </Link>
+        <div>
+          <FunctionalButton
+            action={() => handleDelete(item._id)}
+            icon={<i className="fa-solid fa-xmark"></i>}
+            buttonType="list__button"
+          />
+          <RedirectButton
+            path={`/time-sheets/form?id=${item._id}`}
+            icon={<i className="fa-solid fa-pen-to-square"></i>}
+            buttonType="list__button"
+          />
+        </div>
       </td>
     </tr>
   );

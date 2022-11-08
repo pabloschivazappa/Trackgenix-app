@@ -12,12 +12,18 @@ function TimeSheets() {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`);
       const data = await response.json();
-      setTimesheets(data.data);
+      setFetching(false);
+      if (response.ok) {
+        setTimesheets(data.data);
+      } else {
+        setTimesheets([]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +53,7 @@ function TimeSheets() {
     <>
       <section className={styles.container}>
         <h2>TimeSheets</h2>
-        {timesheets.length > 0 ? (
+        {!fetching ? (
           <ShowList
             list={timesheets}
             deleteTimesheet={(id) => {

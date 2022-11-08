@@ -11,12 +11,18 @@ const Admins = () => {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
       const data = await response.json();
-      setAdmins(data.data);
+      if (response.ok) {
+        setAdmins(data.data);
+      } else {
+        setAdmins([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +50,7 @@ const Admins = () => {
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      {admins.length > 0 ? (
+      {!fetching ? (
         <List
           list={admins}
           setList={setAdmins}

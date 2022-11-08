@@ -6,17 +6,22 @@ import Spinner from '../Shared/Spinner';
 
 function SuperAdmins() {
   const [superAdmins, saveSuperAdmins] = useState([]);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
       const data = await response.json();
-      saveSuperAdmins(data.data);
+      if (response.ok) {
+        saveSuperAdmins(data.data);
+      } else {
+        saveSuperAdmins([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +49,7 @@ function SuperAdmins() {
   return (
     <section className={styles.container}>
       <h2 className={styles.super__admin__h2}>Super Admins</h2>
-      {superAdmins.length > 0 ? (
+      {!fetching ? (
         <List
           superAdmins={superAdmins}
           deleteSuperAdmin={(id) => {

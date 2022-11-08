@@ -11,12 +11,18 @@ function Tasks() {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
       const data = await response.json();
-      saveTasks(data.data);
+      if (response.ok) {
+        saveTasks(data.data);
+      } else {
+        saveTasks([]);
+      }
+      setFetching(false);
     };
     try {
       fetchData();
@@ -48,7 +54,7 @@ function Tasks() {
     <>
       <section className={styles.container}>
         <h2>Tasks</h2>
-        {tasks.length > 0 ? (
+        {!fetching ? (
           <List
             list={tasks}
             deleteTask={(id) => {

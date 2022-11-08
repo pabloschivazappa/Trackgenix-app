@@ -11,12 +11,18 @@ function Employees() {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
       const data = await response.json();
-      saveEmployees(data.data);
+      if (response.ok) {
+        saveEmployees(data.data);
+      } else {
+        saveEmployees([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +50,7 @@ function Employees() {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      {employees.length > 0 ? (
+      {!fetching ? (
         <List
           employees={employees}
           deleteEmployee={(id) => {
