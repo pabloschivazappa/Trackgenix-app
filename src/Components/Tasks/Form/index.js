@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Modal';
+import Input from '../../Shared/Input';
 
 function TaskForm() {
   const urlValues = window.location.search;
@@ -9,7 +9,7 @@ function TaskForm() {
   const urlID = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
-  const [descriptionValue, setDescrpitionValue] = useState('');
+  const [descriptionValue, setDescriptionValue] = useState('');
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
@@ -25,7 +25,7 @@ function TaskForm() {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
-        setDescrpitionValue(data.data.description);
+        setDescriptionValue(data.data.description);
       } catch (error) {
         console.log(error);
       }
@@ -74,50 +74,27 @@ function TaskForm() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    idRegEx.test(urlID) ? editTask(urlID) : createTask();
   };
 
   const changeDescription = (e) => {
-    setDescrpitionValue(e.target.value);
+    setDescriptionValue(e.target.value);
   };
 
   return (
     <>
       <Form
-        onSubmitFunction={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
+        onSubmitFunction={onSubmit}
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
         formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
-      ></Form>
-      <div className={styles.container}>
-        <h2 className={styles.h2__form}>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
-        <form onSubmit={onSubmit} className={styles.form__tasks}>
-          <div>
-            <label htmlFor="input-description">Description</label>
-            <input
-              id="input-name"
-              name="description"
-              required
-              value={descriptionValue}
-              onChange={changeDescription}
-            />
-          </div>
-          <div>
-            <button
-              onClick={() => window.location.assign('../tasks')}
-              type="button"
-              className={`${styles.button__cancel} ${styles.form__button}`}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className={`${styles.button__save} ${styles.form__button}`}
-              onClick={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
+      >
+        <Input
+          title="Description"
+          name="description"
+          value={descriptionValue}
+          onChange={changeDescription}
+        />
+      </Form>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
