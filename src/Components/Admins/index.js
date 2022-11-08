@@ -8,7 +8,7 @@ const Admins = () => {
   const [admins, setAdmins] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('¿Are you sure you want to delete it?');
+  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
 
@@ -52,6 +52,7 @@ const Admins = () => {
             setIsToConfirm(true);
             setModalDisplay(true);
             setId(id);
+            setChildren('¿Are you sure you want to delete it?');
           }}
         />
       ) : (

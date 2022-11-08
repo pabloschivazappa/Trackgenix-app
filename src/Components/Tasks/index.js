@@ -8,7 +8,7 @@ function Tasks() {
   const [tasks, saveTasks] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('¿Are you sure you want to delete it?');
+  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
 
@@ -55,6 +55,7 @@ function Tasks() {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
+              setChildren('¿Are you sure you want to delete it?');
             }}
           />
         ) : (
