@@ -80,10 +80,10 @@ function EmployeeForm() {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const createEmployee = async () => {

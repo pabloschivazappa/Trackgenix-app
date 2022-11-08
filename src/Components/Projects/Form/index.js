@@ -101,10 +101,10 @@ const AddItem = () => {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const createProject = async ({ name, description, clientName, startDate, endDate, active }) => {

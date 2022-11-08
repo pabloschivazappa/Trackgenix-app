@@ -107,10 +107,10 @@ const FormAdmins = () => {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const onChange = (e) => {

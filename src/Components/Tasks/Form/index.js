@@ -16,7 +16,7 @@ function Form() {
 
   const editAndCreateMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
-     Description: ${description}`;
+    Description: ${description}`;
   };
 
   useEffect(async () => {
@@ -45,10 +45,10 @@ function Form() {
       } else {
         setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const createTask = async () => {
@@ -65,10 +65,10 @@ function Form() {
       } else {
         setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const onSubmit = (event) => {

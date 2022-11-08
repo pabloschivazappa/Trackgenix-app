@@ -78,10 +78,10 @@ function Form() {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const createSuperAdmin = async () => {
