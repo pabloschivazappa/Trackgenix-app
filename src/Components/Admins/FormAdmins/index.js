@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormAdmins.module.css';
+import Modal from '../../Shared/Modal';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -17,8 +18,23 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  if (rowId) {
-    useEffect(async () => {
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [children, setChildren] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
+    return ` ${contentSubTitle}:\n
+  Name: ${name}
+  Last Name: ${lastName}
+  Email: ${email}
+  Password: ${password}
+  Dni: ${dni}
+  Phone: ${phone}
+  `;
+  };
+
+  useEffect(async () => {
+    if (rowId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
@@ -33,8 +49,8 @@ const FormAdmins = () => {
       } catch (error) {
         console.error(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const createAdmin = async () => {
     try {
@@ -43,24 +59,27 @@ const FormAdmins = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
       });
-      if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
-        setAdminInput({
-          name: '',
-          lastName: '',
-          email: '',
-          password: '',
-          dni: '',
-          phone: ''
-        });
+      const data = await response.json();
+      setModalTitle('Create admin');
+      if (data.error === true) {
+        setChildren(data.message);
       } else {
-        const data = await response.json();
-        alert(data.message);
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
       }
     } catch (error) {
-      alert(error.message);
+      setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const editAdmin = async () => {
@@ -70,15 +89,26 @@ const FormAdmins = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
       });
-      if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
+      const data = await response.json();
+      setModalTitle('Edit super admin');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        const data = await response.json();
-        alert(data.message);
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
       }
+      setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setChildren(error);
     }
   };
 
@@ -167,6 +197,11 @@ const FormAdmins = () => {
           {rowId ? 'Edit' : 'Create'}
         </button>
       </form>
+      {modalDisplay ? (
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
+      ) : null}
     </div>
   );
 };

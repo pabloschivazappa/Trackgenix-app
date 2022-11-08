@@ -25,7 +25,7 @@ const List = ({ list, deleteAdmin }) => {
           })}
         </tbody>
       </table>
-      <Link to="./admins/form-admins">
+      <Link to="./admins/form">
         <button className={styles.add__button}>
           <p>Add User</p>
         </button>
