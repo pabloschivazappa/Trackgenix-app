@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Modal';
 
-function Form() {
+function TaskForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const urlID = urlParams.get('id');
@@ -81,6 +82,11 @@ function Form() {
 
   return (
     <>
+      <Form
+        onSubmitFunction={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
+        buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
+        formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
+      ></Form>
       <div className={styles.container}>
         <h2 className={styles.h2__form}>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
         <form onSubmit={onSubmit} className={styles.form__tasks}>
@@ -120,4 +126,4 @@ function Form() {
     </>
   );
 }
-export default Form;
+export default TaskForm;

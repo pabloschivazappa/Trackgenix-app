@@ -242,7 +242,7 @@ const AddItem = () => {
           />
         </div>
       </Form>
-      {/* <div className={formStyles.container}>
+      <div className={formStyles.container}>
         <h2>Form</h2>
         <div>
           <form className={formStyles.form} onSubmit={onSubmit}>
@@ -384,7 +384,7 @@ const AddItem = () => {
             </div>
           </form>
         </div>
-      </div> */}
+      </div>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}

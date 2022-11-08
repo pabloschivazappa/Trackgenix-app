@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Form';
 
-function Form() {
+function SuperAdminsForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const product = urlParams.get('id');
@@ -148,6 +149,18 @@ function Form() {
 
   return (
     <>
+      <Form
+        onSubmitFunction={
+          idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
+        }
+        buttonMessage={idRegEx.test(product) ? 'Edit' : 'Create'}
+        formTitle={idRegEx.test(product) ? 'Edit Super Admin' : 'Create Super Admin'}
+      ></Form>
+      {modalDisplay ? (
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
+      ) : null}
       <div className={styles.container}>
         <h2 className={styles.h2__form}>
           {idRegEx.test(product) ? 'Edit super admin' : 'Create super admin'}
@@ -231,4 +244,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default SuperAdminsForm;

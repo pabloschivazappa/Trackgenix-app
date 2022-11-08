@@ -142,7 +142,6 @@ const FormAdmins = () => {
         <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
         <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
       </Form>
-
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}

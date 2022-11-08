@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Form';
 import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 
 const fixDate = (date) => {
@@ -137,6 +138,11 @@ const TimesheetsForm = () => {
 
   return (
     <>
+      <Form
+        onSubmitFunction={onSubmit}
+        buttonMessage={haveId ? 'Edit' : 'Create'}
+        formTitle={haveId ? 'Edit Timesheet' : 'Create Timesheet'}
+      ></Form>
       <div className={styles.container}>
         <h2 className={styles.h2__form}>{haveId ? 'Edit' : 'Create'}</h2>
         <form onSubmit={onSubmit} className={styles.form__timesheets}>
