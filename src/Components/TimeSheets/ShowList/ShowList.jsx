@@ -39,6 +39,7 @@ const ShowList = ({ list, deleteTimesheet }) => {
         path={'/time-sheets/form'}
         title="Create "
         icon={<i className="fa-solid fa-plus"></i>}
+        buttonType="create__button"
       />
     </>
   );

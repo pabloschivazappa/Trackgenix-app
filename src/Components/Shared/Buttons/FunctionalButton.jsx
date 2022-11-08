@@ -6,14 +6,11 @@ const FunctionalButton = ({
   title = null,
   icon = null,
   action = null,
-  buttonType
+  buttonType,
+  buttonColor
 }) => {
   return (
-    <button
-      className={`${styles[buttonType]} ${styles['add__button']}`}
-      onClick={action}
-      type={type}
-    >
+    <button className={`${styles[buttonType]} ${styles[buttonColor]}`} onClick={action} type={type}>
       <p>{title}</p>
       {icon}
     </button>

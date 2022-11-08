@@ -15,6 +15,12 @@ height: 100%;
 padding: 60px 0;
 }
 
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .form__timesheets {
 display: flex;
 flex-direction: column;

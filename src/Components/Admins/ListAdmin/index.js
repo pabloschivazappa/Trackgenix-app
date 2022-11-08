@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './ListAdmin.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ListAdmin = ({ listAdmin, deleteAdmin }) => {
-  const history = useHistory();
   const handleDelete = () => {
     deleteAdmin(listAdmin._id);
   };

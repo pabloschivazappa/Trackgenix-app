@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormAdmins.module.css';
-import { useHistory } from 'react-router-dom';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -8,10 +7,7 @@ const FormAdmins = () => {
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(id);
-  const history = useHistory;
-  const goBack = () => {
-    history.goBack();
-  };
+
   const [adminInput, setAdminInput] = useState({
     name: '',
     lastName: '',
@@ -167,9 +163,7 @@ const FormAdmins = () => {
             required
           />
         </div>
-        <button className={`${styles.button__save} ${styles.form__button}`} onClick={goBack}>
-          Cancel
-        </button>
+        <button className={`${styles.button__save} ${styles.form__button}`}>Cancel</button>
         <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
           {rowId ? 'Edit' : 'Create'}
         </button>

@@ -168,14 +168,15 @@ const TimesheetsForm = () => {
               required
             />
           </label>
-          {/* <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
-            {haveId ? 'Edit' : 'Create'}
-          </button> */}
-          <FunctionalButton
-            type="submit"
-            buttonType="button__save"
-            title={haveId ? 'Edit' : 'Save'}
-          />
+          <div className={styles.box}>
+            <FunctionalButton
+              type="submit"
+              buttonType="form__button"
+              buttonColor="grayish-navy"
+              title={haveId ? 'Save' : 'Create'}
+            />
+            <FunctionalButton buttonType="form__button" buttonColor="red" title="Cancel" />
+          </div>
         </form>
       </div>
       {modalDisplay ? (
