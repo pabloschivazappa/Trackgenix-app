@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-console.log(styles);
-
 const Modal = ({ content, contentMessage, title, setModalDisplay }) => {
   return (
     <div id="id-screen" className={styles.screen}>

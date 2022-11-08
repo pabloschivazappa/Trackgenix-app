@@ -4,7 +4,6 @@ import Modal from '../Modals/modal.js';
 
 const AddItem = () => {
   const fullUrl = window.location.href;
-  console.log(fullUrl);
   const id = fullUrl.substring(fullUrl.lastIndexOf('=') + 1);
   const initialValue = {
     name: '',
@@ -23,7 +22,6 @@ const AddItem = () => {
   const [modalTitle, setModalTitle] = useState('');
 
   useEffect(async () => {
-    console.log(id);
     if (window.location.href.includes('id')) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);

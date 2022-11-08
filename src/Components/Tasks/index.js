@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Spinner from '../Spinner';
+import Spinner from '../Shared/Spinner';
 import List from './List';
 import Modal from './Modal';
 import styles from './tasks.module.css';
@@ -10,6 +10,7 @@ function Tasks() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   const deleteMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
@@ -20,7 +21,12 @@ function Tasks() {
     const fetchData = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
       const data = await response.json();
-      saveTasks(data.data);
+      if (response.ok) {
+        saveTasks(data.data);
+      } else {
+        saveTasks([]);
+      }
+      setFetching(false);
     };
     try {
       fetchData();
@@ -52,7 +58,7 @@ function Tasks() {
     <>
       <section className={styles.container}>
         <h2>Tasks</h2>
-        {tasks ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
+        {!fetching ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
       </section>
       {modalDisplay ? (
         <Modal

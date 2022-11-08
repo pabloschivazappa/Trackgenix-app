@@ -156,6 +156,7 @@ const FormAdmins = () => {
             required
           />
         </div>
+        <button className={`${styles.button__save} ${styles.form__button}`}>Cancel</button>
         <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
           {rowId ? 'Edit' : 'Create'}
         </button>

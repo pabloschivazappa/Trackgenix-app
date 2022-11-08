@@ -56,6 +56,11 @@ th:last-child, td:last-child{
   background-color: var(--header-table);
 }
 
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
+}
+
 .addbutton:hover{
   background-color: #8787A4;
   transition: 0.2s;
