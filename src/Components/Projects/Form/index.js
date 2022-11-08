@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import formStyles from './form.module.css';
-import Modal from '../Modals/modal.js';
+import Modal from '../../Shared/Modal';
 
 const AddItem = () => {
   const fullUrl = window.location.href;
@@ -18,8 +18,29 @@ const AddItem = () => {
   const [employees, setEmployees] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
+  const [children, setChildren] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+
+  const editAndCreateMessage = (
+    contentSubTitle,
+    name,
+    description,
+    clientName,
+    startDate,
+    endDate,
+    employees,
+    active
+  ) => {
+    return ` ${contentSubTitle}:\n
+  Name: ${name}
+  Description: ${description}
+  Client Name: ${clientName}
+  Start Date: ${startDate}
+  End Date: ${endDate}
+  Employees: ${employees}
+  Active: ${active}
+  `;
+  };
 
   useEffect(async () => {
     if (window.location.href.includes('id')) {
@@ -51,9 +72,7 @@ const AddItem = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name,
           description,
@@ -61,19 +80,30 @@ const AddItem = () => {
           startDate,
           endDate,
           employees: employees,
-          active
+          active: active
         })
       });
       const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
+      setModalTitle('Edit super admin');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        setModalTitle('Error');
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.clientName,
+            data.data.description,
+            data.data.startDate.substr(0, 10),
+            data.data.endDate.substr(0, 10),
+            data.data.employees,
+            data.data.active
+          )
+        );
       }
       setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setChildren(error);
     }
   };
 
@@ -81,9 +111,7 @@ const AddItem = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name,
           description,
@@ -95,31 +123,36 @@ const AddItem = () => {
         })
       });
       const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
+      setModalTitle('Create project');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        setModalTitle('Error');
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.clientName,
+            data.data.description,
+            data.data.startDate.substr(0, 10),
+            data.data.endDate.substr(0, 10),
+            data.data.employees,
+            data.data.active
+          )
+        );
       }
-      setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setChildren(error);
     }
+    setModalDisplay(true);
   };
 
-  const cleanInputs = () => {
-    setProject(initialValue);
-    setEmployees([]);
-  };
   const onSubmit = (e) => {
     if (!window.location.href.includes('id')) {
       e.preventDefault();
       createProject(project);
-      cleanInputs();
     } else {
       e.preventDefault();
       editItem(project);
-      cleanInputs();
     }
   };
 
@@ -269,11 +302,9 @@ const AddItem = () => {
         </div>
       </div>
       {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
       ) : null}
     </>
   );

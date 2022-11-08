@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import List from './List/index';
+import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 
 const Admins = () => {
   const [admins, setAdmins] = useState([]);
+
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [children, setChildren] = useState('');
+  const [isToConfirm, setIsToConfirm] = useState(false);
+  const [id, setId] = useState('');
   const [fetching, setFetching] = useState(true);
+
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
@@ -22,35 +29,51 @@ const Admins = () => {
   }, []);
 
   const deleteAdmin = async (id) => {
-    if (confirm('Are you sure that you want to delete the Admin?')) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-          method: 'DELETE'
-        });
-        setAdmins([...admins.filter((admin) => admin._id !== id)]);
-        const data = await response.json();
-        if (!data.error) {
-          setAdmins(admins.filter((admin) => admin._id !== id));
-          alert('Admin deleted');
-        } else {
-          alert('Can not delete admin');
-        }
-      } catch (error) {
-        console.error(error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+        method: 'DELETE'
+      });
+      const newAdmins = admins.filter((admin) => admin._id !== id);
+      setAdmins(newAdmins);
+      if (!response.ok) {
+        setChildren('Cannot delete admin');
+      } else {
+        setChildren('Admin deleted successfully');
       }
+    } catch (error) {
+      setChildren(error);
     }
+    setIsToConfirm(false);
+    setModalDisplay(true);
   };
 
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
-      <div>
-        {!fetching ? (
-          <List list={admins} setList={setAdmins} deleteAdmin={deleteAdmin} />
-        ) : (
-          <Spinner />
-        )}
-      </div>
+      {!fetching ? (
+        <List
+          list={admins}
+          setList={setAdmins}
+          deleteAdmin={(id) => {
+            setIsToConfirm(true);
+            setModalDisplay(true);
+            setId(id);
+            setChildren('¿Are you sure you want to delete it?');
+          }}
+        />
+      ) : (
+        <Spinner />
+      )}
+      {modalDisplay ? (
+        <Modal
+          title={'Delete admin'}
+          setModalDisplay={setModalDisplay}
+          isToConfirm={isToConfirm}
+          onClickFunction={() => deleteAdmin(id)}
+        >
+          {children}
+        </Modal>
+      ) : null}
     </section>
   );
 };

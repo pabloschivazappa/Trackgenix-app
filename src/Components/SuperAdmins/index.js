@@ -7,7 +7,7 @@ import Spinner from '../Shared/Spinner';
 function SuperAdmins() {
   const [superAdmins, saveSuperAdmins] = useState([]);
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('¿Are you sure you want to delete it?');
+  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
   const [fetching, setFetching] = useState(true);
@@ -56,6 +56,7 @@ function SuperAdmins() {
             setIsToConfirm(true);
             setModalDisplay(true);
             setId(id);
+            setChildren('¿Are you sure you want to delete it?');
           }}
         />
       ) : (

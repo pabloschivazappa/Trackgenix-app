@@ -10,6 +10,8 @@
   display: flex;
   flex-direction: column;
   position: fixed;
+  top: 30.15%;
+  left: 37.5%;
   align-items: center;
   min-height: 10em;
   width: 25%;
