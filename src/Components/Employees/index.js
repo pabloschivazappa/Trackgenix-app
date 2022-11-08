@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import List from './List';
+//import List from './List';
 import Modal from './Modal';
 import Spinner from '../Shared/Spinner';
+import { Link } from 'react-router-dom';
+import Table from '../Shared/Table';
 
 function Employees() {
   const [employees, saveEmployees] = useState([]);
@@ -50,11 +52,30 @@ function Employees() {
     }
   };
 
+  const columns = [
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'DNI', value: 'dni' },
+    { heading: 'Phone', value: 'phone' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
       {employees.length > 0 ? (
-        <List employees={employees} deleteEmployee={deleteEmployee} />
+        <>
+          <Table
+            data={employees}
+            columns={columns}
+            deleteItem={deleteEmployee}
+            edit="/employees/form"
+          />
+          <Link to="/employees/form" className={styles.newEmployee}>
+            +
+          </Link>
+        </>
       ) : (
         <Spinner />
       )}
