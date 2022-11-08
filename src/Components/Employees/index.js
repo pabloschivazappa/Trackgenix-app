@@ -10,6 +10,7 @@ function Employees() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   const deleteMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
@@ -20,7 +21,12 @@ function Employees() {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
       const data = await response.json();
-      saveEmployees(data.data);
+      if (response.ok) {
+        saveEmployees(data.data);
+      } else {
+        saveEmployees([]);
+      }
+      setFetching(false);
     } catch (error) {
       console.error(error);
     }
@@ -53,11 +59,7 @@ function Employees() {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      {employees.length > 0 ? (
-        <List employees={employees} deleteEmployee={deleteEmployee} />
-      ) : (
-        <Spinner />
-      )}
+      {!fetching ? <List employees={employees} deleteEmployee={deleteEmployee} /> : <Spinner />}
       {modalDisplay ? (
         <Modal
           title={modalTitle}

@@ -1,4 +1,4 @@
-  h2 {
+/*   h2 {
   background-color: #8787A4;
   margin: 0;
   color: white;
@@ -9,7 +9,7 @@
   font-weight: 400;
   padding-block: 5px;
 }
-
+ */
 .container {
   flex: 1;
   display: flex;

@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import ShowList from './ShowList/ShowList';
 import Modal from './Modal/Modal';
-import { Link } from 'react-router-dom';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
@@ -12,12 +11,18 @@ function TimeSheets() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`);
       const data = await response.json();
-      setTimesheets(data.data);
+      setFetching(false);
+      if (response.ok) {
+        setTimesheets(data.data);
+      } else {
+        setTimesheets([]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,16 +56,7 @@ function TimeSheets() {
     <>
       <section className={styles.container}>
         <h2>TimeSheets</h2>
-        {timesheets.length > 0 ? (
-          <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} />
-        ) : (
-          <Spinner />
-        )}
-        <Link to="/time-sheets/form">
-          <button className={styles.add__button}>
-            <i className="fa-solid fa-plus"></i>Add
-          </button>
-        </Link>
+        {!fetching ? <ShowList list={timesheets} deleteTimesheet={deleteTimesheet} /> : <Spinner />}
       </section>
       {modalDisplay ? (
         <Modal
