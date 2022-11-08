@@ -12,11 +12,6 @@ function Tasks() {
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
 
-  const deleteMessage = (contentSubTitle, description) => {
-    return `${contentSubTitle}:\n
-    Description: ${description}`;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
@@ -40,7 +35,7 @@ function Tasks() {
       if (response.ok) {
         setChildren('The task has been deleted');
       } else {
-        setChildren(() => deleteMessage('Cannot delete task', 'The task id was not found'));
+        setChildren('Cannot delete task');
       }
     } catch (error) {
       setChildren(error);
