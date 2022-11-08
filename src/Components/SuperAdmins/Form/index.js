@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Form';
+import Input from '../..//Shared/Input';
 
 function SuperAdminsForm() {
   const urlValues = window.location.search;
@@ -125,6 +125,7 @@ function SuperAdminsForm() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    idRegEx.test(product) ? editSuperAdmin(product) : createSuperAdmin();
   };
 
   const changeName = (e) => {
@@ -150,91 +151,23 @@ function SuperAdminsForm() {
   return (
     <>
       <Form
-        onSubmitFunction={
-          idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
-        }
+        onSubmitFunction={onSubmit}
         buttonMessage={idRegEx.test(product) ? 'Edit' : 'Create'}
         formTitle={idRegEx.test(product) ? 'Edit Super Admin' : 'Create Super Admin'}
-      ></Form>
-      {modalDisplay ? (
-        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
-          {children}
-        </Modal>
-      ) : null}
-      <div className={styles.container}>
-        <h2 className={styles.h2__form}>
-          {idRegEx.test(product) ? 'Edit super admin' : 'Create super admin'}
-        </h2>
-        <form onSubmit={onSubmit} className={styles.form__super__admins}>
-          <div>
-            <label htmlFor="input-name">Name</label>
-            <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
-          </div>
-          <div>
-            <label htmlFor="input-lastName">Last Name</label>
-            <input
-              id="input-lastName"
-              name="lastName"
-              required
-              value={lastNameValue}
-              onChange={changeLastName}
-            />
-          </div>
-          <div>
-            <label htmlFor="input-email">Email</label>
-            <input
-              id="input-email"
-              name="email"
-              required
-              value={emailValue}
-              onChange={changeEmail}
-            />
-          </div>
-          <div>
-            <label htmlFor="input-password">Password</label>
-            <input
-              id="input-password"
-              type="password"
-              name="password"
-              required
-              value={passwordValue}
-              onChange={changePassword}
-            />
-          </div>
-          <div>
-            <label htmlFor="input-dni">DNI</label>
-            <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
-          </div>
-          <div>
-            <label htmlFor="input-phone">Phone</label>
-            <input
-              id="input-phone"
-              name="phone"
-              required
-              value={phoneValue}
-              onChange={changePhone}
-            />
-          </div>
-          <div>
-            <button
-              onClick={() => window.location.assign('../super-admins')}
-              type="button"
-              className={`${styles.button__cancel} ${styles.form__button}`}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className={`${styles.button__save} ${styles.form__button}`}
-              onClick={
-                idRegEx.test(product) ? () => editSuperAdmin(product) : () => createSuperAdmin()
-              }
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
+      >
+        <Input title="Name" name="name" value={nameValue} onChange={changeName} />
+        <Input title="Last Name" name="lastName" value={lastNameValue} onChange={changeLastName} />
+        <Input title="Email" name="email" value={emailValue} onChange={changeEmail} />
+        <Input
+          title="Password"
+          type="password"
+          name="password"
+          value={passwordValue}
+          onChange={changePassword}
+        />
+        <Input title="DNI" name="dni" value={dniValue} onChange={changeDni} />
+        <Input title="Phone" name="phone" value={phoneValue} onChange={changePhone} />
+      </Form>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
