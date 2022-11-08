@@ -125,7 +125,6 @@ const FormAdmins = () => {
   return (
     <>
       <Form
-        onChange={() => onChange()}
         onSubmitFunction={onSubmit}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
