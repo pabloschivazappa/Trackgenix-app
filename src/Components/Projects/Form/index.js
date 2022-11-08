@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import formStyles from './form.module.css';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Form';
+import Input from '../../Shared/Input';
+import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 
 const AddItem = () => {
   const fullUrl = window.location.href;
@@ -158,7 +161,88 @@ const AddItem = () => {
 
   return (
     <>
-      <div className={formStyles.container}>
+      <Form
+        onSubmitFunction={onSubmit}
+        buttonMessage={id ? 'Edit' : 'Create'}
+        formTitle={id ? 'Edit Project' : 'Create Project'}
+      >
+        <div className={formStyles.form__container}>
+          <label className={formStyles.form__label}> Add Employees (optional)</label>
+          {employees.map((employee, index) => (
+            <div key={index} className={formStyles.employee__form}>
+              <Input
+                name="employee"
+                title="Employee"
+                value={employees[index].employee._id}
+                onChange={(e) =>
+                  setEmployees([
+                    ...employees.slice(0, index),
+                    {
+                      ...employee,
+                      employee: e.target.value.slice(-24)
+                    },
+                    ...employees.slice(index + 1)
+                  ])
+                }
+              />
+              <Input
+                title="Rate"
+                name="rate"
+                value={employee.rate}
+                onChange={(e) =>
+                  setEmployees([
+                    ...employees.slice(0, index),
+                    {
+                      ...employee,
+                      rate: e.target.value
+                    },
+                    ...employees.slice(index + 1)
+                  ])
+                }
+              />
+              <Input
+                title="Role"
+                name="role"
+                value={employee.role}
+                onChange={(e) =>
+                  setEmployees([
+                    ...employees.slice(0, index),
+                    {
+                      ...employee,
+                      role: e.target.value
+                    },
+                    ...employees.slice(index + 1)
+                  ])
+                }
+              />
+              <FunctionalButton
+                title="Delete"
+                action={(e) => {
+                  e.target.closest('div').remove();
+                }}
+                buttonType="form__button__add__employee"
+                buttonColor="red"
+              />
+            </div>
+          ))}
+          <FunctionalButton
+            title="Add"
+            action={() =>
+              setEmployees([
+                ...employees,
+                {
+                  employee: '',
+                  rate: 0,
+                  role: ''
+                }
+              ])
+            }
+            buttonType="form__button__add__employee"
+            buttonColor="grayish-navy"
+          />
+        </div>
+      </Form>
+      {/* <div className={formStyles.container}>
         <h2>Form</h2>
         <div>
           <form className={formStyles.form} onSubmit={onSubmit}>
@@ -300,7 +384,7 @@ const AddItem = () => {
             </div>
           </form>
         </div>
-      </div>
+      </div> */}
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
