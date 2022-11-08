@@ -166,6 +166,38 @@ const AddItem = () => {
         buttonMessage={id ? 'Edit' : 'Create'}
         formTitle={id ? 'Edit Project' : 'Create Project'}
       >
+        <Input
+          title="Project Name"
+          name="name"
+          value={project.name}
+          onChange={(e) => setProject({ ...project, name: e.target.value })}
+        />
+        <Input
+          title="Description"
+          name="description"
+          value={project.description}
+          onChange={(e) => setProject({ ...project, description: e.target.value })}
+        />
+        <Input
+          title="Client Name"
+          name="clientName"
+          value={project.clientName}
+          onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+        />
+        <Input
+          title="Start Date"
+          type="date"
+          name="startDate"
+          value={project.startDate}
+          onChange={(e) => setProject({ ...project, startDate: e.target.value })}
+        />
+        <Input
+          title="End Date"
+          type="date"
+          name="endDate"
+          value={project.startDate}
+          onChange={(e) => setProject({ ...project, endDate: e.target.value })}
+        />
         <div className={formStyles.form__container}>
           <label className={formStyles.form__label}> Add Employees (optional)</label>
           {employees.map((employee, index) => (
@@ -242,149 +274,6 @@ const AddItem = () => {
           />
         </div>
       </Form>
-      <div className={formStyles.container}>
-        <h2>Form</h2>
-        <div>
-          <form className={formStyles.form} onSubmit={onSubmit}>
-            <div className={formStyles.formRaws}>
-              <label>Project Name</label>
-              <input
-                className={formStyles.inputs}
-                type="text"
-                name="name"
-                value={project.name}
-                onChange={(e) => setProject({ ...project, name: e.target.value })}
-              />
-            </div>
-            <div className={formStyles.formRaws}>
-              <label>Description</label>
-              <input
-                className={formStyles.inputs}
-                type="text"
-                name="description"
-                value={project.description}
-                onChange={(e) => setProject({ ...project, description: e.target.value })}
-              />
-            </div>
-            <div className={formStyles.formRaws}>
-              <label>Client Name</label>
-              <input
-                className={formStyles.inputs}
-                type="text"
-                name="clientName"
-                value={project.clientName}
-                onChange={(e) => setProject({ ...project, clientName: e.target.value })}
-              />
-            </div>
-            <div className={formStyles.formRaws}>
-              <label>Start Date</label>
-              <input
-                className={formStyles.inputs}
-                type="date"
-                name="startDate"
-                value={project.startDate}
-                onChange={(e) => setProject({ ...project, startDate: e.target.value })}
-              />
-            </div>
-            <div className={formStyles.formRaws}>
-              <label>End date</label>
-              <input
-                className={formStyles.inputs}
-                type="date"
-                name="endDate"
-                value={project.endDate}
-                onChange={(e) => setProject({ ...project, endDate: e.target.value })}
-              />
-            </div>
-            <div>
-              <label className={formStyles.form}> Add Employees</label>
-              {employees.map((employee, index) => (
-                <div key={index} id="employee-form">
-                  <label>Employee</label>
-                  <input
-                    className={formStyles.inputs}
-                    type="text"
-                    name="employee"
-                    value={employees[index].employee._id}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          employee: e.target.value.slice(-24)
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                  ></input>
-                  <label>Rate</label>
-                  <input
-                    className={formStyles.inputs}
-                    type="text"
-                    name="rate"
-                    value={employee.rate}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          rate: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                  />
-                  <label>Role</label>
-                  <input
-                    className={formStyles.inputs}
-                    type="text"
-                    name="role"
-                    value={employee.role}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          role: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                  ></input>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.target.closest('div').remove();
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-              <div className={formStyles.addEmployeeButton}>
-                <button
-                  onClick={() =>
-                    setEmployees([
-                      ...employees,
-                      {
-                        employee: '',
-                        rate: 0,
-                        role: ''
-                      }
-                    ])
-                  }
-                  type="button"
-                >
-                  Add Employee
-                </button>
-              </div>
-            </div>
-            <div className={formStyles.submitDiv}>
-              <input className={formStyles.submit} type="submit" value="submit" />
-            </div>
-          </form>
-        </div>
-      </div>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
