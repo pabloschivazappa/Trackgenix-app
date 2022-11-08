@@ -5,9 +5,9 @@
     --color-soft: #000000ca;
   }
 
-  h3 {
+  /* h3 {
     margin: 0
-  }
+  } */
 
   .modal__display__none {
     display: none;

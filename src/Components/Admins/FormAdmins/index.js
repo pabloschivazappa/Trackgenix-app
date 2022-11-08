@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormAdmins.module.css';
+import Input from '../../Shared/Input';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -98,15 +99,7 @@ const FormAdmins = () => {
       </div>
       <form onSubmit={onSubmit} className={styles.form__admins}>
         <div>
-          <label>Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="name"
-            value={adminInput.name}
-            onChange={onChange}
-            required
-          />
+          <Input type={'text'} name={'Name'} value={adminInput.name} onChange={onChange} />
         </div>
         <div>
           <label>Last Name</label>

@@ -42,7 +42,7 @@ th:first-child, td:first-child{
 
 th:last-child, td:last-child{
   border-radius: 0 15px 15px 0 ;
-}
+} */
 
 .table {
   width: var(--width);
@@ -70,4 +70,4 @@ th:last-child, td:last-child{
   --main-color: #373867;
   --width: 60%;
   --header-table: #EBECF0
-} */
+}

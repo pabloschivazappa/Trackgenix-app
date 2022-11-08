@@ -1,4 +1,4 @@
-form h2 {
+/* form h2 {
   width: 100%;
   margin-bottom: 30px;
 }
@@ -24,9 +24,9 @@ form div:last-child {
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 20px;
-}
+} */
 
-input {
+/* input {
   border: 1px solid transparent;
   padding: 8px;
   border-radius: 10px;
@@ -47,7 +47,7 @@ button {
 label {
   color: var(--main-color);
   font-weight: 500;
-}
+} */
 
 .container {
   display: flex;
