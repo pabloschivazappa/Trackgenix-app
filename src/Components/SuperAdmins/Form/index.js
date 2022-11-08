@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Modal from '../Modal';
+import Modal from '../../Shared/Modal';
 
 function Form() {
   const urlValues = window.location.search;
@@ -16,7 +16,7 @@ function Form() {
   const [phoneValue, setPhoneValue] = useState('');
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
+  const [children, setChildren] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
   const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
@@ -64,9 +64,9 @@ function Form() {
       const data = await response.json();
       setModalTitle('Edit super admin');
       if (data.error === true) {
-        setContentMessage(data.message);
+        setChildren(data.message);
       } else {
-        setContentMessage(() =>
+        setChildren(() =>
           editAndCreateMessage(
             data.message,
             data.data.name,
@@ -80,7 +80,7 @@ function Form() {
       }
       setModalDisplay(true);
     } catch (error) {
-      setContentMessage(error);
+      setChildren(error);
     }
   };
 
@@ -102,9 +102,9 @@ function Form() {
       const data = await response.json();
       setModalTitle('Create super admin');
       if (data.error === true) {
-        setContentMessage(data.message);
+        setChildren(data.message);
       } else {
-        setContentMessage(() =>
+        setChildren(() =>
           editAndCreateMessage(
             data.message,
             data.data.name,
@@ -117,7 +117,7 @@ function Form() {
         );
       }
     } catch (error) {
-      setContentMessage(error);
+      setChildren(error);
     }
     setModalDisplay(true);
   };
@@ -223,11 +223,9 @@ function Form() {
         </form>
       </div>
       {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
       ) : null}
     </>
   );
