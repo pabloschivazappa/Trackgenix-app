@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormAdmins.module.css';
+import Form from '../../Shared/Form';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -96,7 +97,8 @@ const FormAdmins = () => {
       <div>
         <h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
       </div>
-      <form onSubmit={onSubmit} className={styles.form__admins}>
+      <Form onChange={() => onChange()} onSubmitFunction={() => onSubmit()} />
+      {/* <form onSubmit={onSubmit} className={styles.form__admins}>
         <div>
           <label>Name</label>
           <input
@@ -166,7 +168,7 @@ const FormAdmins = () => {
         <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
           {rowId ? 'Edit' : 'Create'}
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };

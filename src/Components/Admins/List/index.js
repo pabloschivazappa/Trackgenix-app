@@ -1,9 +1,12 @@
 import React from 'react';
 import ListAdmin from '../ListAdmin';
 import styles from './List.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const List = ({ list, deleteAdmin }) => {
+  let history = useHistory();
+  console.log(history);
+
   return (
     <>
       <table className={styles.table}>
@@ -25,8 +28,8 @@ const List = ({ list, deleteAdmin }) => {
           })}
         </tbody>
       </table>
-      <Link to="./admins/form-admins">
-        <button className={styles.add__button}>
+      <Link to="./admins/form">
+        <button onClick={() => history.push('/admins')} className={styles.add__button}>
           <p>Add User</p>
         </button>
       </Link>
