@@ -100,7 +100,6 @@ const AddItem = () => {
             data.data.active
           )
         );
-        console.log(data);
       }
       setModalDisplay(true);
     } catch (error) {
