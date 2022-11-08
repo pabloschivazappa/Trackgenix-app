@@ -1,13 +1,13 @@
-/* :root {
+:root {
     --main-color: #373867;
     --close-color: var(--main-color);
     --hover-close-color: #252646;
     --color-soft: #000000ca;
   }
 
-  h3 {
+  /* h3 {
     margin: 0
-  }
+  } */
 
   .modal__display__none {
     display: none;
@@ -100,4 +100,4 @@
     background-color: white;
     color: var(--main-color);
     cursor: pointer;
-  } */
+  }

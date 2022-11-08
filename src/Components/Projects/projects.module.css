@@ -1,4 +1,4 @@
- /* .container {
+ .container {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -9,4 +9,4 @@
 .empty__list {
   align-self: center;
   margin-top: 5px;
-} */
+}

@@ -8,7 +8,7 @@ height: 100%;
 padding: 60px 0;
 }
 
-/* .h2__form {
+.h2__form {
 width: var(--form-width);
 margin: 0 0 15px 0;
 padding: 5px 20px;
@@ -33,7 +33,7 @@ flex-direction: column;
 gap: 3px;
 }
 
-.form__admins input {
+/* .form__admins input {
 border: 1px solid transparent;
 padding: 8px;
 border-radius: 10px;
@@ -51,7 +51,7 @@ transition: 0.2s;
 color: var(--main-color);
 font-weight: 600;
 margin-top: 3px;
-}
+} */
 
 .form__button {
 padding: 12px 30px;
@@ -76,4 +76,4 @@ background-color: var(--header-table);
 --cancel-color: #ff7c7c;
 --header-table: #EBECF0;
 --form-padding: 20px;
-} */
+}
