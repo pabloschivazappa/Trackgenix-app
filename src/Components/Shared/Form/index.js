@@ -4,12 +4,15 @@ import { useHistory } from 'react-router-dom';
 
 const Form = ({ onSubmitFunction, children }) => {
   let history = useHistory();
-  console.log(history);
+  const back = (e) => {
+    e.preventDefault();
+    history.goBack();
+  };
 
   return (
     <form onSubmit={onSubmitFunction} className={styles.form}>
       {children}
-      <button onClick={() => history.goBack()}>Cancel</button>
+      <button onClick={back}>Cancel</button>
     </form>
   );
 };
