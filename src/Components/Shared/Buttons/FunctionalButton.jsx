@@ -11,7 +11,7 @@ const FunctionalButton = ({
 }) => {
   return (
     <button className={`${styles[buttonType]} ${styles[buttonColor]}`} onClick={action} type={type}>
-      <p>{title}</p>
+      {title}
       {icon}
     </button>
   );

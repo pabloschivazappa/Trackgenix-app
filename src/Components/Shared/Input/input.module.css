@@ -11,7 +11,7 @@
 .label input {
   align-self: stretch;
   border: 1px solid transparent;
-  padding: 8px;
+  padding: 9px 8px;
   border-radius: 10px;
   background-color: #eef0f5;
   color: var(--main-color)

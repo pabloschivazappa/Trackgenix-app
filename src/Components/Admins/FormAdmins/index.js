@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Form from '../../Shared/Form';
+import Modal from '../../Shared/Modal';
 import Input from '../../Shared/Input';
 
 const FormAdmins = () => {
@@ -18,8 +19,23 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  if (rowId) {
-    useEffect(async () => {
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [children, setChildren] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
+    return ` ${contentSubTitle}:\n
+  Name: ${name}
+  Last Name: ${lastName}
+  Email: ${email}
+  Password: ${password}
+  Dni: ${dni}
+  Phone: ${phone}
+  `;
+  };
+
+  useEffect(async () => {
+    if (rowId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
@@ -34,8 +50,8 @@ const FormAdmins = () => {
       } catch (error) {
         console.error(error);
       }
-    }, []);
-  }
+    }
+  }, []);
 
   const createAdmin = async () => {
     try {
@@ -44,24 +60,27 @@ const FormAdmins = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
       });
-      if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
-        setAdminInput({
-          name: '',
-          lastName: '',
-          email: '',
-          password: '',
-          dni: '',
-          phone: ''
-        });
+      const data = await response.json();
+      setModalTitle('Create admin');
+      if (data.error === true) {
+        setChildren(data.message);
       } else {
-        const data = await response.json();
-        alert(data.message);
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
       }
     } catch (error) {
-      alert(error.message);
+      setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const editAdmin = async () => {
@@ -71,15 +90,26 @@ const FormAdmins = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(adminInput)
       });
-      if (response.ok) {
-        const data = await response.json();
-        alert(data.message);
+      const data = await response.json();
+      setModalTitle('Edit super admin');
+      if (!response.ok) {
+        setChildren(data.message);
       } else {
-        const data = await response.json();
-        alert(data.message);
+        setChildren(() =>
+          editAndCreateMessage(
+            data.message,
+            data.data.name,
+            data.data.lastName,
+            data.data.email,
+            data.data.password,
+            data.data.dni,
+            data.data.phone
+          )
+        );
       }
+      setModalDisplay(true);
     } catch (error) {
-      alert(error);
+      setChildren(error);
     }
   };
 
@@ -93,98 +123,33 @@ const FormAdmins = () => {
   };
 
   return (
-    //<h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
+    <>
+      <Form
+        onChange={() => onChange()}
+        onSubmitFunction={onSubmit}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
+      >
+        <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
+        <Input name="lastName" title="Last Name" value={adminInput.lastName} onChange={onChange} />
+        <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
+        <Input
+          name="password"
+          title="Password"
+          value={adminInput.password}
+          onChange={onChange}
+          type="password"
+        />
+        <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
+        <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
+      </Form>
 
-    <Form
-      onChange={() => onChange()}
-      onSubmitFunction={onSubmit}
-      buttonMessage={rowId ? 'Edit' : 'Create'}
-      formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
-    >
-      <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
-      <Input name="lastName" title="Last Name" value={adminInput.lastName} onChange={onChange} />
-      <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
-      <Input
-        name="password"
-        title="Password"
-        value={adminInput.password}
-        onChange={onChange}
-        type="password"
-      />
-      <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
-      <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
-      {/* <form onSubmit={onSubmit} className={styles.form__admins}>
-        <div>
-          <label>Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="name"
-            value={adminInput.name}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Last Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="lastName"
-            value={adminInput.lastName}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="email"
-            value={adminInput.email}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="password"
-            value={adminInput.password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>DNI</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="dni"
-            value={adminInput.dni}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Phone</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="phone"
-            value={adminInput.phone}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <button type="submit" className={`${styles.button__save} ${styles.form__button}`}>
-          {rowId ? 'Edit' : 'Create'}
-        </button>
-      </form> */}
-    </Form>
+      {modalDisplay ? (
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
+      ) : null}
+    </>
   );
 };
 export default FormAdmins;
