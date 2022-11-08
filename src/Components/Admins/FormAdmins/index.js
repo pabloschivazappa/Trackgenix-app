@@ -99,7 +99,7 @@ const FormAdmins = () => {
       </div>
       <form onSubmit={onSubmit} className={styles.form__admins}>
         <div>
-          <Input type={'text'} name={'Name'} value={adminInput.name} onChange={onChange} required />
+          <Input type={'text'} name={'Name'} value={adminInput.name} onChange={onChange} />
         </div>
         <div>
           <label>Last Name</label>
