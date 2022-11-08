@@ -1,9 +1,9 @@
 import Styles from './input.module.css';
 
-const Input = ({ type = 'text', name, value = '', onChange = '' }) => {
+const Input = ({ type = 'text', name, title, value, onChange }) => {
   return (
     <label className={Styles.label}>
-      {name}
+      {title}
       <input type={type} name={name} value={value} onChange={onChange} />
     </label>
   );

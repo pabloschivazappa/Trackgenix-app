@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from './FormAdmins.module.css';
 import Form from '../../Shared/Form';
+import Input from '../../Shared/Input';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -93,11 +93,26 @@ const FormAdmins = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div>
-        <h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
-      </div>
-      <Form onChange={() => onChange()} onSubmitFunction={() => onSubmit()} />
+    //<h2 className={styles.h2__form}>{rowId ? 'Edit' : 'Create'}</h2>
+
+    <Form
+      onChange={() => onChange()}
+      onSubmitFunction={onSubmit}
+      buttonMessage={rowId ? 'Edit' : 'Create'}
+      formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
+    >
+      <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
+      <Input name="lastName" title="Last Name" value={adminInput.lastName} onChange={onChange} />
+      <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
+      <Input
+        name="password"
+        title="Password"
+        value={adminInput.password}
+        onChange={onChange}
+        type="password"
+      />
+      <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
+      <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
       {/* <form onSubmit={onSubmit} className={styles.form__admins}>
         <div>
           <label>Name</label>
@@ -169,7 +184,7 @@ const FormAdmins = () => {
           {rowId ? 'Edit' : 'Create'}
         </button>
       </form> */}
-    </div>
+    </Form>
   );
 };
 export default FormAdmins;
