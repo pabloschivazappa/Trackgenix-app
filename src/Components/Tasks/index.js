@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import Spinner from '../Shared/Spinner';
 import List from './List';
-import Modal from './Modal';
+import Modal from '../Shared/Modal';
 import styles from './tasks.module.css';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
+  const [children, setChildren] = useState('¿Are you sure you want to delete it?');
+  const [isToConfirm, setIsToConfirm] = useState(false);
+  const [id, setId] = useState('');
 
   const deleteMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
@@ -36,31 +37,45 @@ function Tasks() {
       });
       const filteredTasks = tasks.filter((task) => task._id !== id);
       saveTasks(filteredTasks);
-      setModalTitle('Delete Task');
       if (response.ok) {
-        setContentMessage('The task has been deleted');
+        setChildren('The task has been deleted');
       } else {
-        setContentMessage(() => deleteMessage('Cannot delete task', 'The task id was not found'));
+        setChildren(() => deleteMessage('Cannot delete task', 'The task id was not found'));
       }
-      setModalDisplay(true);
     } catch (error) {
-      setContentMessage(error);
+      setChildren(error);
     }
+    setIsToConfirm(false);
+    setModalDisplay(true);
   };
 
   return (
     <>
       <section className={styles.container}>
         <h2>Tasks</h2>
-        {tasks.length > 0 ? <List list={tasks} deleteTask={deleteTask} /> : <Spinner />}
+        {tasks.length > 0 ? (
+          <List
+            list={tasks}
+            deleteTask={(id) => {
+              setIsToConfirm(true);
+              setModalDisplay(true);
+              setId(id);
+            }}
+          />
+        ) : (
+          <Spinner />
+        )}
+        {modalDisplay ? (
+          <Modal
+            title={'Delete super admin'}
+            setModalDisplay={setModalDisplay}
+            isToConfirm={isToConfirm}
+            onClickFunction={() => deleteTask(id)}
+          >
+            {children}
+          </Modal>
+        ) : null}
       </section>
-      {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
-      ) : null}
     </>
   );
 }
