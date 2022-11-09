@@ -7,6 +7,19 @@
   cursor: pointer;
 }
 
+.form__button__add__employee {
+  width: 60px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form__button__add__employee:hover {
+  transition: 0.2s;
+}
+
 .form__button:hover {
   transition: 0.2s;
 }

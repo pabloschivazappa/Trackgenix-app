@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../../Shared/Modal';
-import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
+import Form from '../../Shared/Form';
+import Input from '../../Shared/Input';
 
 const fixDate = (date) => {
   return date.slice(0, 10);
@@ -137,85 +137,34 @@ const TimesheetsForm = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <h2 className={styles.h2__form}>{haveId ? 'Edit' : 'Create'}</h2>
-        <form onSubmit={onSubmit} className={styles.form__timesheets}>
-          <label>
-            Description:
-            <input
-              type="text"
-              name="description"
-              value={timesheetInput.description}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <label>
-            Date:
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={timesheetInput.date}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <label>
-            Hours:
-            <input
-              type="text"
-              id="hours"
-              name="hours"
-              value={timesheetInput.hours}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <label>
-            Task ID:
-            <input
-              type="text"
-              id="task"
-              name="task"
-              value={timesheetInput.task}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <label>
-            Employee ID:
-            <input
-              type="text"
-              id="employee"
-              name="employee"
-              value={timesheetInput.employee}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <label>
-            Project ID:
-            <input
-              type="text"
-              id="project"
-              name="project"
-              value={timesheetInput.project}
-              onChange={onChange}
-              required
-            />
-          </label>
-          <div className={styles.box}>
-            <FunctionalButton
-              type="submit"
-              buttonType="form__button"
-              buttonColor="grayish-navy"
-              title={haveId ? 'Save' : 'Create'}
-            />
-            <FunctionalButton buttonType="form__button" buttonColor="red" title="Cancel" />
-          </div>
-        </form>
-      </div>
+      <Form
+        onSubmitFunction={onSubmit}
+        buttonMessage={haveId ? 'Edit' : 'Create'}
+        formTitle={haveId ? 'Edit Timesheet' : 'Create Timesheet'}
+      >
+        <Input
+          title="Description"
+          name="description"
+          value={timesheetInput.description}
+          onChange={onChange}
+        />
+        <Input
+          title="Date"
+          type="date"
+          name="date"
+          value={timesheetInput.date}
+          onChange={onChange}
+        />
+        <Input title="Hours" name="hours" value={timesheetInput.hours} onChange={onChange} />
+        <Input title="Task" name="task" value={timesheetInput.task} onChange={onChange} />
+        <Input
+          title="Employee"
+          name="employee"
+          value={timesheetInput.employee}
+          onChange={onChange}
+        />
+        <Input title="Project" name="project" value={timesheetInput.project} onChange={onChange} />
+      </Form>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
