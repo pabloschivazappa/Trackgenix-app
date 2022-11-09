@@ -1,0 +1,77 @@
+.form__button {
+  width: 95px;
+  height: var(--button-height);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form__button:hover {
+  transition: 0.2s;
+}
+
+.grayish-navy {
+  color: var(--main-color);
+  background-color: var(--header-table);
+}
+
+.grayish-navy:hover {
+  background-color: rgb(220, 222, 228);
+}
+
+.red {
+  background-color: #ff7c7c;
+  color: white;
+}
+
+.red:hover {
+  background-color: #d44a4a;
+}
+
+.create__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--button-height);
+  width: 105px;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 15px;
+  color: var(--main-color);
+  background-color: var(--header-table);
+  box-shadow: 1px 1px 7px 0px rgb(0 0 0 / 28%);
+}
+
+.create__button p {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.create__button:hover {
+  background-color: #dadde9;
+  transition: 0.2s;
+}
+
+.list__button {
+  border: none;
+  background-color: white;
+  color: var(--main-color);
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+:root {
+  --main-color: #373867;
+  --form-width: 300px;
+  --cancel-color: #ff7c7c;
+  --header-table: #ebecf0;
+  --form-padding: 20px;
+  --button-height: 40px;
+}

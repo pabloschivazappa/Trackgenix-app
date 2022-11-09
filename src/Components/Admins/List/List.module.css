@@ -1,4 +1,4 @@
-.table {
+/* .table {
   border-collapse: collapse;
   color: #373867;
 }
@@ -36,6 +36,11 @@ th:last-child, td:last-child{
   width: var(--table--width);
 }
 
+.empty__list {
+  align-self: center;
+  margin-top: 5px;
+}
+
 .add__button {
   padding: 0 20px;
   margin-left: 3px;
@@ -64,4 +69,4 @@ th:last-child, td:last-child{
   --main-color: #373867;
   --table--width: 55%;
   --header-table: #EBECF0
-}
+} */

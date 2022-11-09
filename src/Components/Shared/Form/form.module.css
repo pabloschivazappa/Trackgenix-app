@@ -1,11 +1,17 @@
-/*.h2__form {
-  width: var(--form-width);
-  margin: 0 0 15px 0;
-  padding: 5px 20px;
-  box-shadow: 1px -1px 5px 2px rgba(0,0,0,0.10);
+.form h2 {
+  background-color: #8787A4;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 400;
+  padding-block: 5px;
 }
 
-.container {
+.form__container {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -15,7 +21,7 @@
   padding: 60px 0;
 }
 
-.form__tasks {
+.form {
   display: flex;
   flex-direction: column;
   border-radius: 15px;
@@ -23,23 +29,18 @@
   gap: 13px;
   padding: 20px;
   color: var(--main-color);
-  margin: 0 0 0 0;
   box-shadow: 1px -1px 3px 2px rgba(0,0,0,0.06);
 }
 
-.form__tasks div {
+.div__buttons {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  justify-content: center;
+  margin-top: 25px;
+  gap: 30px;
 }
 
-.form__tasks div:last-child {
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-top: 20px;
-}
 
-.form__tasks input {
+/*.form__super__admins input {
   border: 1px solid transparent;
   padding: 8px;
   border-radius: 10px;
@@ -47,13 +48,13 @@
   color: var(--main-color)
 }
 
-.form__tasks input:focus {
+.form__super__admins input:focus {
   outline: none !important;
   background-color: #d0d4e4;
   transition: 0.2s;
 }
 
-.form__tasks label {
+.form__super__admins label {
   color: var(--main-color);
   font-weight: 600;
   margin-top: 3px;
@@ -88,7 +89,7 @@
 .button__cancel:hover{
   background-color: #d44a4a;
   color: white;
-}
+}*/
 
 :root {
   --main-color: #373867;
@@ -96,4 +97,4 @@
   --cancel-color: #ff7c7c;
   --header-table: #EBECF0;
   --form-padding: 20px;
-}*/
+}

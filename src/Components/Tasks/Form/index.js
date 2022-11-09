@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Modal from '../Modal';
+import Modal from '../../Shared/Modal';
 
 function Form() {
   const urlValues = window.location.search;
@@ -11,7 +11,7 @@ function Form() {
   const [descriptionValue, setDescrpitionValue] = useState('');
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
+  const [children, setChildren] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
   const editAndCreateMessage = (contentSubTitle, description) => {
@@ -41,13 +41,13 @@ function Form() {
       const data = await response.json();
       setModalTitle('Edit Task');
       if (data.error === true) {
-        setContentMessage(data.message);
+        setChildren(data.message);
       } else {
-        setContentMessage(() => editAndCreateMessage(data.message, data.data.description));
+        setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
       setModalDisplay(true);
     } catch (error) {
-      setContentMessage(error);
+      setChildren(error);
     }
   };
 
@@ -61,13 +61,13 @@ function Form() {
       const data = await response.json();
       setModalTitle('Create Task');
       if (data.error === true) {
-        setContentMessage(data.message);
+        setChildren(data.message);
       } else {
-        setContentMessage(() => editAndCreateMessage(data.message, data.data.description));
+        setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
       setModalDisplay(true);
     } catch (error) {
-      setContentMessage(error);
+      setChildren(error);
     }
   };
 
@@ -113,11 +113,9 @@ function Form() {
         </form>
       </div>
       {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
+        </Modal>
       ) : null}
     </>
   );

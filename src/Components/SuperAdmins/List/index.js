@@ -5,44 +5,48 @@ import { Link } from 'react-router-dom';
 const List = ({ superAdmins, deleteSuperAdmin }) => {
   return (
     <>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th id="name">Name</th>
-            <th id="last-name">Last name</th>
-            <th id="email">Email</th>
-            <th id="dni">DNI</th>
-            <th id="phone">Phone</th>
-            <th id="actions">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {superAdmins.map((superAdmin) => {
-            return (
-              <tr key={superAdmin._id}>
-                <td>{superAdmin.name}</td>
-                <td>{superAdmin.lastName}</td>
-                <td>{superAdmin.email}</td>
-                <td>{superAdmin.dni}</td>
-                <td>{superAdmin.phone}</td>
-                <td>
-                  <Link to={`super-admins/form?id=${superAdmin._id}`}>
-                    <button className={styles.table__button}>
-                      <i className="fa-solid fa-pen-to-square fa-lg"></i>
+      {superAdmins.length !== 0 ? (
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th id="name">Name</th>
+              <th id="last-name">Last name</th>
+              <th id="email">Email</th>
+              <th id="dni">DNI</th>
+              <th id="phone">Phone</th>
+              <th id="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {superAdmins.map((superAdmin) => {
+              return (
+                <tr key={superAdmin._id}>
+                  <td>{superAdmin.name}</td>
+                  <td>{superAdmin.lastName}</td>
+                  <td>{superAdmin.email}</td>
+                  <td>{superAdmin.dni}</td>
+                  <td>{superAdmin.phone}</td>
+                  <td>
+                    <Link to={`super-admins/form?id=${superAdmin._id}`}>
+                      <button className={styles.table__button}>
+                        <i className="fa-solid fa-pen-to-square fa-lg"></i>
+                      </button>
+                    </Link>
+                    <button
+                      className={styles.table__button}
+                      onClick={() => deleteSuperAdmin(superAdmin._id)}
+                    >
+                      <i className="fa-solid fa-xmark fa-lg"></i>
                     </button>
-                  </Link>
-                  <button
-                    className={styles.table__button}
-                    onClick={() => deleteSuperAdmin(superAdmin._id)}
-                  >
-                    <i className="fa-solid fa-xmark fa-lg"></i>
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ) : (
+        <p className={styles.empty__list}>Empty list</p>
+      )}
       <Link to={'super-admins/form'}>
         <button className={styles.add__button}>
           <p>Add super admin</p>

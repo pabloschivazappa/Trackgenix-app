@@ -6,6 +6,9 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
   const handleDelete = () => {
     deleteAdmin(listAdmin._id);
   };
+  const push = () => {
+    history.push('/admins');
+  };
   return (
     <tr>
       <td>{listAdmin._id}</td>
@@ -20,7 +23,9 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
           X
         </button>
         <Link to={`./admins/form?id=${listAdmin._id}`}>
-          <button className={styles.table__button}>edit</button>
+          <button className={styles.table__button} onClick={push}>
+            edit
+          </button>
         </Link>
       </td>
     </tr>
