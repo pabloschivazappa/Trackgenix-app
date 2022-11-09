@@ -86,7 +86,7 @@ function TaskForm() {
       <Form
         onSubmitFunction={onSubmit}
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
-        formTitle={idRegEx.test(urlID) ? 'Edit Super Admin' : 'Create Super Admin'}
+        formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
       >
         <Input
           title="Description"
