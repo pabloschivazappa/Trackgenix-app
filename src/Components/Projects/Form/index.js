@@ -103,7 +103,7 @@ const AddItem = () => {
             data.data.description,
             data.data.startDate.substr(0, 10),
             data.data.endDate.substr(0, 10),
-            data.data.employees,
+            `${data.data.employees[0].employee.name} ${data.data.employees[0].employee.lastName}`,
             data.data.active
           )
         );
