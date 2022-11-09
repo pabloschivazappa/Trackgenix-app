@@ -6,8 +6,12 @@ import Input from '../../Shared/Input';
 import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 
 const AddItem = () => {
-  const fullUrl = window.location.href;
-  const id = fullUrl.substring(fullUrl.lastIndexOf('=') + 1);
+  const urlValues = window.location.search;
+  const urlParams = new URLSearchParams(urlValues);
+  const id = urlParams.get('id');
+  const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const rowId = idRegEx.test(id);
+
   const initialValue = {
     name: '',
     description: '',
@@ -46,7 +50,7 @@ const AddItem = () => {
   };
 
   useEffect(async () => {
-    if (window.location.href.includes('id')) {
+    if (rowId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
@@ -150,7 +154,7 @@ const AddItem = () => {
   };
 
   const onSubmit = (e) => {
-    if (!window.location.href.includes('id')) {
+    if (!rowId) {
       e.preventDefault();
       createProject(project);
     } else {
@@ -163,8 +167,8 @@ const AddItem = () => {
     <>
       <Form
         onSubmitFunction={onSubmit}
-        buttonMessage={id ? 'Edit' : 'Create'}
-        formTitle={id ? 'Edit Project' : 'Create Project'}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Project' : 'Create Project'}
       >
         <Input
           title="Project Name"
