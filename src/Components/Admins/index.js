@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import List from './List/index';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
+import { Link } from 'react-router-dom';
 import Spinner from '../Shared/Spinner';
 
 const Admins = () => {
@@ -47,20 +48,36 @@ const Admins = () => {
     setModalDisplay(true);
   };
 
+  const columns = [
+    { heading: 'ID', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'DNI', value: 'dni' },
+    { heading: 'Phone', value: 'phone' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <section className={styles.container}>
       <h2>Admins</h2>
       {!fetching ? (
-        <List
-          list={admins}
-          setList={setAdmins}
-          deleteAdmin={(id) => {
-            setIsToConfirm(true);
-            setModalDisplay(true);
-            setId(id);
-            setChildren('¿Are you sure you want to delete it?');
-          }}
-        />
+        <>
+          <Table
+            data={admins}
+            columns={columns}
+            deleteAdmin={(id) => {
+              setIsToConfirm(true);
+              setModalDisplay(true);
+              setId(id);
+              setChildren('¿Are you sure you want to delete it?');
+            }}
+            edit="/admins/form"
+          />
+          <Link to="/admins/form" className={styles.newAdmins}>
+            +
+          </Link>
+        </>
       ) : (
         <Spinner />
       )}
