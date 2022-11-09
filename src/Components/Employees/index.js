@@ -53,6 +53,7 @@ function Employees() {
   };
 
   const columns = [
+    { heading: 'ID', value: '_id' },
     { heading: 'Name', value: 'name' },
     { heading: 'Last Name', value: 'lastName' },
     { heading: 'Email', value: 'email' },

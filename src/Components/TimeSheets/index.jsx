@@ -1,7 +1,7 @@
 import styles from './time-sheets.module.css';
 import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
-import ShowList from './ShowList/ShowList';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import { Link } from 'react-router-dom';
 
@@ -49,19 +49,31 @@ function TimeSheets() {
     setModalDisplay(true);
   };
 
+  const columns = [
+    { heading: 'Description', value: 'description' },
+    { heading: 'Date', value: 'date' },
+    { heading: 'Project', value: 'project' },
+    { heading: 'Task', value: 'task' },
+    { heading: 'Employee', value: 'employee' },
+    { heading: 'Hours', value: 'hours' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <>
       <section className={styles.container}>
         <h2>TimeSheets</h2>
         {!fetching ? (
-          <ShowList
-            list={timesheets}
+          <Table
+            data={timesheets}
+            columns={columns}
             deleteTimesheet={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
               setChildren('¿Are you sure you want to delete it?');
             }}
+            edit="/time-sheets/form"
           />
         ) : (
           <Spinner />
