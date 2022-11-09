@@ -195,7 +195,7 @@ const AddItem = () => {
           title="End Date"
           type="date"
           name="endDate"
-          value={project.startDate}
+          value={project.endDate}
           onChange={(e) => setProject({ ...project, endDate: e.target.value })}
         />
         <div className={formStyles.form__container}>
