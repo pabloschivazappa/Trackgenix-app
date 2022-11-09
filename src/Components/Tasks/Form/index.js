@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Modal';
+import Form from '../../Shared/Form';
 import Input from '../../Shared/Input';
 
 function TaskForm() {
@@ -9,7 +9,7 @@ function TaskForm() {
   const urlID = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
-  const [descriptionValue, setDescriptionValue] = useState('');
+  const [descriptionValue, setDescrpitionValue] = useState('');
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
@@ -17,7 +17,7 @@ function TaskForm() {
 
   const editAndCreateMessage = (contentSubTitle, description) => {
     return `${contentSubTitle}:\n
-    Description: ${description}`;
+     Description: ${description}`;
   };
 
   useEffect(async () => {
@@ -25,7 +25,7 @@ function TaskForm() {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
-        setDescriptionValue(data.data.description);
+        setDescrpitionValue(data.data.description);
       } catch (error) {
         console.log(error);
       }
@@ -46,10 +46,10 @@ function TaskForm() {
       } else {
         setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
+      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
-    setModalDisplay(true);
   };
 
   const createTask = async () => {
@@ -66,10 +66,10 @@ function TaskForm() {
       } else {
         setChildren(() => editAndCreateMessage(data.message, data.data.description));
       }
+      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
-    setModalDisplay(true);
   };
 
   const onSubmit = (event) => {
@@ -78,7 +78,7 @@ function TaskForm() {
   };
 
   const changeDescription = (e) => {
-    setDescriptionValue(e.target.value);
+    setDescrpitionValue(e.target.value);
   };
 
   return (
@@ -86,7 +86,7 @@ function TaskForm() {
       <Form
         onSubmitFunction={onSubmit}
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
-        formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
+        formTitle={idRegEx.test(urlID) ? 'Edit Super Admin' : 'Create Super Admin'}
       >
         <Input
           title="Description"
