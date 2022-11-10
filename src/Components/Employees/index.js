@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import List from './List';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
+import Table from '../Shared/Table';
 
 function Employees() {
   const [employees, saveEmployees] = useState([]);
@@ -28,7 +28,7 @@ function Employees() {
     }
   }, []);
 
-  const deleteEmployee = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'DELETE'
@@ -47,19 +47,33 @@ function Employees() {
     setModalDisplay(true);
   };
 
+  const columns = [
+    { heading: 'ID', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'DNI', value: 'dni' },
+    { heading: 'Phone', value: 'phone' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
       {!fetching ? (
-        <List
-          employees={employees}
-          deleteEmployee={(id) => {
-            setIsToConfirm(true);
-            setModalDisplay(true);
-            setId(id);
-            setChildren('¿Are you sure you want to delete it?');
-          }}
-        />
+        <>
+          <Table
+            data={employees}
+            columns={columns}
+            deleteItem={(id) => {
+              setIsToConfirm(true);
+              setModalDisplay(true);
+              setId(id);
+              setChildren('¿Are you sure you want to delete it?');
+            }}
+            edit="/employees/form"
+          />
+        </>
       ) : (
         <Spinner />
       )}
@@ -68,7 +82,7 @@ function Employees() {
           title={'Delete employee'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteEmployee(id)}
+          onClickFunction={() => deleteItem(id)}
         >
           {children}
         </Modal>

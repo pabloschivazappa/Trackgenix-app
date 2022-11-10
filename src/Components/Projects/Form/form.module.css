@@ -1,65 +1,56 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form__label {
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
-/* h2{
-    color: #EA3354;
-} */
+.form__container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.employee__form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-bottom: 10px;
+}
+
+.employee__form button{
+  margin-top: 10px;
+  align-self: center;
 }
 
 .formRaws{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
-/* label{
-    text-align: center;
-    margin-bottom: 5px;
-    font-weight: 500;
-} */
 
 .inputs{
-    height: 30px;
-    width: 200px;
-    margin-bottom: 5px;
-    border: 2px solid #EA3354;
-    border-radius: 4px;
+  height: 30px;
+  width: 200px;
+  margin-bottom: 5px;
+  border: 2px solid #EA3354;
+  border-radius: 4px;
 }
 
-/* button{
-    background-color: #EA3354;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    padding: 8px 15px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-} */
 
 .addEmployeeButton{
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .submitDiv{
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .submit{
-    background-color: #EA3354;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    padding: 16px 32px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
+  background-color: #EA3354;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
 }

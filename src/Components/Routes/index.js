@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import Admins from '../Admins/index';
@@ -50,4 +50,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default withRouter(Routes);

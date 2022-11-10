@@ -1,7 +1,7 @@
 import styles from './time-sheets.module.css';
 import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
-import ShowList from './ShowList/ShowList';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 
 function TimeSheets() {
@@ -28,7 +28,7 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteTimesheet = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
         method: 'DELETE'
@@ -48,19 +48,31 @@ function TimeSheets() {
     setModalDisplay(true);
   };
 
+  const columns = [
+    { heading: 'Description', value: 'description' },
+    { heading: 'Date', value: 'date' },
+    { heading: 'Project', value: 'project' },
+    { heading: 'Task', value: 'task' },
+    { heading: 'Employee', value: 'employee' },
+    { heading: 'Hours', value: 'hours' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <>
       <section className={styles.container}>
         <h2>TimeSheets</h2>
         {!fetching ? (
-          <ShowList
-            list={timesheets}
-            deleteTimesheet={(id) => {
+          <Table
+            data={timesheets}
+            columns={columns}
+            deleteItem={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
               setChildren('¿Are you sure you want to delete it?');
             }}
+            edit="/time-sheets/form"
           />
         ) : (
           <Spinner />
@@ -70,7 +82,7 @@ function TimeSheets() {
             title={'Delete super admin'}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
-            onClickFunction={() => deleteTimesheet(id)}
+            onClickFunction={() => deleteItem(id)}
           >
             {children}
           </Modal>

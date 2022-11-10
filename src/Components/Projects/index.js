@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
-import ProjectTable from './Table';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -51,19 +50,33 @@ function Projects() {
     setModalDisplay(true);
   };
 
+  const columns = [
+    { heading: 'Name', value: 'name' },
+    { heading: 'Description', value: 'description' },
+    { heading: 'Client', value: 'clientName' },
+    { heading: 'Start Date', value: 'startDate' },
+    { heading: 'End Date', value: 'endDate' },
+    { heading: 'Employees', value: 'employees' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <>
       <section className={styles.container}>
         {!fetching ? (
-          <ProjectTable
-            list={projects}
-            deleteItem={(id) => {
-              setIsToConfirm(true);
-              setModalDisplay(true);
-              setId(id);
-              setChildren('¿Are you sure you want to delete it?');
-            }}
-          />
+          <>
+            <Table
+              data={projects}
+              columns={columns}
+              deleteItem={(id) => {
+                setIsToConfirm(true);
+                setModalDisplay(true);
+                setId(id);
+                setChildren('¿Are you sure you want to delete it?');
+              }}
+              edit="/projects/form"
+            />
+          </>
         ) : (
           <Spinner />
         )}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Form';
+import Input from '../../Shared/Input';
 
-function Form() {
+function TaskForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const urlID = urlParams.get('id');
@@ -73,6 +74,7 @@ function Form() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    idRegEx.test(urlID) ? editTask(urlID) : createTask();
   };
 
   const changeDescription = (e) => {
@@ -81,37 +83,18 @@ function Form() {
 
   return (
     <>
-      <div className={styles.container}>
-        <h2 className={styles.h2__form}>{idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}</h2>
-        <form onSubmit={onSubmit} className={styles.form__tasks}>
-          <div>
-            <label htmlFor="input-description">Description</label>
-            <input
-              id="input-name"
-              name="description"
-              required
-              value={descriptionValue}
-              onChange={changeDescription}
-            />
-          </div>
-          <div>
-            <button
-              onClick={() => window.location.assign('../tasks')}
-              type="button"
-              className={`${styles.button__cancel} ${styles.form__button}`}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className={`${styles.button__save} ${styles.form__button}`}
-              onClick={idRegEx.test(urlID) ? () => editTask(urlID) : () => createTask()}
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
+      <Form
+        onSubmitFunction={onSubmit}
+        buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
+        formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
+      >
+        <Input
+          title="Description"
+          name="description"
+          value={descriptionValue}
+          onChange={changeDescription}
+        />
+      </Form>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
@@ -120,4 +103,4 @@ function Form() {
     </>
   );
 }
-export default Form;
+export default TaskForm;

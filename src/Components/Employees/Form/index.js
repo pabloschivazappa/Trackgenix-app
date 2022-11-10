@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import styles from './form.module.css';
 import Modal from '../../Shared/Modal';
+import Form from '../../Shared/Form';
+import Input from '../../Shared/Input';
 
-function Form() {
+function EmployeeForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   var product = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const rowId = idRegEx.test(product);
 
   const [nameValue, setNameValue] = useState('');
   const [lastNameValue, setLastNameValue] = useState('');
@@ -31,7 +33,7 @@ function Form() {
   };
 
   useEffect(async () => {
-    if (idRegEx.test(product)) {
+    if (rowId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
         const data = await response.json();
@@ -78,10 +80,10 @@ function Form() {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const createEmployee = async () => {
@@ -124,98 +126,55 @@ function Form() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    rowId ? editEmployee(product) : createEmployee();
   };
 
   const changeName = (e) => {
     setNameValue(e.target.value);
+    console.log(e.target.value);
   };
   const changeLastName = (e) => {
     setLastNameValue(e.target.value);
+    console.log(e.target.value);
   };
   const changeEmail = (e) => {
     setEmailValue(e.target.value);
+    console.log(e.target.value);
   };
 
   const changePassword = (e) => {
     setPasswordValue(e.target.value);
+    console.log(e.target.value);
   };
   const changePhone = (e) => {
     setPhoneValue(e.target.value);
+    console.log(e.target.value);
   };
   const changeDni = (e) => {
     setDniValue(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
     <>
-      <div className={styles.container}>
-        <form onSubmit={onSubmit}>
-          <h2>{idRegEx.test(product) ? 'Edit Employee' : 'Create Employee'}</h2>
-          <div className="form-item">
-            <label htmlFor="input-name">Name</label>
-            <input id="input-name" name="name" required value={nameValue} onChange={changeName} />
-          </div>
-          <div className="form-item">
-            <label htmlFor="input-lastName">Last Name</label>
-            <input
-              id="input-lastName"
-              name="lastName"
-              required
-              value={lastNameValue}
-              onChange={changeLastName}
-            />
-          </div>
-          <div className="form-item">
-            <label htmlFor="input-email">Email</label>
-            <input
-              id="input-email"
-              name="email"
-              required
-              value={emailValue}
-              onChange={changeEmail}
-            />
-          </div>
-          <div className="form-item">
-            <label htmlFor="input-password">Password</label>
-            <input
-              id="input-password"
-              type="password"
-              name="password"
-              required
-              value={passwordValue}
-              onChange={changePassword}
-            />
-          </div>
-          <div className="form-item">
-            <label htmlFor="input-dni">DNI</label>
-            <input id="input-dni" name="dni" required value={dniValue} onChange={changeDni} />
-          </div>
-          <div className="form-item">
-            <label htmlFor="input-phone">Phone</label>
-            <input
-              id="input-phone"
-              name="phone"
-              required
-              value={phoneValue}
-              onChange={changePhone}
-            />
-          </div>
-          <div>
-            <a href={'../employees'}>
-              <button type="button" className={styles.buttonCancel}>
-                Cancel
-              </button>
-            </a>
-            <button
-              type="submit"
-              className={styles.buttonSave}
-              onClick={idRegEx.test(product) ? () => editEmployee(product) : () => createEmployee()}
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
+      <Form
+        onSubmitFunction={onSubmit}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Employee' : 'Create Employee'}
+      >
+        <Input name="name" title="Name" value={nameValue} onChange={changeName} />
+        <Input name="lastName" title="Last Name" value={lastNameValue} onChange={changeLastName} />
+        <Input name="email" title="Email" value={emailValue} onChange={changeEmail} />
+        <Input
+          name="password"
+          title="Password"
+          value={passwordValue}
+          onChange={changePassword}
+          type="password"
+        />
+        <Input name="dni" title="DNI" value={dniValue} onChange={changeDni} />
+        <Input name="phone" title="Phone" value={phoneValue} onChange={changePhone} />
+      </Form>
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
@@ -225,4 +184,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default EmployeeForm;
