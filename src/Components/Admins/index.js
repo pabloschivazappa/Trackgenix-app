@@ -58,10 +58,10 @@ const Admins = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Admins</h2>
       {!fetching ? (
         <>
           <Table
+            title="Admins"
             data={admins}
             columns={columns}
             deleteItem={(id) => {

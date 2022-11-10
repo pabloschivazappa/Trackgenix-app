@@ -61,9 +61,9 @@ function TimeSheets() {
   return (
     <>
       <section className={styles.container}>
-        <h2>TimeSheets</h2>
         {!fetching ? (
           <Table
+            title="Timesheets"
             data={timesheets}
             columns={columns}
             deleteItem={(id) => {

@@ -3,9 +3,10 @@ import TableRow from './tableRow.js';
 import styles from './table.module.css';
 import RedirectButton from '../Buttons/RedirectButton.jsx';
 
-const Table = ({ columns, data, deleteItem, edit }) => {
+const Table = ({ title, columns, data, deleteItem, edit }) => {
   return (
     <>
+      <h2 className={styles.entity}>{title}</h2>
       <table className={styles.table}>
         <thead className={styles.tHead}>
           <tr>

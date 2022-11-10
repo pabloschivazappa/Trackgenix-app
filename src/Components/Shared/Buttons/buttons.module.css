@@ -46,6 +46,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   height: var(--button-height);
   width: 105px;
   text-decoration: none;
@@ -59,12 +60,6 @@
   box-shadow: 1px 1px 7px 0px rgb(0 0 0 / 28%);
 }
 
-.create__button p {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 15px;
-  font-weight: 600;
-}
 
 .create__button:hover {
   background-color: #dadde9;

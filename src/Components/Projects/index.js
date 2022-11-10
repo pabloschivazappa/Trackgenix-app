@@ -66,6 +66,7 @@ function Projects() {
         {!fetching ? (
           <>
             <Table
+              title="Projects"
               data={projects}
               columns={columns}
               deleteItem={(id) => {

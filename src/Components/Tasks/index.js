@@ -59,10 +59,10 @@ function Tasks() {
   return (
     <>
       <section className={styles.container}>
-        <h2>Tasks</h2>
         {!fetching ? (
           <>
             <Table
+              title="Tasks"
               data={tasks}
               columns={columns}
               deleteItem={(id) => {

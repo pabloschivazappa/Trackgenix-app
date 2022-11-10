@@ -59,10 +59,10 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      <h2>Employees</h2>
       {!fetching ? (
         <>
           <Table
+            title="Employees"
             data={employees}
             columns={columns}
             deleteItem={(id) => {

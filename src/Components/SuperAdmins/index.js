@@ -59,10 +59,10 @@ function SuperAdmins() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.super__admin__h2}>Super Admins</h2>
       {!fetching ? (
         <>
           <Table
+            title="Super Admins"
             data={superAdmins}
             columns={columns}
             deleteItem={(id) => {
