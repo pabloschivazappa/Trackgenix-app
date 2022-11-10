@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-//import List from './List';
-//import Modal from './Modal';
-//import List from './List';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import { Link } from 'react-router-dom';
@@ -14,7 +11,6 @@ function Employees() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [id, setId] = useState('');
   const [fetching, setFetching] = useState(true);
 
@@ -33,7 +29,7 @@ function Employees() {
     }
   }, []);
 
-  const deleteEmployee = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'DELETE'
@@ -70,7 +66,12 @@ function Employees() {
           <Table
             data={employees}
             columns={columns}
-            deleteItem={deleteEmployee}
+            deleteItem={(id) => {
+              setIsToConfirm(true);
+              setModalDisplay(true);
+              setId(id);
+              setChildren('¿Are you sure you want to delete it?');
+            }}
             edit="/employees/form"
           />
           <Link to="/employees/form" className={styles.newEmployee}>
@@ -85,7 +86,7 @@ function Employees() {
           title={'Delete employee'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteEmployee(id)}
+          onClickFunction={() => deleteItem(id)}
         >
           {children}
         </Modal>

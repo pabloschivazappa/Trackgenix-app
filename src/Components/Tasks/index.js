@@ -32,7 +32,7 @@ function Tasks() {
     }
   }, []);
 
-  const deleteTask = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'DELETE'
@@ -66,7 +66,7 @@ function Tasks() {
             <Table
               data={tasks}
               columns={columns}
-              deleteTask={(id) => {
+              deleteItem={(id) => {
                 setIsToConfirm(true);
                 setModalDisplay(true);
                 setId(id);
@@ -86,7 +86,7 @@ function Tasks() {
             title={'Delete super admin'}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
-            onClickFunction={() => deleteTask(id)}
+            onClickFunction={() => deleteItem(id)}
           >
             {children}
           </Modal>

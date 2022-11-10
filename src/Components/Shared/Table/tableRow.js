@@ -4,9 +4,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
-  //const [setModal, setModalDisplay] = useState(false);
-  console.log(item);
-
   return (
     <>
       <tr>
@@ -19,7 +16,7 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
                     <i className="fa-solid fa-pen-to-square fa-lg"></i>
                   </Link>
                 </button>
-                <button onClick={deleteItem}>
+                <button onClick={() => deleteItem(item._id)}>
                   <i className="fa-solid fa-xmark fa-lg"></i>
                 </button>
               </td>
@@ -27,7 +24,6 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           }
 
           if (columnItem.heading === 'Employees') {
-            //console.log('emplea3:', item.employees);
             return (
               <td key={index}>
                 {item.employees.map((e) => {
@@ -49,13 +45,6 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           }
 
           return <td key={index}>{item[columnItem.value]}</td>;
-          // return (
-          //   <td key={index}>
-          //     {Array.isArray(item[columnItem.value]) && item[columnItem.value].length
-          //       ? item[columnItem.value][0].employee.name
-          //       : item[columnItem.value]}
-          //   </td>
-          // );
         })}
       </tr>
     </>

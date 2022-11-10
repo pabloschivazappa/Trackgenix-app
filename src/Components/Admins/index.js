@@ -7,7 +7,6 @@ import Spinner from '../Shared/Spinner';
 
 const Admins = () => {
   const [admins, setAdmins] = useState([]);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -29,7 +28,7 @@ const Admins = () => {
     }
   }, []);
 
-  const deleteAdmin = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
         method: 'DELETE'
@@ -66,7 +65,7 @@ const Admins = () => {
           <Table
             data={admins}
             columns={columns}
-            deleteAdmin={(id) => {
+            deleteItem={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
@@ -86,7 +85,7 @@ const Admins = () => {
           title={'Delete admin'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteAdmin(id)}
+          onClickFunction={() => deleteItem(id)}
         >
           {children}
         </Modal>

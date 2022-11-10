@@ -29,7 +29,7 @@ function SuperAdmins() {
     }
   }, []);
 
-  const deleteSuperAdmin = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
         method: 'DELETE'
@@ -66,7 +66,7 @@ function SuperAdmins() {
           <Table
             data={superAdmins}
             columns={columns}
-            deleteSuperAdmin={(id) => {
+            deleteItem={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
@@ -86,7 +86,7 @@ function SuperAdmins() {
           title={'Delete super admin'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteSuperAdmin(id)}
+          onClickFunction={() => deleteItem(id)}
         >
           {children}
         </Modal>

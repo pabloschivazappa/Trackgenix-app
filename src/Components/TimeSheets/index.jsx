@@ -29,7 +29,7 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteTimesheet = async (id) => {
+  const deleteItem = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
         method: 'DELETE'
@@ -67,7 +67,7 @@ function TimeSheets() {
           <Table
             data={timesheets}
             columns={columns}
-            deleteTimesheet={(id) => {
+            deleteItem={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
@@ -88,7 +88,7 @@ function TimeSheets() {
             title={'Delete super admin'}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
-            onClickFunction={() => deleteTimesheet(id)}
+            onClickFunction={() => deleteItem(id)}
           >
             {children}
           </Modal>

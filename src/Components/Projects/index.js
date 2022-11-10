@@ -7,7 +7,6 @@ import Spinner from '../Shared/Spinner';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -76,9 +75,9 @@ function Projects() {
                 setId(id);
                 setChildren('¿Are you sure you want to delete it?');
               }}
-              edit="/employees/form"
+              edit="/projects/form"
             />
-            <Link to="/employees/form" className={styles.newEmployee}>
+            <Link to="/projects/form" className={styles.newEmployee}>
               +
             </Link>
           </>
