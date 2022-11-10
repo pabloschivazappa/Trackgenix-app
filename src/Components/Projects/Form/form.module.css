@@ -1,20 +1,24 @@
-/*.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}*/
-
-/*h2{
-  color: #EA3354;
+.form__label {
+  font-weight: 600;
+  margin-bottom: 5px;
 }
-/* h2{
-    color: #EA3354;
-} */
 
-.form{
+.form__container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.employee__form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 70%;
+  margin-bottom: 10px;
+}
+
+.employee__form button{
+  margin-top: 10px;
+  align-self: center;
 }
 
 .formRaws{

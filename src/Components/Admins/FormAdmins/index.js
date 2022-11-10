@@ -107,10 +107,10 @@ const FormAdmins = () => {
           )
         );
       }
-      setModalDisplay(true);
     } catch (error) {
       setChildren(error);
     }
+    setModalDisplay(true);
   };
 
   const onChange = (e) => {
@@ -125,7 +125,6 @@ const FormAdmins = () => {
   return (
     <>
       <Form
-        onChange={() => onChange()}
         onSubmitFunction={onSubmit}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
@@ -143,7 +142,6 @@ const FormAdmins = () => {
         <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
         <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
       </Form>
-
       {modalDisplay ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
