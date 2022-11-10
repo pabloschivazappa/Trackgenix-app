@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
-import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 
 function Employees() {
@@ -60,10 +59,10 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      <h2>Employees</h2>
       {!fetching ? (
         <>
           <Table
+            title="Employees"
             data={employees}
             columns={columns}
             deleteItem={(id) => {
@@ -74,9 +73,6 @@ function Employees() {
             }}
             edit="/employees/form"
           />
-          <Link to="/employees/form" className={styles.newEmployee}>
-            +
-          </Link>
         </>
       ) : (
         <Spinner />

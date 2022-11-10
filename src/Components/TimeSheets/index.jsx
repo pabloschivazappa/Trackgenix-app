@@ -3,7 +3,6 @@ import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 
 function TimeSheets() {
   const [timesheets, setTimesheets] = useState([]);
@@ -62,9 +61,9 @@ function TimeSheets() {
   return (
     <>
       <section className={styles.container}>
-        <h2>TimeSheets</h2>
         {!fetching ? (
           <Table
+            title="Timesheets"
             data={timesheets}
             columns={columns}
             deleteItem={(id) => {
@@ -78,11 +77,6 @@ function TimeSheets() {
         ) : (
           <Spinner />
         )}
-        <Link to="/time-sheets/form">
-          <button className={styles.add__button}>
-            <i className="fa-solid fa-plus"></i>Add
-          </button>
-        </Link>
         {modalDisplay ? (
           <Modal
             title={'Delete super admin'}

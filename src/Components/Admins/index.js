@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 import Spinner from '../Shared/Spinner';
 
 const Admins = () => {
@@ -59,10 +58,10 @@ const Admins = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Admins</h2>
       {!fetching ? (
         <>
           <Table
+            title="Admins"
             data={admins}
             columns={columns}
             deleteItem={(id) => {
@@ -73,9 +72,6 @@ const Admins = () => {
             }}
             edit="/admins/form"
           />
-          <Link to="/admins/form" className={styles.newAdmins}>
-            +
-          </Link>
         </>
       ) : (
         <Spinner />

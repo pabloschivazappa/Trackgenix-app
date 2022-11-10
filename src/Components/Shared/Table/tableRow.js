@@ -1,7 +1,6 @@
 import React from 'react';
-//import Modal from '../Modal';
-//import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import FunctionalButton from '../Buttons/FunctionalButton';
+import RedirectButton from '../Buttons/RedirectButton';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
   return (
@@ -11,14 +10,16 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           if (columnItem.heading === 'Actions') {
             return (
               <td key={index}>
-                <button>
-                  <Link to={`${edit}?id=${item._id}`}>
-                    <i className="fa-solid fa-pen-to-square fa-lg"></i>
-                  </Link>
-                </button>
-                <button onClick={() => deleteItem(item._id)}>
-                  <i className="fa-solid fa-xmark fa-lg"></i>
-                </button>
+                <RedirectButton
+                  path={`${edit}?id=${item._id}`}
+                  icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
+                  buttonType="list__button"
+                />
+                <FunctionalButton
+                  action={() => deleteItem(item._id)}
+                  icon={<i className="fa-solid fa-xmark fa-lg"></i>}
+                  buttonType="list__button"
+                />
               </td>
             );
           }

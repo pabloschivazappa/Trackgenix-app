@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './tasks.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 import Spinner from '../Shared/Spinner';
 
 function Tasks() {
@@ -60,10 +59,10 @@ function Tasks() {
   return (
     <>
       <section className={styles.container}>
-        <h2>Tasks</h2>
         {!fetching ? (
           <>
             <Table
+              title="Tasks"
               data={tasks}
               columns={columns}
               deleteItem={(id) => {
@@ -74,9 +73,6 @@ function Tasks() {
               }}
               edit="/tasks/form"
             />
-            <Link to="/tasks/form" className={styles.filteredTasks}>
-              +
-            </Link>
           </>
         ) : (
           <Spinner />

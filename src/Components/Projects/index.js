@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 import Spinner from '../Shared/Spinner';
 
 function Projects() {
@@ -67,6 +66,7 @@ function Projects() {
         {!fetching ? (
           <>
             <Table
+              title="Projects"
               data={projects}
               columns={columns}
               deleteItem={(id) => {
@@ -77,9 +77,6 @@ function Projects() {
               }}
               edit="/projects/form"
             />
-            <Link to="/projects/form" className={styles.newEmployee}>
-              +
-            </Link>
           </>
         ) : (
           <Spinner />

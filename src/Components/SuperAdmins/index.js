@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
-import { Link } from 'react-router-dom';
 import Spinner from '../Shared/Spinner';
 
 function SuperAdmins() {
@@ -60,10 +59,10 @@ function SuperAdmins() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.super__admin__h2}>Super Admins</h2>
       {!fetching ? (
         <>
           <Table
+            title="Super Admins"
             data={superAdmins}
             columns={columns}
             deleteItem={(id) => {
@@ -74,9 +73,6 @@ function SuperAdmins() {
             }}
             edit="/super-admins/form"
           />
-          <Link to="/super-admins/form" className={styles.newSuperAdmins}>
-            +
-          </Link>
         </>
       ) : (
         <Spinner />
