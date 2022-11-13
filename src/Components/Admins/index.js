@@ -3,6 +3,8 @@ import styles from './admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdmins } from '../../redux/admins/thunks';
 
 const Admins = () => {
   const [admins, setAdmins] = useState([]);
@@ -10,21 +12,11 @@ const Admins = () => {
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const [fetching, setFetching] = useState(true);
+  const { list: adminsList, fetching, error } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
-      const data = await response.json();
-      if (response.ok) {
-        setAdmins(data.data);
-      } else {
-        setAdmins([]);
-      }
-      setFetching(false);
-    } catch (error) {
-      console.error(error);
-    }
+  useEffect(() => {
+    dispatch(getAdmins());
   }, []);
 
   const deleteItem = async (id) => {
@@ -62,7 +54,8 @@ const Admins = () => {
         <>
           <Table
             title="Admins"
-            data={admins}
+            data={adminsList}
+            error={error}
             columns={columns}
             deleteItem={(id) => {
               setIsToConfirm(true);
