@@ -1,31 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getEmployees } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import Table from '../Shared/Table';
 
 function Employees() {
-  const [employees, saveEmployees] = useState([]);
+  const { list: employees, isLoading } = useSelector((state) => state.employees);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const [fetching, setFetching] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      if (response.ok) {
-        saveEmployees(data.data);
-      } else {
-        saveEmployees([]);
-      }
-      setFetching(false);
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(getEmployees());
   }, []);
 
   const deleteItem = async (id) => {
@@ -33,8 +24,7 @@ function Employees() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'DELETE'
       });
-      const newEmployees = employees.filter((employee) => employee._id !== id);
-      saveEmployees(newEmployees);
+      // const newEmployees = employees.filter((employee) => employee._id !== id);
       if (!response.ok) {
         setChildren('Cannot delete employee');
       } else {
@@ -59,7 +49,7 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      {!fetching ? (
+      {!isLoading ? (
         <>
           <Table
             title="Employees"
