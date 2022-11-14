@@ -4,7 +4,10 @@ import {
   GET_ADMINS_ERROR,
   DELETE_ADMINS_PENDING,
   DELETE_ADMINS_SUCCESS,
-  DELETE_ADMINS_ERROR
+  DELETE_ADMINS_ERROR,
+  POST_ADMINS_PENDING,
+  POST_ADMINS_SUCCESS,
+  POST_ADMINS_ERROR
 } from './constants';
 
 export const getAdminsPending = () => {
@@ -45,5 +48,25 @@ export const deleteAdminsError = (error) => {
   return {
     type: DELETE_ADMINS_ERROR,
     payload: error ? error : 'Cannot delete admin'
+  };
+};
+
+export const postAdminsPending = () => {
+  return {
+    type: POST_ADMINS_PENDING
+  };
+};
+
+export const postAdminsSuccess = (payload) => {
+  return {
+    type: POST_ADMINS_SUCCESS,
+    payload
+  };
+};
+
+export const postAdminsError = (error) => {
+  return {
+    type: POST_ADMINS_ERROR,
+    payload: error
   };
 };

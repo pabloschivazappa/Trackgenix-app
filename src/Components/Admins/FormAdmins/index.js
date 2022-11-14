@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Form from '../../Shared/Form';
 import Modal from '../../Shared/Modal';
 import Input from '../../Shared/Input';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAdmin } from '../../../redux/admins/thunks';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -9,6 +11,8 @@ const FormAdmins = () => {
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(id);
+  const { children: childrens, modalTitle: modalTitles } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
 
   const [adminInput, setAdminInput] = useState({
     name: '',
@@ -53,33 +57,38 @@ const FormAdmins = () => {
     }
   }, []);
 
-  const createAdmin = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(adminInput)
-      });
-      const data = await response.json();
-      setModalTitle('Create admin');
-      if (data.error === true) {
-        setChildren(data.message);
-      } else {
-        setChildren(() =>
-          editAndCreateMessage(
-            data.message,
-            data.data.name,
-            data.data.lastName,
-            data.data.email,
-            data.data.password,
-            data.data.dni,
-            data.data.phone
-          )
-        );
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  // const createAdmin = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(adminInput)
+  //     });
+  //     const data = await response.json();
+  //     setModalTitle('Create admin');
+  //     if (data.error === true) {
+  //       setChildren(data.message);
+  //     } else {
+  //       setChildren(() =>
+  //         editAndCreateMessage(
+  //           data.message,
+  //           data.data.name,
+  //           data.data.lastName,
+  //           data.data.email,
+  //           data.data.password,
+  //           data.data.dni,
+  //           data.data.phone
+  //         )
+  //       );
+  //     }
+  //   } catch (error) {
+  //     setChildren(error);
+  //   }
+  //   setModalDisplay(true);
+  // };
+
+  const addAdmin = () => {
+    dispatch(createAdmin(adminInput));
     setModalDisplay(true);
   };
 
@@ -111,6 +120,8 @@ const FormAdmins = () => {
       setChildren(error);
     }
     setModalDisplay(true);
+    console.log(children);
+    console.log(modalTitle);
   };
 
   const onChange = (e) => {
@@ -119,7 +130,7 @@ const FormAdmins = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    rowId ? editAdmin() : createAdmin();
+    rowId ? editAdmin() : addAdmin();
   };
 
   return (
@@ -143,8 +154,8 @@ const FormAdmins = () => {
         <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
       </Form>
       {modalDisplay ? (
-        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
-          {children}
+        <Modal title={modalTitles} setModalDisplay={setModalDisplay}>
+          {childrens}
         </Modal>
       ) : null}
     </>

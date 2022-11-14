@@ -7,7 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 
 const Admins = () => {
-  const { list: adminsList, fetching, error, children } = useSelector((state) => state.admins);
+  const {
+    list: adminsList,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -55,7 +61,7 @@ const Admins = () => {
       )}
       {modalDisplay ? (
         <Modal
-          title={'Delete admin'}
+          title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
           onClickFunction={() => removeAdmins(id)}
