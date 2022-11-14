@@ -4,14 +4,17 @@ import {
   GET_EMPLOYEES_SUCCESS,
   DELETE_EMPLOYEES_LOADING,
   DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR
+  DELETE_EMPLOYEES_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 const INITIAL_STATE = {
   fetching: false,
   list: [],
   error: '',
-  children: 'Are you sure?'
+  children: '',
+  modalTitle: ''
 };
 
 const employeesReducer = (state = INITIAL_STATE, action) => {
@@ -44,9 +47,23 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         list: state.list.filter((employee) => employee._id !== action.payload),
-        children: 'Employee deleted'
+        children: 'Employee deleted succesfully',
+        modalTitle: 'Succes'
       };
     case DELETE_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        children: action.payload,
+        modalTitle: 'Error'
+      };
+    case SET_MODAL_TITLE:
+      return {
+        ...state,
+        fetching: false,
+        modalTitle: action.payload
+      };
+    case SET_MODAL_CONTENT:
       return {
         ...state,
         fetching: false,

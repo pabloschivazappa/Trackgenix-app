@@ -5,12 +5,18 @@ import styles from './employees.module.css';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import Table from '../Shared/Table';
+import { setModalTitle, setModalContent } from '../../redux/employees/actions';
 
 function Employees() {
-  const { list: employees, fetching, children } = useSelector((state) => state.employees);
+  const {
+    list: employees,
+    fetching,
+    children,
+    error,
+    modalTitle
+  } = useSelector((state) => state.employees);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  // const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
   const dispatch = useDispatch();
@@ -22,7 +28,7 @@ function Employees() {
   const removeEmployees = (id) => {
     dispatch(deleteEmployees(id));
     setIsToConfirm(false);
-    // setChildren('Employee deleted');
+    setModalDisplay(true);
   };
 
   const columns = [
@@ -43,11 +49,13 @@ function Employees() {
             title="Employees"
             data={employees}
             columns={columns}
+            errror={error}
             deleteItem={(id) => {
+              dispatch(setModalTitle('Delete'));
+              dispatch(setModalContent('Are you sure you want to delete it?'));
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              // setChildren('¿Are you sure you want to delete it?');
             }}
             edit="/employees/form"
           />
@@ -57,7 +65,7 @@ function Employees() {
       )}
       {modalDisplay ? (
         <Modal
-          title={'Delete employee'}
+          title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
           onClickFunction={() => removeEmployees(id)}

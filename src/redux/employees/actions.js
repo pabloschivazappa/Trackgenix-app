@@ -4,7 +4,9 @@ import {
   GET_EMPLOYEES_ERROR,
   DELETE_EMPLOYEES_LOADING,
   DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR
+  DELETE_EMPLOYEES_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 export const getEmployeesLoading = () => {
@@ -44,6 +46,20 @@ export const deleteEmployeesSuccess = (payload) => {
 export const deleteEmployeesError = (error) => {
   return {
     type: DELETE_EMPLOYEES_ERROR,
-    payload: error ? error : 'Error'
+    payload: error ? error : 'Cannot delete employee'
+  };
+};
+
+export const setModalTitle = (payload) => {
+  return {
+    type: SET_MODAL_TITLE,
+    payload
+  };
+};
+
+export const setModalContent = (payload) => {
+  return {
+    type: SET_MODAL_CONTENT,
+    payload
   };
 };
