@@ -3,49 +3,32 @@ import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTimesheets, deleteTimesheet } from '../../redux/timeSheets/thunks';
+import { setModalTitle, setModalContent } from '../../redux/timeSheets/actions';
 
-function TimeSheets() {
-  const [timesheets, setTimesheets] = useState([]);
-
+const TimeSheets = () => {
+  const {
+    list: timesheetsList,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.timeSheets);
+  const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const [fetching, setFetching] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`);
-      const data = await response.json();
-      setFetching(false);
-      if (response.ok) {
-        setTimesheets(data.data);
-      } else {
-        setTimesheets([]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  useEffect(() => {
+    dispatch(getTimesheets());
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
-        method: 'DELETE'
-      });
-      const newTimesheets = timesheets.filter((timesheet) => timesheet._id !== id);
-      setTimesheets(newTimesheets);
-      setChildren('¿Are you sure you want to delete it?');
-      if (!response.ok) {
-        setChildren('Cannot delete timesheet');
-      } else {
-        setChildren('Timesheet deleted successfully');
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const removeTimesheets = (id) => {
+    dispatch(deleteTimesheet(id));
     setIsToConfirm(false);
     setModalDisplay(true);
+    dispatch(getTimesheets());
   };
 
   const columns = [
@@ -64,13 +47,15 @@ function TimeSheets() {
         {!fetching ? (
           <Table
             title="Timesheets"
-            data={timesheets}
+            data={timesheetsList}
+            error={error}
             columns={columns}
             deleteItem={(id) => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              setChildren('¿Are you sure you want to delete it?');
+              dispatch(setModalTitle('Delete'));
+              dispatch(setModalContent('Are you sure you want to delete it?'));
             }}
             edit="/time-sheets/form"
           />
@@ -79,10 +64,10 @@ function TimeSheets() {
         )}
         {modalDisplay ? (
           <Modal
-            title={'Delete super admin'}
+            title={modalTitle}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
-            onClickFunction={() => deleteItem(id)}
+            onClickFunction={() => removeTimesheets(id)}
           >
             {children}
           </Modal>
@@ -90,6 +75,6 @@ function TimeSheets() {
       </section>
     </>
   );
-}
+};
 
 export default TimeSheets;
