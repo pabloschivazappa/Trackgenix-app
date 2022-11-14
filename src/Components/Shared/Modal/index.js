@@ -27,7 +27,7 @@ const Modal = ({ title, children, setModalDisplay, isToConfirm, onClickFunction 
             {isToConfirm ? (
               <Button
                 buttonType="options__button"
-                buttonColor="options__close"
+                buttonColor="red"
                 action={() => onClickFunction()}
                 title="Confirm"
               />
