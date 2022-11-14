@@ -7,7 +7,9 @@ import {
   DELETE_ADMINS_ERROR,
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR
+  POST_ADMINS_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 export const getAdminsPending = () => {
@@ -67,6 +69,20 @@ export const postAdminsSuccess = (payload) => {
 export const postAdminsError = (payload) => {
   return {
     type: POST_ADMINS_ERROR,
+    payload
+  };
+};
+
+export const setModalTitle = (payload) => {
+  return {
+    type: SET_MODAL_TITLE,
+    payload
+  };
+};
+
+export const setModalContent = (payload) => {
+  return {
+    type: SET_MODAL_CONTENT,
     payload
   };
 };

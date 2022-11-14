@@ -7,7 +7,9 @@ import {
   DELETE_ADMINS_ERROR,
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR
+  POST_ADMINS_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 const INITIAL_STATE = {
@@ -79,6 +81,16 @@ const reducer = (state = INITIAL_STATE, action) => {
         children: action.payload,
         list: [],
         modalTitle: 'Error'
+      };
+    case SET_MODAL_TITLE:
+      return {
+        ...state,
+        modalTitle: action.payload
+      };
+    case SET_MODAL_CONTENT:
+      return {
+        ...state,
+        children: action.payload
       };
     default:
       return state;
