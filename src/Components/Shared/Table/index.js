@@ -31,7 +31,7 @@ const Table = ({ title, columns, data, deleteItem, edit, error }) => {
           </tbody>
         </table>
       ) : (
-        <h2>{error}</h2>
+        <h3>{error}</h3>
       )}
       <RedirectButton
         title="Create "

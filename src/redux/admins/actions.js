@@ -23,7 +23,8 @@ export const getAdminsSuccess = (data) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
-    payload: error
+    payload: error,
+    list: []
   };
 };
 
@@ -33,16 +34,16 @@ export const deleteAdminsPending = () => {
   };
 };
 
-export const deleteAdminsSuccess = (data) => {
+export const deleteAdminsSuccess = (payload) => {
   return {
     type: DELETE_ADMINS_SUCCESS,
-    payload: data
+    payload
   };
 };
 
 export const deleteAdminsError = (error) => {
   return {
     type: DELETE_ADMINS_ERROR,
-    payload: error
+    payload: error ? error : 'Cannot delete admin'
   };
 };

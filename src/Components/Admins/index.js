@@ -4,36 +4,21 @@ import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAdmins } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 
 const Admins = () => {
-  const [admins, setAdmins] = useState([]);
+  const { list: adminsList, fetching, error, children } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const { list: adminsList, fetching, error } = useSelector((state) => state.admins);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAdmins());
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'DELETE'
-      });
-      const newAdmins = admins.filter((admin) => admin._id !== id);
-      setAdmins(newAdmins);
-      if (!response.ok) {
-        setChildren('Cannot delete admin');
-      } else {
-        setChildren('Admin deleted successfully');
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const removeAdmins = (id) => {
+    dispatch(deleteAdmin(id));
     setIsToConfirm(false);
     setModalDisplay(true);
   };
@@ -61,7 +46,6 @@ const Admins = () => {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              setChildren('¿Are you sure you want to delete it?');
             }}
             edit="/admins/form"
           />
@@ -74,9 +58,9 @@ const Admins = () => {
           title={'Delete admin'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteItem(id)}
+          onClickFunction={() => removeAdmins(id)}
         >
-          {children}
+          {!isToConfirm ? children : 'Are you sure you want to delete it?'}
         </Modal>
       ) : null}
     </section>

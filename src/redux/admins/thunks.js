@@ -8,35 +8,36 @@ import {
 } from './actions';
 
 export const getAdmins = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(getAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(getAdminsSuccess(response.data));
-      })
-      .catch((err) => {
-        dispatch(getAdminsError(err.toString()));
-      });
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(getAdminsSuccess(data.data));
+      } else {
+        dispatch(getAdminsError(data.message.toString()));
+      }
+    } catch (error) {
+      dispatch(getAdminsError(error.toString()));
+    }
   };
 };
 
 export const deleteAdmin = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(deleteAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteAdminsSuccess(id));
-      })
-      .catch((err) => {
-        dispatch(deleteAdminsError(err.toString()));
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+        method: 'DELETE'
       });
+      if (response.ok) {
+        dispatch(deleteAdminsSuccess(id));
+      } else {
+        dispatch(deleteAdminsError());
+      }
+    } catch (error) {
+      dispatch(deleteAdminsError(error.toString()));
+    }
   };
 };

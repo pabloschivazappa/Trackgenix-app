@@ -10,7 +10,8 @@ import {
 const INITIAL_STATE = {
   list: [],
   fetching: false,
-  error: ''
+  error: '',
+  children: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -43,15 +44,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        error: '',
-        list: [...state.list.filter((admin) => admin._id !== action.payload)]
+        list: [...state.list.filter((admin) => admin._id !== action.payload)],
+        children: 'Admin deleted successfully'
       };
     case DELETE_ADMINS_ERROR:
       return {
         ...state,
         fetching: false,
-        error: action.payload,
-        list: []
+        children: action.payload
       };
     default:
       return state;
