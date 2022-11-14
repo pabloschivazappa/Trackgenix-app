@@ -8,8 +8,12 @@ import {
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
   POST_ADMINS_ERROR,
+  PUT_ADMINS_PENDING,
+  PUT_ADMINS_SUCCESS,
+  PUT_ADMINS_ERROR,
   SET_MODAL_TITLE,
-  SET_MODAL_CONTENT
+  SET_MODAL_CONTENT,
+  SET_FETCHING_VALUE
 } from './constants';
 
 const INITIAL_STATE = {
@@ -82,6 +86,26 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: [],
         modalTitle: 'Error'
       };
+    case PUT_ADMINS_PENDING:
+      return {
+        ...state,
+        fetching: true
+      };
+    case PUT_ADMINS_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        list: [...state.list],
+        children: 'Admin edited successfully',
+        modalTitle: 'Success'
+      };
+    case PUT_ADMINS_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        children: action.payload,
+        modalTitle: 'Error'
+      };
     case SET_MODAL_TITLE:
       return {
         ...state,
@@ -91,6 +115,11 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         children: action.payload
+      };
+    case SET_FETCHING_VALUE:
+      return {
+        ...state,
+        fetching: action.payload
       };
     default:
       return state;

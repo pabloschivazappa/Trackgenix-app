@@ -7,7 +7,10 @@ import {
   deleteAdminsError,
   postAdminsPending,
   postAdminsSuccess,
-  postAdminsError
+  postAdminsError,
+  putAdminsPending,
+  putAdminsSuccess,
+  putAdminsError
 } from './actions';
 
 export const getAdmins = () => {
@@ -63,6 +66,28 @@ export const createAdmin = (admin) => {
       }
     } catch (error) {
       dispatch(postAdminsError(error.toString()));
+    }
+  };
+};
+
+export const editAdmin = (id, admin) => {
+  return async (dispatch) => {
+    dispatch(putAdminsPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(admin)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(putAdminsSuccess(data.data));
+      } else {
+        console.log(data);
+        dispatch(putAdminsError(data.message));
+      }
+    } catch (error) {
+      dispatch(putAdminsError(error.toString()));
     }
   };
 };

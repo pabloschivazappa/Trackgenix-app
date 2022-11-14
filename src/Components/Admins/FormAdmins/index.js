@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Form from '../../Shared/Form';
 import Modal from '../../Shared/Modal';
 import Input from '../../Shared/Input';
+import Spinner from '../../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { createAdmin } from '../../../redux/admins/thunks';
+import { createAdmin, editAdmin } from '../../../redux/admins/thunks';
+import { setFetching } from '../../../redux/admins/actions';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -11,7 +13,7 @@ const FormAdmins = () => {
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(id);
-  const { children: childrens, modalTitle: modalTitles } = useSelector((state) => state.admins);
+  const { children, modalTitle, fetching } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
 
   const [adminInput, setAdminInput] = useState({
@@ -24,22 +26,10 @@ const FormAdmins = () => {
   });
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
-
-  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
-    return ` ${contentSubTitle}:\n
-  Name: ${name}
-  Last Name: ${lastName}
-  Email: ${email}
-  Password: ${password}
-  Dni: ${dni}
-  Phone: ${phone}
-  `;
-  };
 
   useEffect(async () => {
     if (rowId) {
+      dispatch(setFetching(true));
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
@@ -54,74 +44,18 @@ const FormAdmins = () => {
       } catch (error) {
         console.error(error);
       }
+      dispatch(setFetching(false));
     }
   }, []);
-
-  // const createAdmin = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(adminInput)
-  //     });
-  //     const data = await response.json();
-  //     setModalTitle('Create admin');
-  //     if (data.error === true) {
-  //       setChildren(data.message);
-  //     } else {
-  //       setChildren(() =>
-  //         editAndCreateMessage(
-  //           data.message,
-  //           data.data.name,
-  //           data.data.lastName,
-  //           data.data.email,
-  //           data.data.password,
-  //           data.data.dni,
-  //           data.data.phone
-  //         )
-  //       );
-  //     }
-  //   } catch (error) {
-  //     setChildren(error);
-  //   }
-  //   setModalDisplay(true);
-  // };
 
   const addAdmin = () => {
     dispatch(createAdmin(adminInput));
     setModalDisplay(true);
   };
 
-  const editAdmin = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(adminInput)
-      });
-      const data = await response.json();
-      setModalTitle('Edit super admin');
-      if (!response.ok) {
-        setChildren(data.message);
-      } else {
-        setChildren(() =>
-          editAndCreateMessage(
-            data.message,
-            data.data.name,
-            data.data.lastName,
-            data.data.email,
-            data.data.password,
-            data.data.dni,
-            data.data.phone
-          )
-        );
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const putAdmin = () => {
+    dispatch(editAdmin(id, adminInput));
     setModalDisplay(true);
-    console.log(children);
-    console.log(modalTitle);
   };
 
   const onChange = (e) => {
@@ -130,7 +64,7 @@ const FormAdmins = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    rowId ? editAdmin() : addAdmin();
+    rowId ? putAdmin() : addAdmin();
   };
 
   return (
@@ -140,22 +74,33 @@ const FormAdmins = () => {
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
       >
-        <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
-        <Input name="lastName" title="Last Name" value={adminInput.lastName} onChange={onChange} />
-        <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
-        <Input
-          name="password"
-          title="Password"
-          value={adminInput.password}
-          onChange={onChange}
-          type="password"
-        />
-        <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
-        <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
+        {!fetching ? (
+          <>
+            <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
+            <Input
+              name="lastName"
+              title="Last Name"
+              value={adminInput.lastName}
+              onChange={onChange}
+            />
+            <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
+            <Input
+              name="password"
+              title="Password"
+              value={adminInput.password}
+              onChange={onChange}
+              type="password"
+            />
+            <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
+            <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </Form>
-      {modalDisplay ? (
-        <Modal title={modalTitles ? modalTitles : 'Post'} setModalDisplay={setModalDisplay}>
-          {childrens}
+      {modalDisplay && !fetching ? (
+        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
+          {children}
         </Modal>
       ) : null}
     </>

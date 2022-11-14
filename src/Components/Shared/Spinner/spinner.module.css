@@ -1,8 +1,10 @@
 .loader {
+    align-self: center;
     border: 10px solid #f3f3f3;
     border-top: 10px solid #EA3354;
     border-radius: 50%;
     margin-top: 70px;
+    margin-bottom: 40px;
     width: 80px;
     height: 80px;
     animation: spin 1s linear infinite;
@@ -15,4 +17,3 @@
       transform: rotate(360deg);
     }
   }
-  

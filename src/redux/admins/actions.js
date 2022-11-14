@@ -8,8 +8,12 @@ import {
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
   POST_ADMINS_ERROR,
+  PUT_ADMINS_PENDING,
+  PUT_ADMINS_SUCCESS,
+  PUT_ADMINS_ERROR,
   SET_MODAL_TITLE,
-  SET_MODAL_CONTENT
+  SET_MODAL_CONTENT,
+  SET_FETCHING_VALUE
 } from './constants';
 
 export const getAdminsPending = () => {
@@ -18,18 +22,17 @@ export const getAdminsPending = () => {
   };
 };
 
-export const getAdminsSuccess = (data) => {
+export const getAdminsSuccess = (payload) => {
   return {
     type: GET_ADMINS_SUCCESS,
-    payload: data
+    payload
   };
 };
 
-export const getAdminsError = (error) => {
+export const getAdminsError = (payload) => {
   return {
     type: GET_ADMINS_ERROR,
-    payload: error,
-    list: []
+    payload
   };
 };
 
@@ -73,6 +76,26 @@ export const postAdminsError = (payload) => {
   };
 };
 
+export const putAdminsPending = () => {
+  return {
+    type: PUT_ADMINS_PENDING
+  };
+};
+
+export const putAdminsSuccess = (payload) => {
+  return {
+    type: PUT_ADMINS_SUCCESS,
+    payload
+  };
+};
+
+export const putAdminsError = (payload) => {
+  return {
+    type: PUT_ADMINS_ERROR,
+    payload
+  };
+};
+
 export const setModalTitle = (payload) => {
   return {
     type: SET_MODAL_TITLE,
@@ -83,6 +106,13 @@ export const setModalTitle = (payload) => {
 export const setModalContent = (payload) => {
   return {
     type: SET_MODAL_CONTENT,
+    payload
+  };
+};
+
+export const setFetching = (payload) => {
+  return {
+    type: SET_FETCHING_VALUE,
     payload
   };
 };
