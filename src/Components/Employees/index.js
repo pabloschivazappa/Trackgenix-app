@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEmployees } from '../../redux/employees/thunks';
+import { getEmployees, deleteEmployees } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import Table from '../Shared/Table';
 
 function Employees() {
-  const { list: employees, isLoading } = useSelector((state) => state.employees);
+  const { list: employees, fetching, children } = useSelector((state) => state.employees);
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
+  // const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
   const dispatch = useDispatch();
@@ -19,22 +19,10 @@ function Employees() {
     dispatch(getEmployees());
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
-        method: 'DELETE'
-      });
-      // const newEmployees = employees.filter((employee) => employee._id !== id);
-      if (!response.ok) {
-        setChildren('Cannot delete employee');
-      } else {
-        setChildren('Employee deleted successfully');
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const removeEmployees = (id) => {
+    dispatch(deleteEmployees(id));
     setIsToConfirm(false);
-    setModalDisplay(true);
+    // setChildren('Employee deleted');
   };
 
   const columns = [
@@ -49,7 +37,7 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      {!isLoading ? (
+      {!fetching ? (
         <>
           <Table
             title="Employees"
@@ -59,7 +47,7 @@ function Employees() {
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              setChildren('¿Are you sure you want to delete it?');
+              // setChildren('¿Are you sure you want to delete it?');
             }}
             edit="/employees/form"
           />
@@ -72,7 +60,7 @@ function Employees() {
           title={'Delete employee'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteItem(id)}
+          onClickFunction={() => removeEmployees(id)}
         >
           {children}
         </Modal>

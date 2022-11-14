@@ -1,11 +1,17 @@
-import { GET_EMPLOYEES_ERROR, GET_EMPLOYEES_LOADING, GET_EMPLOYEES_SUCCESS } from './constants';
+import {
+  GET_EMPLOYEES_ERROR,
+  GET_EMPLOYEES_LOADING,
+  GET_EMPLOYEES_SUCCESS,
+  DELETE_EMPLOYEES_LOADING,
+  DELETE_EMPLOYEES_SUCCESS,
+  DELETE_EMPLOYEES_ERROR
+} from './constants';
 
 const INITIAL_STATE = {
-  isLoading: false,
+  fetching: false,
   list: [],
   error: '',
-  modalContent: { title: '', content: '' },
-  showModalMessage: false
+  children: 'Are you sure?'
 };
 
 const employeesReducer = (state = INITIAL_STATE, action) => {
@@ -13,21 +19,38 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case GET_EMPLOYEES_LOADING:
       return {
         ...state,
-        isLoading: true
+        fetching: true
       };
     case GET_EMPLOYEES_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        fetching: false,
         list: action.payload
       };
     case GET_EMPLOYEES_ERROR:
       return {
         ...state,
-        isLoading: false,
+        fetching: false,
         error: action.payload,
-        modalContent: { title: 'ERROR!', content: `Could not GET Employees! ${action.payload}` },
-        showModalMessage: true
+        list: []
+      };
+    case DELETE_EMPLOYEES_LOADING:
+      return {
+        ...state,
+        fetching: true
+      };
+    case DELETE_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        list: state.list.filter((employee) => employee._id !== action.payload),
+        children: 'Employee deleted'
+      };
+    case DELETE_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        children: action.payload
       };
     default:
       return state;
