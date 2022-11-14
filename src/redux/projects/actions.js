@@ -4,12 +4,28 @@ import {
   GET_PROJECTS_ERROR,
   DELETE_PROJECTS_ERROR,
   DELETE_PROJECTS_SUCCESS,
-  DELETE_PROJECTS_PENDING
+  DELETE_PROJECTS_PENDING,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 export const getProjectsPending = () => {
   return {
     type: GET_PROJECTS_PENDING
+  };
+};
+
+export const setModalTitle = (payload) => {
+  return {
+    type: SET_MODAL_TITLE,
+    payload
+  };
+};
+
+export const setModalContent = (payload) => {
+  return {
+    type: SET_MODAL_CONTENT,
+    payload
   };
 };
 

@@ -5,6 +5,7 @@ import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from '../../redux/projects/thunks';
+import { setModalTitle, setModalContent } from '../../redux/projects/actions';
 
 function Projects() {
   const {
@@ -87,6 +88,8 @@ function Projects() {
               columns={columns}
               error={error}
               deleteItem={(id) => {
+                dispatch(setModalTitle('Delete'));
+                dispatch(setModalContent('Are you sure you want to delete it?'));
                 setIsToConfirm(true);
                 setModalDisplay(true);
                 setId(id);
@@ -99,12 +102,12 @@ function Projects() {
         )}
         {modalDisplay ? (
           <Modal
-            title={!isToConfirm ? modalTitle : 'Delete'}
+            title={modalTitle}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
             onClickFunction={() => removeAdmins(id)}
           >
-            {!isToConfirm ? children : 'Are you sure you want to delete it?'}
+            {children}
           </Modal>
         ) : null}
       </section>

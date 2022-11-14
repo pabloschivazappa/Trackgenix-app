@@ -4,7 +4,9 @@ import {
   GET_PROJECTS_ERROR,
   DELETE_PROJECTS_PENDING,
   DELETE_PROJECTS_SUCCESS,
-  DELETE_PROJECTS_ERROR
+  DELETE_PROJECTS_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT
 } from './constants';
 
 const INITIAL_STATE = {
@@ -17,6 +19,16 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case SET_MODAL_TITLE:
+      return {
+        ...state,
+        modalTitle: action.payload
+      };
+    case SET_MODAL_CONTENT:
+      return {
+        ...state,
+        children: action.payload
+      };
     case GET_PROJECTS_PENDING:
       return {
         ...state,
