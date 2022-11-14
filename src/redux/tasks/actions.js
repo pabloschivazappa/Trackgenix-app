@@ -5,6 +5,8 @@ import {
   DELETE_TASKS_PENDING,
   DELETE_TASKS_SUCCESS,
   DELETE_TASKS_ERROR,
+  SET_MODAL_TITLE,
+  SET_MODAL_CONTENT,
   POST_TASKS_PENDING,
   POST_TASKS_SUCCESS,
   POST_TASKS_ERROR,
@@ -50,6 +52,20 @@ export const deleteTasksError = (error) => {
   return {
     type: DELETE_TASKS_ERROR,
     payload: error
+  };
+};
+
+export const setModalTitle = (data) => {
+  return {
+    type: SET_MODAL_TITLE,
+    payload: data
+  };
+};
+
+export const setModalContent = (data) => {
+  return {
+    type: SET_MODAL_CONTENT,
+    payload: data
   };
 };
 

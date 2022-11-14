@@ -39,6 +39,7 @@ export const deleteTasks = (id) => {
       }
     } catch (error) {
       dispatch(deleteTasksError(error.toString()));
+      console.log(error);
     }
   };
 };
