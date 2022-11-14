@@ -54,11 +54,12 @@ export const createAdmin = (admin) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(admin)
       });
-      const data = response.json();
+      const data = await response.json();
       if (response.ok) {
         dispatch(postAdminsSuccess(data.data));
       } else {
-        dispatch(postAdminsError(data.message.toString()));
+        console.log(data);
+        dispatch(postAdminsError(data.message));
       }
     } catch (error) {
       dispatch(postAdminsError(error.toString()));

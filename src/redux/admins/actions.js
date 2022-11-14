@@ -64,9 +64,9 @@ export const postAdminsSuccess = (payload) => {
   };
 };
 
-export const postAdminsError = (error) => {
+export const postAdminsError = (payload) => {
   return {
     type: POST_ADMINS_ERROR,
-    payload: error
+    payload
   };
 };

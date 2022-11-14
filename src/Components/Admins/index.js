@@ -61,7 +61,7 @@ const Admins = () => {
       )}
       {modalDisplay ? (
         <Modal
-          title={modalTitle}
+          title={!isToConfirm ? modalTitle : 'Delete'}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
           onClickFunction={() => removeAdmins(id)}

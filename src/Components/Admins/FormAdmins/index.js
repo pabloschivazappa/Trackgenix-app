@@ -154,7 +154,7 @@ const FormAdmins = () => {
         <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
       </Form>
       {modalDisplay ? (
-        <Modal title={modalTitles} setModalDisplay={setModalDisplay}>
+        <Modal title={modalTitles ? modalTitles : 'Post'} setModalDisplay={setModalDisplay}>
           {childrens}
         </Modal>
       ) : null}
