@@ -131,28 +131,22 @@ function EmployeeForm() {
 
   const changeName = (e) => {
     setNameValue(e.target.value);
-    console.log(e.target.value);
   };
   const changeLastName = (e) => {
     setLastNameValue(e.target.value);
-    console.log(e.target.value);
   };
   const changeEmail = (e) => {
     setEmailValue(e.target.value);
-    console.log(e.target.value);
   };
 
   const changePassword = (e) => {
     setPasswordValue(e.target.value);
-    console.log(e.target.value);
   };
   const changePhone = (e) => {
     setPhoneValue(e.target.value);
-    console.log(e.target.value);
   };
   const changeDni = (e) => {
     setDniValue(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
