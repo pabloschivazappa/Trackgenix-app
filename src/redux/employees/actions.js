@@ -5,8 +5,15 @@ import {
   DELETE_EMPLOYEES_LOADING,
   DELETE_EMPLOYEES_SUCCESS,
   DELETE_EMPLOYEES_ERROR,
+  POST_EMPLOYEES_LOADING,
+  POST_EMPLOYEES_SUCCESS,
+  POST_EMPLOYEES_ERROR,
+  PUT_EMPLOYEES_LOADING,
+  PUT_EMPLOYEES_SUCCESS,
+  PUT_EMPLOYEES_ERROR,
   SET_MODAL_TITLE,
-  SET_MODAL_CONTENT
+  SET_MODAL_CONTENT,
+  SET_FETCHING_VALUE
 } from './constants';
 
 export const getEmployeesLoading = () => {
@@ -50,6 +57,46 @@ export const deleteEmployeesError = (error) => {
   };
 };
 
+export const postEmployeesLoading = () => {
+  return {
+    type: POST_EMPLOYEES_LOADING
+  };
+};
+
+export const postEmployeesSuccess = (payload) => {
+  return {
+    type: POST_EMPLOYEES_SUCCESS,
+    payload
+  };
+};
+
+export const postEmployeesError = (payload) => {
+  return {
+    type: POST_EMPLOYEES_ERROR,
+    payload
+  };
+};
+
+export const putEmployeesLoading = () => {
+  return {
+    type: PUT_EMPLOYEES_LOADING
+  };
+};
+
+export const putEmployeesSuccess = (payload) => {
+  return {
+    type: PUT_EMPLOYEES_SUCCESS,
+    payload
+  };
+};
+
+export const putEmployeesError = (payload) => {
+  return {
+    type: PUT_EMPLOYEES_ERROR,
+    payload
+  };
+};
+
 export const setModalTitle = (payload) => {
   return {
     type: SET_MODAL_TITLE,
@@ -60,6 +107,13 @@ export const setModalTitle = (payload) => {
 export const setModalContent = (payload) => {
   return {
     type: SET_MODAL_CONTENT,
+    payload
+  };
+};
+
+export const setFetching = (payload) => {
+  return {
+    type: SET_FETCHING_VALUE,
     payload
   };
 };
