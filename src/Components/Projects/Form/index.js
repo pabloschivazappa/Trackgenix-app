@@ -23,7 +23,7 @@ const AddItem = () => {
     clientName: '',
     startDate: '',
     endDate: '',
-    employees: '',
+    employees: [],
     active: true
   });
   const [employees, setEmployees] = useState([]);
@@ -37,12 +37,13 @@ const AddItem = () => {
         const data = await response.json();
         setProject({
           name: data.data.name,
-          description: data.data.description,
           clientName: data.data.clientName,
-          startDate: data.data.startDate,
-          endDate: data.data.endDate,
+          description: data.data.description,
+          startDate: data.data.startDate.substr(0, 10),
+          endDate: data.data.endDate.substr(0, 10),
           active: true
         });
+        setEmployees(data.data.employees.filter((employee) => employee.employee !== null));
       } catch (error) {
         console.error(error);
       }
@@ -51,6 +52,7 @@ const AddItem = () => {
   }, []);
 
   const addProject = () => {
+    setProject({ ...project, employees: employees });
     dispatch(createProject(project));
     setModalDisplay(true);
   };
@@ -113,7 +115,7 @@ const AddItem = () => {
                   <Input
                     name="employee"
                     title="Employee"
-                    value={employees[index].employee._id}
+                    value={employees[index].employee?._id}
                     onChange={(e) =>
                       setEmployees([
                         ...employees.slice(0, index),
@@ -140,11 +142,6 @@ const AddItem = () => {
                       ])
                     }
                   />
-                  <select>
-                    <option value="QA">QA</option>
-                    <option value="DEV">DEV</option>
-                    <option value="TL">TL</option>
-                  </select>
                   <Input
                     title="Role"
                     name="role"

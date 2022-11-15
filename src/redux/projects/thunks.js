@@ -48,20 +48,19 @@ export const deleteProject = (id) => {
   };
 };
 
-export const createProject = (project) => {
+export const createProject = (projects) => {
   return async (dispatch) => {
     dispatch(postProjectsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(project)
+        body: JSON.stringify(projects)
       });
       const data = await response.json();
       if (response.ok) {
         dispatch(postProjectsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(postProjectsError(data.message));
       }
     } catch (error) {
@@ -70,20 +69,19 @@ export const createProject = (project) => {
   };
 };
 
-export const editProject = (id, project) => {
+export const editProject = (id, { name, description, clientName, startDate, endDate, active }) => {
   return async (dispatch) => {
     dispatch(putProjectsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(project)
+        body: JSON.stringify({ name, description, clientName, startDate, endDate, active })
       });
       const data = await response.json();
       if (response.ok) {
         dispatch(putProjectsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(putProjectsError(data.message));
       }
     } catch (error) {
