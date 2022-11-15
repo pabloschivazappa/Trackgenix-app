@@ -7,6 +7,7 @@ import {
   DELETE_TASKS_ERROR,
   SET_MODAL_TITLE,
   SET_MODAL_CONTENT,
+  SET_FETCHING_VALUE,
   POST_TASKS_PENDING,
   POST_TASKS_SUCCESS,
   POST_TASKS_ERROR,
@@ -65,6 +66,13 @@ export const setModalTitle = (data) => {
 export const setModalContent = (data) => {
   return {
     type: SET_MODAL_CONTENT,
+    payload: data
+  };
+};
+
+export const setFetching = (data) => {
+  return {
+    type: SET_FETCHING_VALUE,
     payload: data
   };
 };

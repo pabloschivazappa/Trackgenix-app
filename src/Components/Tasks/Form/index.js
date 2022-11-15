@@ -2,83 +2,56 @@ import { useEffect, useState } from 'react';
 import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Form';
 import Input from '../../Shared/Input';
+import Spinner from '../../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { createTasks, editTasks } from '../../../redux/tasks/thunks';
+import { setFetching } from '../../../redux/tasks/actions';
 
 function TaskForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const urlID = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const { children, modalTitle, fetching } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
-  const [descriptionValue, setDescrpitionValue] = useState('');
-
+  const [descriptionValue, setDescriptionValue] = useState({
+    description: ''
+  });
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
-
-  const editAndCreateMessage = (contentSubTitle, description) => {
-    return `${contentSubTitle}:\n
-     Description: ${description}`;
-  };
 
   useEffect(async () => {
     if (idRegEx.test(urlID)) {
+      dispatch(setFetching(true));
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
-        setDescrpitionValue(data.data.description);
+        setDescriptionValue({ description: data.data.description });
       } catch (error) {
         console.log(error);
       }
+      dispatch(setFetching(false));
     }
   }, []);
 
-  const editTask = async (urlID) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`, {
-        method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ description: descriptionValue })
-      });
-      const data = await response.json();
-      setModalTitle('Edit Task');
-      if (data.error === true) {
-        setChildren(data.message);
-      } else {
-        setChildren(() => editAndCreateMessage(data.message, data.data.description));
-      }
-      setModalDisplay(true);
-    } catch (error) {
-      setChildren(error);
-    }
+  const postTasks = () => {
+    dispatch(createTasks(descriptionValue));
+    console.log(descriptionValue);
+    setModalDisplay(true);
   };
 
-  const createTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ description: descriptionValue })
-      });
-      const data = await response.json();
-      setModalTitle('Create Task');
-      if (data.error === true) {
-        setChildren(data.message);
-      } else {
-        setChildren(() => editAndCreateMessage(data.message, data.data.description));
-      }
-      setModalDisplay(true);
-    } catch (error) {
-      setChildren(error);
-    }
+  const putTasks = () => {
+    dispatch(editTasks(urlID, descriptionValue));
+    setModalDisplay(true);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    idRegEx.test(urlID) ? editTask(urlID) : createTask();
+    urlID ? putTasks() : postTasks();
   };
 
   const changeDescription = (e) => {
-    setDescrpitionValue(e.target.value);
+    setDescriptionValue(e.target.value);
   };
 
   return (
@@ -88,14 +61,20 @@ function TaskForm() {
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
         formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
       >
-        <Input
-          title="Description"
-          name="description"
-          value={descriptionValue}
-          onChange={changeDescription}
-        />
+        {!fetching ? (
+          <>
+            <Input
+              title="Description"
+              name="description"
+              value={descriptionValue.description}
+              onChange={changeDescription}
+            />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </Form>
-      {modalDisplay ? (
+      {modalDisplay && !fetching ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
         </Modal>
