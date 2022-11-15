@@ -54,7 +54,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        list: [...state.list.filter((admin) => admin._id !== action.payload)],
         children: 'Admin deleted successfully',
         modalTitle: 'Success'
       };

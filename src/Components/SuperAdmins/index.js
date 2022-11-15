@@ -28,7 +28,6 @@ const SuperAdmins = () => {
     dispatch(deleteSuperAdmin(id));
     setIsToConfirm(false);
     setModalDisplay(true);
-    dispatch(getSuperAdmins());
   };
 
   const columns = [

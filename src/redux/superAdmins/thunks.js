@@ -45,6 +45,7 @@ export const deleteSuperAdmin = (id) => {
     } catch (error) {
       dispatch(deleteSuperAdminsError(error.toString()));
     }
+    dispatch(getSuperAdmins());
   };
 };
 
