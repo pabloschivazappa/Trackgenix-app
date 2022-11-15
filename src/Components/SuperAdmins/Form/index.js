@@ -1,180 +1,110 @@
-import { useEffect, useState } from 'react';
-import Modal from '../../Shared/Modal';
+import React, { useEffect, useState } from 'react';
 import Form from '../../Shared/Form';
-import Input from '../..//Shared/Input';
+import Modal from '../../Shared/Modal';
+import Input from '../../Shared/Input';
+import Spinner from '../../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { createSuperAdmin, editSuperAdmin } from '../../../redux/superAdmins/thunks';
+import { setFetching } from '../../../redux/superAdmins/actions';
 
-function SuperAdminsForm() {
+const SuperAdminsForm = () => {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
-  const product = urlParams.get('id');
+  const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const rowId = idRegEx.test(id);
+  const { children, modalTitle, fetching } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
 
-  const [nameValue, setNameValue] = useState('');
-  const [lastNameValue, setLastNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [dniValue, setDniValue] = useState('');
-  const [phoneValue, setPhoneValue] = useState('');
+  const [superAdminInput, setSuperAdminInput] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    password: '',
+    dni: '',
+    phone: ''
+  });
 
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
-
-  const editAndCreateMessage = (contentSubTitle, name, lastName, email, password, dni, phone) => {
-    return ` ${contentSubTitle}:\n
-  Name: ${name}
-  Last Name: ${lastName}
-  Email: ${email}
-  Password: ${password}
-  Dni: ${dni}
-  Phone: ${phone}
-  `;
-  };
 
   useEffect(async () => {
-    if (idRegEx.test(product)) {
+    if (rowId) {
+      dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`);
         const data = await response.json();
-        setNameValue(data.data.name);
-        setLastNameValue(data.data.lastName);
-        setEmailValue(data.data.email);
-        setPasswordValue(data.data.password);
-        setDniValue(data.data.dni);
-        setPhoneValue(data.data.phone);
+        setSuperAdminInput({
+          name: data.data.name,
+          lastName: data.data.lastName,
+          email: data.data.email,
+          password: data.data.password,
+          dni: data.data.dni,
+          phone: data.data.phone
+        });
       } catch (error) {
         console.error(error);
       }
+      dispatch(setFetching(false));
     }
   }, []);
 
-  const editSuperAdmin = async (product) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${product}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: nameValue,
-          lastName: lastNameValue,
-          email: emailValue,
-          password: passwordValue,
-          dni: dniValue,
-          phone: phoneValue
-        })
-      });
-      const data = await response.json();
-      setModalTitle('Edit super admin');
-      if (data.error === true) {
-        setChildren(data.message);
-      } else {
-        setChildren(() =>
-          editAndCreateMessage(
-            data.message,
-            data.data.name,
-            data.data.lastName,
-            data.data.email,
-            data.data.password,
-            data.data.dni,
-            data.data.phone
-          )
-        );
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const addSuperAdmin = () => {
+    dispatch(createSuperAdmin(superAdminInput));
     setModalDisplay(true);
   };
 
-  const createSuperAdmin = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: nameValue,
-          lastName: lastNameValue,
-          email: emailValue,
-          password: passwordValue,
-          dni: dniValue,
-          phone: phoneValue
-        })
-      });
-
-      const data = await response.json();
-      setModalTitle('Create super admin');
-      if (data.error === true) {
-        setChildren(data.message);
-      } else {
-        setChildren(() =>
-          editAndCreateMessage(
-            data.message,
-            data.data.name,
-            data.data.lastName,
-            data.data.email,
-            data.data.password,
-            data.data.dni,
-            data.data.phone
-          )
-        );
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const putSuperAdmin = () => {
+    dispatch(editSuperAdmin(id, superAdminInput));
     setModalDisplay(true);
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    idRegEx.test(product) ? editSuperAdmin(product) : createSuperAdmin();
+  const onChange = (e) => {
+    setSuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
 
-  const changeName = (e) => {
-    setNameValue(e.target.value);
-  };
-  const changeLastName = (e) => {
-    setLastNameValue(e.target.value);
-  };
-  const changeEmail = (e) => {
-    setEmailValue(e.target.value);
-  };
-
-  const changePassword = (e) => {
-    setPasswordValue(e.target.value);
-  };
-  const changePhone = (e) => {
-    setPhoneValue(e.target.value);
-  };
-  const changeDni = (e) => {
-    setDniValue(e.target.value);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    rowId ? putSuperAdmin() : addSuperAdmin();
   };
 
   return (
     <>
       <Form
         onSubmitFunction={onSubmit}
-        buttonMessage={idRegEx.test(product) ? 'Edit' : 'Create'}
-        formTitle={idRegEx.test(product) ? 'Edit Super Admin' : 'Create Super Admin'}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Super admin' : 'Create Super admin'}
       >
-        <Input title="Name" name="name" value={nameValue} onChange={changeName} />
-        <Input title="Last Name" name="lastName" value={lastNameValue} onChange={changeLastName} />
-        <Input title="Email" name="email" value={emailValue} onChange={changeEmail} />
-        <Input
-          title="Password"
-          type="password"
-          name="password"
-          value={passwordValue}
-          onChange={changePassword}
-        />
-        <Input title="DNI" name="dni" value={dniValue} onChange={changeDni} />
-        <Input title="Phone" name="phone" value={phoneValue} onChange={changePhone} />
+        {!fetching ? (
+          <>
+            <Input name="name" title="Name" value={superAdminInput.name} onChange={onChange} />
+            <Input
+              name="lastName"
+              title="Last Name"
+              value={superAdminInput.lastName}
+              onChange={onChange}
+            />
+            <Input name="email" title="Email" value={superAdminInput.email} onChange={onChange} />
+            <Input
+              name="password"
+              title="Password"
+              value={superAdminInput.password}
+              onChange={onChange}
+              type="password"
+            />
+            <Input name="dni" title="DNI" value={superAdminInput.dni} onChange={onChange} />
+            <Input name="phone" title="Phone" value={superAdminInput.phone} onChange={onChange} />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </Form>
-      {modalDisplay ? (
+      {modalDisplay && !fetching ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
           {children}
         </Modal>
       ) : null}
     </>
   );
-}
+};
 
 export default SuperAdminsForm;
