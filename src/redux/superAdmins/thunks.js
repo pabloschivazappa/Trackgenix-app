@@ -48,14 +48,14 @@ export const deleteSuperAdmin = (id) => {
   };
 };
 
-export const createSuperAdmin = (admin) => {
+export const createSuperAdmin = (superAdmin) => {
   return async (dispatch) => {
     dispatch(postSuperAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(admin)
+        body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
       if (response.ok) {
@@ -70,14 +70,14 @@ export const createSuperAdmin = (admin) => {
   };
 };
 
-export const editSuperAdmin = (id, admin) => {
+export const editSuperAdmin = (id, superAdmin) => {
   return async (dispatch) => {
     dispatch(putSuperAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(admin)
+        body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
       if (response.ok) {

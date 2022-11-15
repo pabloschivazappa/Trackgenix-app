@@ -72,7 +72,7 @@ const SuperAdminsForm = () => {
       <Form
         onSubmitFunction={onSubmit}
         buttonMessage={rowId ? 'Edit' : 'Create'}
-        formTitle={rowId ? 'Edit Super admin' : 'Create Super admin'}
+        formTitle={rowId ? 'Edit Super Admin' : 'Create Super Admin'}
       >
         {!fetching ? (
           <>

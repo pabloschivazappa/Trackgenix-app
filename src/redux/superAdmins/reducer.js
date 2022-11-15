@@ -55,7 +55,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         list: [...state.list.filter((superAdmin) => superAdmin._id !== action.payload)],
-        children: 'Superadmin deleted successfully',
+        children: 'Super Admin deleted successfully',
         modalTitle: 'Success'
       };
     case DELETE_SUPERADMINS_ERROR:
@@ -75,7 +75,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         list: [...state.list, action.payload],
-        children: 'Superadmin created successfully',
+        children: 'Super Admin created successfully',
         modalTitle: 'Success'
       };
     case POST_SUPERADMINS_ERROR:
@@ -96,7 +96,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         list: [...state.list],
-        children: 'Superadmin edited successfully',
+        children: 'Super Admin edited successfully',
         modalTitle: 'Success'
       };
     case PUT_SUPERADMINS_ERROR:

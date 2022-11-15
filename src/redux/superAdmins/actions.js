@@ -52,7 +52,7 @@ export const deleteSuperAdminsSuccess = (payload) => {
 export const deleteSuperAdminsError = (error) => {
   return {
     type: DELETE_SUPERADMINS_ERROR,
-    payload: error ? error : 'Cannot delete superadmin'
+    payload: error ? error : 'Cannot delete Super Admin'
   };
 };
 
