@@ -3,11 +3,14 @@ import Modal from '../../Shared/Modal';
 import Spinner from '../../Shared/Spinner';
 import Form from '../../Shared/Form';
 import Input from '../../Shared/Input';
+import Select from '../../Shared/Select';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTimesheet, editTimesheet } from '../../../redux/timeSheets/thunks';
 import { setFetching } from '../../../redux/timeSheets/actions';
-
+import { getTasks } from '../../../redux/tasks/thunks';
+import { getProjects } from '../../../redux/projects/thunks';
+import { getEmployees } from '../../../redux/employees/thunks';
 const fixDate = (date) => {
   return date.slice(0, 10);
 };
@@ -21,6 +24,9 @@ const TimesheetsForm = () => {
   const { children, modalTitle, fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
+  const { list: tasksList } = useSelector((state) => state.tasks);
+  const { list: projectsList } = useSelector((state) => state.projects);
+  const { list: employeesList } = useSelector((state) => state.employees);
 
   const [timesheetInput, setTimesheetsInput] = useState({
     date: '',
@@ -32,6 +38,9 @@ const TimesheetsForm = () => {
   });
 
   useEffect(async () => {
+    dispatch(getTasks());
+    dispatch(getProjects());
+    dispatch(getEmployees());
     if (haveId) {
       dispatch(setFetching(true));
       try {
@@ -41,9 +50,11 @@ const TimesheetsForm = () => {
           description: data.data.description,
           hours: data.data.hours,
           date: fixDate(data.data.date),
-          task: data.data.task ? data.data.task._id : 'not found',
-          employee: data.data.employee ? data.data.employee._id : 'not found',
-          project: data.data.project ? data.data.project._id : 'not found'
+          task: data.data.task ? data.data.task._id : 'Please select an existing task',
+          employee: data.data.employee
+            ? data.data.employee._id
+            : 'Please select an existing employee',
+          project: data.data.project ? data.data.project._id : 'Please select an existing project'
         });
       } catch (error) {
         console.error(error);
@@ -53,6 +64,7 @@ const TimesheetsForm = () => {
   }, []);
 
   const addTimesheet = () => {
+    console.log(timesheetInput);
     dispatch(createTimesheet(timesheetInput));
     setModalDisplay(true);
   };
@@ -60,6 +72,7 @@ const TimesheetsForm = () => {
   const putTimesheet = () => {
     dispatch(editTimesheet(id, timesheetInput));
     setModalDisplay(true);
+    console.log(timesheetInput);
   };
 
   const onChange = (e) => {
@@ -80,6 +93,13 @@ const TimesheetsForm = () => {
       >
         {!fetching ? (
           <>
+            {/* <select name="task" value={timesheetInput.task} onChange={onChange}>
+              {tasksList.map((task) => (
+                <option value={task._id} key={task._id}>
+                  {task.description}
+                </option>
+              ))}
+            </select> */}
             <Input
               title="Description"
               name="description"
@@ -94,18 +114,30 @@ const TimesheetsForm = () => {
               onChange={onChange}
             />
             <Input title="Hours" name="hours" value={timesheetInput.hours} onChange={onChange} />
-            <Input title="Task" name="task" value={timesheetInput.task} onChange={onChange} />
-            <Input
-              title="Employee"
-              name="employee"
-              value={timesheetInput.employee}
+            {/* <Input title="Task" name="task" value={timesheetInput.task} onChange={onChange} /> */}
+            <Select
+              input={timesheetInput.task}
               onChange={onChange}
+              list={tasksList}
+              name="task"
+              kind="description"
+              id={id}
             />
-            <Input
-              title="Project"
-              name="project"
-              value={timesheetInput.project}
+            <Select
+              input={timesheetInput.employee}
               onChange={onChange}
+              list={employeesList}
+              name="employee"
+              kind="name"
+              id={id}
+            />
+            <Select
+              input={timesheetInput.project}
+              onChange={onChange}
+              list={projectsList}
+              name="project"
+              kind="name"
+              id={id}
             />
           </>
         ) : (

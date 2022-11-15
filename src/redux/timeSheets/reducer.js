@@ -54,7 +54,6 @@ const timeSheetsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        list: [...state.list.filter((timesheet) => timesheet._id !== action.payload)],
         children: 'Timesheet deleted successfully',
         modalTitle: 'Success'
       };

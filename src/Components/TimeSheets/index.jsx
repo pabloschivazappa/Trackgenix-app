@@ -24,11 +24,10 @@ const TimeSheets = () => {
     dispatch(getTimesheets());
   }, []);
 
-  const removeTimesheets = (id) => {
+  const removeTimesheets = () => {
     dispatch(deleteTimesheet(id));
     setIsToConfirm(false);
     setModalDisplay(true);
-    dispatch(getTimesheets());
   };
 
   const columns = [
@@ -67,7 +66,7 @@ const TimeSheets = () => {
             title={modalTitle}
             setModalDisplay={setModalDisplay}
             isToConfirm={isToConfirm}
-            onClickFunction={() => removeTimesheets(id)}
+            onClickFunction={() => removeTimesheets()}
           >
             {children}
           </Modal>

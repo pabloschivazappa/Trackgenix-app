@@ -42,10 +42,9 @@ export const deleteTimesheetsPending = () => {
   };
 };
 
-export const deleteTimesheetsSuccess = (payload) => {
+export const deleteTimesheetsSuccess = () => {
   return {
-    type: DELETE_TIMESHEETS_SUCCESS,
-    payload
+    type: DELETE_TIMESHEETS_SUCCESS
   };
 };
 

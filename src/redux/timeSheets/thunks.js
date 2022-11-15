@@ -38,13 +38,14 @@ export const deleteTimesheet = (id) => {
         method: 'DELETE'
       });
       if (response.ok) {
-        dispatch(deleteTimesheetsSuccess(id));
+        dispatch(deleteTimesheetsSuccess());
       } else {
         dispatch(deleteTimesheetsError());
       }
     } catch (error) {
       dispatch(deleteTimesheetsError(error.toString()));
     }
+    dispatch(getTimesheets());
   };
 };
 
@@ -61,7 +62,6 @@ export const createTimesheet = (timesheet) => {
       if (response.ok) {
         dispatch(postTimesheetsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(postTimesheetsError(data.message));
       }
     } catch (error) {
@@ -83,7 +83,6 @@ export const editTimesheet = (id, timesheet) => {
       if (response.ok) {
         dispatch(putTimesheetsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(putTimesheetsError(data.message));
       }
     } catch (error) {
