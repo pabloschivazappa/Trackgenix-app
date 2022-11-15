@@ -14,10 +14,10 @@ const AddItem = () => {
   const urlParams = new URLSearchParams(urlValues);
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-  const rowId = idRegEx.test(id);
+  const isValidId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
-  const initialValue = {
+  const [project, setProject] = useState({
     name: '',
     description: '',
     clientName: '',
@@ -25,47 +25,23 @@ const AddItem = () => {
     endDate: '',
     employees: '',
     active: true
-  };
-  const [project, setProject] = useState(initialValue);
+  });
   const [employees, setEmployees] = useState([]);
   const [modalDisplay, setModalDisplay] = useState('');
-  // const [children, setChildren] = useState('');
-  // const [modalTitle, setModalTitle] = useState('');
-
-  // const editAndCreateMessage = (
-  //   contentSubTitle,
-  //   name,
-  //   description,
-  //   clientName,
-  //   startDate,
-  //   endDate,
-  //   employees,
-  //   active
-  // ) => {
-  //   return ` ${contentSubTitle}:\n
-  // Name: ${name}
-  // Description: ${description}
-  // Client Name: ${clientName}
-  // Start Date: ${startDate}
-  // End Date: ${endDate}
-  // Employees: ${employees}
-  // Active: ${active}
-  // `;
-  // };
 
   useEffect(async () => {
-    if (rowId) {
+    if (isValidId) {
       dispatch(setFetching(true));
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
         setProject({
           name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password,
-          dni: data.data.dni,
-          phone: data.data.phone
+          description: data.data.description,
+          clientName: data.data.clientName,
+          startDate: data.data.startDate,
+          endDate: data.data.endDate,
+          active: true
         });
       } catch (error) {
         console.error(error);
@@ -80,21 +56,21 @@ const AddItem = () => {
   };
 
   const putProject = () => {
-    dispatch(editProject(rowId, project));
+    dispatch(editProject(id, project));
     setModalDisplay(true);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    !rowId ? addProject(project) : putProject(project);
+    !isValidId ? addProject(project) : putProject(project);
   };
 
   return (
     <>
       <Form
         onSubmitFunction={onSubmit}
-        buttonMessage={rowId ? 'Edit' : 'Create'}
-        formTitle={rowId ? 'Edit Project' : 'Create Project'}
+        buttonMessage={isValidId ? 'Edit' : 'Create'}
+        formTitle={isValidId ? 'Edit Project' : 'Create Project'}
       >
         {!fetching ? (
           <>
@@ -164,6 +140,11 @@ const AddItem = () => {
                       ])
                     }
                   />
+                  <select>
+                    <option value="QA">QA</option>
+                    <option value="DEV">DEV</option>
+                    <option value="TL">TL</option>
+                  </select>
                   <Input
                     title="Role"
                     name="role"
