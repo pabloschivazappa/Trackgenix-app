@@ -4,10 +4,12 @@ import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Form';
 import Input from '../../Shared/Input';
 import Spinner from '../../Shared/Spinner';
+// import Select from '../../Shared/Select';
 import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
+import { getEmployees } from '../../../redux/employees/thunks';
 
 const AddItem = () => {
   const urlValues = window.location.search;
@@ -17,6 +19,13 @@ const AddItem = () => {
   const isValidId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+  const [employees, setEmployees] = useState([
+    {
+      id: '',
+      rate: 0,
+      role: ''
+    }
+  ]);
   const [project, setProject] = useState({
     name: '',
     description: '',
@@ -26,10 +35,11 @@ const AddItem = () => {
     employees: [],
     active: true
   });
-  const [employees, setEmployees] = useState([]);
   const [modalDisplay, setModalDisplay] = useState('');
+  // const { list: employeesList } = useSelector((state) => state.employees);
 
   useEffect(async () => {
+    dispatch(getEmployees());
     if (isValidId) {
       dispatch(setFetching(true));
       try {
@@ -58,6 +68,7 @@ const AddItem = () => {
   };
 
   const putProject = () => {
+    setProject({ ...project, employees: employees });
     dispatch(editProject(id, project));
     setModalDisplay(true);
   };
@@ -112,6 +123,43 @@ const AddItem = () => {
               <label className={formStyles.form__label}> Add Employees (optional)</label>
               {employees.map((employee, index) => (
                 <div key={index} className={formStyles.employee__form}>
+                  {/* <Select
+                    input={employees[index].employee?._id}
+                    onChange={(e) =>
+                      setEmployees([
+                        ...employees.slice(0, index),
+                        {
+                          ...employee,
+                          employee: e.target.value
+                        },
+                        ...employees.slice(index + 1)
+                      ])
+                    }
+                    list={employeesList}
+                    name="employee"
+                    kind="name"
+                    id={id}
+                  /> */}
+                  {/* <select
+                    value={'Nada'}
+                    name="employee"
+                    onChange={(e) => {
+                      setEmployees([
+                        ...employees.slice(0, index),
+                        {
+                          ...employee,
+                          employee: e.target.value
+                        },
+                        ...employees.slice(index + 1)
+                      ]);
+                    }}
+                  >
+                    {employeesList.map((employee) => {
+                      <option key={employee._id} value={employees[index].employee?._id}>
+                        {employee._name}
+                      </option>;
+                    })}
+                  </select> */}
                   <Input
                     name="employee"
                     title="Employee"
@@ -121,7 +169,7 @@ const AddItem = () => {
                         ...employees.slice(0, index),
                         {
                           ...employee,
-                          employee: e.target.value.slice(-24)
+                          employee: e.target.value
                         },
                         ...employees.slice(index + 1)
                       ])
@@ -157,6 +205,25 @@ const AddItem = () => {
                       ])
                     }
                   />
+                  {/* <select
+                    value={employee.role}
+                    name="role"
+                    onChange={(e) => {
+                      setEmployees([
+                        ...employees.slice(0, index),
+                        {
+                          ...employee,
+                          role: e.target.value
+                        },
+                        ...employees.slice(index + 1)
+                      ]);
+                      console.log(employee.role);
+                    }}
+                  >
+                    <option value="DEV">DEV</option>
+                    <option value="TL">TL</option>
+                    <option value="QA">QA</option>
+                  </select> */}
                   <FunctionalButton
                     title="Delete"
                     action={(e) => {
