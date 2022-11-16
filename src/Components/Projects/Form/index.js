@@ -11,22 +11,21 @@ import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
 import { getEmployees } from '../../../redux/employees/thunks';
 
-const AddItem = () => {
+const ProjectForm = () => {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const isValidId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
+  // const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
-  const [employees, setEmployees] = useState([
-    {
-      id: '',
-      rate: 0,
-      role: ''
-    }
-  ]);
-  const [project, setProject] = useState({
+  const [employee, setEmployee] = useState({
+    id: '',
+    role: '',
+    rate: ''
+  });
+  const [projectBody, setProjectBody] = useState({
     name: '',
     description: '',
     clientName: '',
@@ -36,7 +35,7 @@ const AddItem = () => {
     active: true
   });
   const [modalDisplay, setModalDisplay] = useState('');
-  // const { list: employeesList } = useSelector((state) => state.employees);
+  // const roles = ['DEV', 'TL', 'QA', 'PM'];
 
   useEffect(async () => {
     dispatch(getEmployees());
@@ -45,15 +44,17 @@ const AddItem = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
-        setProject({
+        setProjectBody({
           name: data.data.name,
           clientName: data.data.clientName,
           description: data.data.description,
           startDate: data.data.startDate.substr(0, 10),
           endDate: data.data.endDate.substr(0, 10),
+          employees: data.data?.employees.filter((employee) => employee.employee !== null),
           active: true
         });
-        setEmployees(data.data.employees.filter((employee) => employee.employee !== null));
+        console.log(data.data);
+        // setEmployee(data.data.employees.filter((employee) => employee.employee !== null));
       } catch (error) {
         console.error(error);
       }
@@ -62,20 +63,26 @@ const AddItem = () => {
   }, []);
 
   const addProject = () => {
-    setProject({ ...project, employees: employees });
-    dispatch(createProject(project));
+    dispatch(createProject(projectBody));
     setModalDisplay(true);
   };
 
-  const putProject = () => {
-    setProject({ ...project, employees: employees });
-    dispatch(editProject(id, project));
+  const changeProject = () => {
+    dispatch(editProject(id, projectBody));
     setModalDisplay(true);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    !isValidId ? addProject(project) : putProject(project);
+    !isValidId ? addProject(projectBody) : changeProject(projectBody);
+  };
+
+  const onChange = (e) => {
+    setProjectBody({ ...projectBody, [e.target.name]: e.target.value });
+  };
+
+  const onChangeEmployee = (e) => {
+    setEmployee({ ...employee, [e.target.name]: e.target.value });
   };
 
   return (
@@ -87,143 +94,45 @@ const AddItem = () => {
       >
         {!fetching ? (
           <>
-            <Input
-              title="Project Name"
-              name="name"
-              value={project.name}
-              onChange={(e) => setProject({ ...project, name: e.target.value })}
-            />
+            <Input title="Project Name" name="name" value={projectBody.name} onChange={onChange} />
             <Input
               title="Description"
               name="description"
-              value={project.description}
-              onChange={(e) => setProject({ ...project, description: e.target.value })}
+              value={projectBody.description}
+              onChange={onChange}
             />
             <Input
               title="Client Name"
               name="clientName"
-              value={project.clientName}
-              onChange={(e) => setProject({ ...project, clientName: e.target.value })}
+              value={projectBody.clientName}
+              onChange={onChange}
             />
             <Input
               title="Start Date"
               type="date"
               name="startDate"
-              value={project.startDate}
-              onChange={(e) => setProject({ ...project, startDate: e.target.value })}
+              value={projectBody.startDate}
+              onChange={onChange}
             />
             <Input
               title="End Date"
               type="date"
               name="endDate"
-              value={project.endDate}
-              onChange={(e) => setProject({ ...project, endDate: e.target.value })}
+              value={projectBody.endDate}
+              onChange={onChange}
             />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
-              {employees.map((employee, index) => (
+              {projectBody.employees.map((item, index) => (
                 <div key={index} className={formStyles.employee__form}>
-                  {/* <Select
-                    input={employees[index].employee?._id}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          employee: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                    list={employeesList}
-                    name="employee"
-                    kind="name"
-                    id={id}
-                  /> */}
-                  {/* <select
-                    value={'Nada'}
-                    name="employee"
-                    onChange={(e) => {
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          employee: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ]);
-                    }}
-                  >
-                    {employeesList.map((employee) => {
-                      <option key={employee._id} value={employees[index].employee?._id}>
-                        {employee._name}
-                      </option>;
-                    })}
-                  </select> */}
                   <Input
-                    name="employee"
                     title="Employee"
-                    value={employees[index].employee?._id}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          employee: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
+                    name="id"
+                    value={item.employee._id}
+                    onChange={onChangeEmployee}
                   />
-                  <Input
-                    title="Rate"
-                    name="rate"
-                    value={employee.rate}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          rate: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                  />
-                  <Input
-                    title="Role"
-                    name="role"
-                    value={employee.role}
-                    onChange={(e) =>
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          role: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ])
-                    }
-                  />
-                  {/* <select
-                    value={employee.role}
-                    name="role"
-                    onChange={(e) => {
-                      setEmployees([
-                        ...employees.slice(0, index),
-                        {
-                          ...employee,
-                          role: e.target.value
-                        },
-                        ...employees.slice(index + 1)
-                      ]);
-                      console.log(employee.role);
-                    }}
-                  >
-                    <option value="DEV">DEV</option>
-                    <option value="TL">TL</option>
-                    <option value="QA">QA</option>
-                  </select> */}
+                  <Input title="Rate" name="rate" value={item.rate} onChange={onChangeEmployee} />
+                  <Input title="Role" name="role" value={item.role} onChange={onChangeEmployee} />
                   <FunctionalButton
                     title="Delete"
                     action={(e) => {
@@ -237,8 +146,8 @@ const AddItem = () => {
               <FunctionalButton
                 title="Add"
                 action={() =>
-                  setEmployees([
-                    ...employees,
+                  setEmployee([
+                    ...employee,
                     {
                       employee: '',
                       rate: 0,
@@ -264,4 +173,4 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default ProjectForm;
