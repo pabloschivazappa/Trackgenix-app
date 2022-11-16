@@ -62,7 +62,6 @@ export const createSuperAdmin = (superAdmin) => {
       if (response.ok) {
         dispatch(postSuperAdminsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(postSuperAdminsError(data.message));
       }
     } catch (error) {
@@ -84,7 +83,6 @@ export const editSuperAdmin = (id, superAdmin) => {
       if (response.ok) {
         dispatch(putSuperAdminsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(putSuperAdminsError(data.message));
       }
     } catch (error) {
