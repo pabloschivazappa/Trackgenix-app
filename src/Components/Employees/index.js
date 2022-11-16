@@ -49,7 +49,7 @@ function Employees() {
             title="Employees"
             data={employees}
             columns={columns}
-            errror={error}
+            error={error}
             deleteItem={(id) => {
               dispatch(setModalTitle('Delete'));
               dispatch(setModalContent('Are you sure you want to delete it?'));
