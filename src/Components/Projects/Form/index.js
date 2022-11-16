@@ -4,12 +4,10 @@ import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Form';
 import Input from '../../Shared/Input';
 import Spinner from '../../Shared/Spinner';
-// import Select from '../../Shared/Select';
 import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
-import { getEmployees } from '../../../redux/employees/thunks';
 
 const ProjectForm = () => {
   const urlValues = window.location.search;
@@ -18,13 +16,7 @@ const ProjectForm = () => {
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const isValidId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
-  // const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
-  const [employee, setEmployee] = useState({
-    id: '',
-    role: '',
-    rate: ''
-  });
   const [projectBody, setProjectBody] = useState({
     name: '',
     description: '',
@@ -35,10 +27,8 @@ const ProjectForm = () => {
     active: true
   });
   const [modalDisplay, setModalDisplay] = useState('');
-  // const roles = ['DEV', 'TL', 'QA', 'PM'];
 
   useEffect(async () => {
-    dispatch(getEmployees());
     if (isValidId) {
       dispatch(setFetching(true));
       try {
@@ -49,19 +39,16 @@ const ProjectForm = () => {
           clientName: data.data.clientName,
           description: data.data.description,
           startDate: data.data.startDate.substr(0, 10),
+          employees: data.data.employees.filter((item) => item.employee !== null),
           endDate: data.data.endDate.substr(0, 10),
-          employees: data.data?.employees.filter((employee) => employee.employee !== null),
           active: true
         });
-        console.log(data.data);
-        // setEmployee(data.data.employees.filter((employee) => employee.employee !== null));
       } catch (error) {
         console.error(error);
       }
       dispatch(setFetching(false));
     }
   }, []);
-
   const addProject = () => {
     dispatch(createProject(projectBody));
     setModalDisplay(true);
@@ -79,10 +66,6 @@ const ProjectForm = () => {
 
   const onChange = (e) => {
     setProjectBody({ ...projectBody, [e.target.name]: e.target.value });
-  };
-
-  const onChangeEmployee = (e) => {
-    setEmployee({ ...employee, [e.target.name]: e.target.value });
   };
 
   return (
@@ -129,10 +112,20 @@ const ProjectForm = () => {
                     title="Employee"
                     name="id"
                     value={item.employee._id}
-                    onChange={onChangeEmployee}
+                    onChange={() => setProjectBody()}
                   />
-                  <Input title="Rate" name="rate" value={item.rate} onChange={onChangeEmployee} />
-                  <Input title="Role" name="role" value={item.role} onChange={onChangeEmployee} />
+                  <Input
+                    title="Rate"
+                    name="rate"
+                    value={item.rate}
+                    onChange={() => setProjectBody()}
+                  />
+                  <Input
+                    title="Role"
+                    name="role"
+                    value={item.role}
+                    onChange={() => setProjectBody()}
+                  />
                   <FunctionalButton
                     title="Delete"
                     action={(e) => {
@@ -145,16 +138,7 @@ const ProjectForm = () => {
               ))}
               <FunctionalButton
                 title="Add"
-                action={() =>
-                  setEmployee([
-                    ...employee,
-                    {
-                      employee: '',
-                      rate: 0,
-                      role: ''
-                    }
-                  ])
-                }
+                action={() => setProjectBody()}
                 buttonType="form__button__add__employee"
                 buttonColor="grayish-navy"
               />
