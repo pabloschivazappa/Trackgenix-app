@@ -66,7 +66,6 @@ const TimesheetsForm = () => {
   }, []);
 
   const addTimesheet = () => {
-    console.log(timesheetInput);
     dispatch(createTimesheet(timesheetInput));
     setModalDisplay(true);
   };
@@ -74,7 +73,6 @@ const TimesheetsForm = () => {
   const putTimesheet = () => {
     dispatch(editTimesheet(id, timesheetInput));
     setModalDisplay(true);
-    console.log(timesheetInput);
   };
 
   const onChange = (e) => {
