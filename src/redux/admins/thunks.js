@@ -61,7 +61,6 @@ export const createAdmin = (admin) => {
       if (response.ok) {
         dispatch(postAdminsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(postAdminsError(data.message));
       }
     } catch (error) {
@@ -83,7 +82,6 @@ export const editAdmin = (id, admin) => {
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
       } else {
-        console.log(data);
         dispatch(putAdminsError(data.message));
       }
     } catch (error) {
