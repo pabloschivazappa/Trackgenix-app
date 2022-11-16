@@ -3,47 +3,32 @@ import styles from './admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
+import { setModalTitle, setModalContent } from '../../redux/admins/actions';
 
 const Admins = () => {
-  const [admins, setAdmins] = useState([]);
+  const {
+    list: adminsList,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const [fetching, setFetching] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
-      const data = await response.json();
-      if (response.ok) {
-        setAdmins(data.data);
-      } else {
-        setAdmins([]);
-      }
-      setFetching(false);
-    } catch (error) {
-      console.error(error);
-    }
+  useEffect(() => {
+    dispatch(getAdmins());
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'DELETE'
-      });
-      const newAdmins = admins.filter((admin) => admin._id !== id);
-      setAdmins(newAdmins);
-      if (!response.ok) {
-        setChildren('Cannot delete admin');
-      } else {
-        setChildren('Admin deleted successfully');
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const removeAdmins = (id) => {
+    dispatch(deleteAdmin(id));
     setIsToConfirm(false);
     setModalDisplay(true);
+    dispatch(getAdmins());
   };
 
   const columns = [
@@ -62,13 +47,15 @@ const Admins = () => {
         <>
           <Table
             title="Admins"
-            data={admins}
+            data={adminsList}
+            error={error}
             columns={columns}
             deleteItem={(id) => {
+              dispatch(setModalTitle('Delete'));
+              dispatch(setModalContent('Are you sure you want to delete it?'));
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              setChildren('¿Are you sure you want to delete it?');
             }}
             edit="/admins/form"
           />
@@ -78,10 +65,10 @@ const Admins = () => {
       )}
       {modalDisplay ? (
         <Modal
-          title={'Delete admin'}
+          title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteItem(id)}
+          onClickFunction={() => removeAdmins(id)}
         >
           {children}
         </Modal>
