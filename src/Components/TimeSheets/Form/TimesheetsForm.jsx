@@ -50,11 +50,13 @@ const TimesheetsForm = () => {
           description: data.data.description,
           hours: data.data.hours,
           date: fixDate(data.data.date),
-          task: data.data.task ? data.data.task._id : 'Please select an existing task',
+          task: data.data.task ? data.data.task._id : '- Please select an existing task -',
           employee: data.data.employee
             ? data.data.employee._id
-            : 'Please select an existing employee',
-          project: data.data.project ? data.data.project._id : 'Please select an existing project'
+            : '- Please select an existing employee -',
+          project: data.data.project
+            ? data.data.project._id
+            : '- Please select an existing project -'
         });
       } catch (error) {
         console.error(error);
@@ -93,13 +95,6 @@ const TimesheetsForm = () => {
       >
         {!fetching ? (
           <>
-            {/* <select name="task" value={timesheetInput.task} onChange={onChange}>
-              {tasksList.map((task) => (
-                <option value={task._id} key={task._id}>
-                  {task.description}
-                </option>
-              ))}
-            </select> */}
             <Input
               title="Description"
               name="description"
@@ -114,7 +109,6 @@ const TimesheetsForm = () => {
               onChange={onChange}
             />
             <Input title="Hours" name="hours" value={timesheetInput.hours} onChange={onChange} />
-            {/* <Input title="Task" name="task" value={timesheetInput.task} onChange={onChange} /> */}
             <Select
               input={timesheetInput.task}
               onChange={onChange}
@@ -122,6 +116,7 @@ const TimesheetsForm = () => {
               name="task"
               kind="description"
               id={id}
+              title="Task"
             />
             <Select
               input={timesheetInput.employee}
@@ -130,6 +125,7 @@ const TimesheetsForm = () => {
               name="employee"
               kind="name"
               id={id}
+              title="Employee"
             />
             <Select
               input={timesheetInput.project}
@@ -138,6 +134,7 @@ const TimesheetsForm = () => {
               name="project"
               kind="name"
               id={id}
+              title="Project"
             />
           </>
         ) : (
