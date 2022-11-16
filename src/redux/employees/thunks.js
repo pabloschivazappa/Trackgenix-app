@@ -16,7 +16,7 @@ export const getEmployees = () => {
       if (response.ok) {
         dispatch(getEmployeesSuccess(data.data));
       } else {
-        dispatch(getEmployeesError(data.error.toString()));
+        dispatch(getEmployeesError(data.message.toString()));
       }
     } catch (error) {
       dispatch(getEmployeesError(error.toString()));

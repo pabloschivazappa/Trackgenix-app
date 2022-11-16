@@ -28,7 +28,7 @@ function TaskForm() {
         const data = await response.json();
         setDescriptionValue({ description: data.data.description });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       dispatch(setFetching(false));
     }
@@ -36,7 +36,6 @@ function TaskForm() {
 
   const postTasks = () => {
     dispatch(createTasks(descriptionValue));
-    console.log(descriptionValue);
     setModalDisplay(true);
   };
 

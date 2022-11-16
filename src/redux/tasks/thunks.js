@@ -22,7 +22,7 @@ export const getTasks = () => {
       if (response.ok) {
         dispatch(getTasksSuccess(data.data));
       } else {
-        dispatch(getTasksError(data.error.toString()));
+        dispatch(getTasksError(data.message.toString()));
       }
     } catch (error) {
       dispatch(getTasksError(error.toString()));
@@ -46,6 +46,7 @@ export const deleteTasks = (id) => {
     } catch (error) {
       dispatch(deleteTasksError(error.toString()));
     }
+    dispatch(getTasks());
   };
 };
 

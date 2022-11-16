@@ -55,7 +55,6 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         error: '',
-        list: [...state.list.filter((tasks) => tasks._id !== action.payload)],
         children: 'Task deleted successfully',
         modalTitle: 'Success'
       };
@@ -63,7 +62,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        error: action.payload,
         children: action.payload,
         modalTitle: 'Error'
       };
