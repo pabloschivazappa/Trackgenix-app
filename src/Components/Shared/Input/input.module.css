@@ -13,13 +13,13 @@
   border: 1px solid transparent;
   padding: 9px 8px;
   border-radius: 10px;
-  background-color: #eef0f5;
-  color: var(--main-color)
+  background-color: #d0d4e4;
+  color: #1F1F45
 }
 
 .label input:focus {
   outline: none !important;
-  background-color: #d0d4e4;
+  background-color: #abb0c3;
   transition: 0.2s;
 }
 
