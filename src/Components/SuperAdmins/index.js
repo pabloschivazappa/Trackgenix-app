@@ -3,46 +3,29 @@ import styles from './super-admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Spinner from '../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSuperAdmins, deleteSuperAdmin } from '../../redux/superAdmins/thunks';
+import { setModalTitle, setModalContent } from '../../redux/superAdmins/actions';
 
-function SuperAdmins() {
-  const [superAdmins, saveSuperAdmins] = useState([]);
-
+const SuperAdmins = () => {
+  const {
+    list: superAdminsList,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
-  const [children, setChildren] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
-  const [fetching, setFetching] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins`);
-      const data = await response.json();
-      if (response.ok) {
-        saveSuperAdmins(data.data);
-      } else {
-        saveSuperAdmins([]);
-      }
-      setFetching(false);
-    } catch (error) {
-      console.error(error);
-    }
+  useEffect(() => {
+    dispatch(getSuperAdmins());
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
-        method: 'DELETE'
-      });
-      const newSuperAdmins = superAdmins.filter((superAdmin) => superAdmin._id !== id);
-      saveSuperAdmins(newSuperAdmins);
-      if (!response.ok) {
-        setChildren('Cannot delete super admin');
-      } else {
-        setChildren('Super Admin deleted successfully');
-      }
-    } catch (error) {
-      setChildren(error);
-    }
+  const removeSuperAdmins = (id) => {
+    dispatch(deleteSuperAdmin(id));
     setIsToConfirm(false);
     setModalDisplay(true);
   };
@@ -63,13 +46,15 @@ function SuperAdmins() {
         <>
           <Table
             title="Super Admins"
-            data={superAdmins}
+            data={superAdminsList}
+            error={error}
             columns={columns}
             deleteItem={(id) => {
+              dispatch(setModalTitle('Delete'));
+              dispatch(setModalContent('Are you sure you want to delete it?'));
               setIsToConfirm(true);
               setModalDisplay(true);
               setId(id);
-              setChildren('¿Are you sure you want to delete it?');
             }}
             edit="/super-admins/form"
           />
@@ -79,16 +64,16 @@ function SuperAdmins() {
       )}
       {modalDisplay ? (
         <Modal
-          title={'Delete super admin'}
+          title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => deleteItem(id)}
+          onClickFunction={() => removeSuperAdmins(id)}
         >
           {children}
         </Modal>
       ) : null}
     </section>
   );
-}
+};
 
 export default SuperAdmins;

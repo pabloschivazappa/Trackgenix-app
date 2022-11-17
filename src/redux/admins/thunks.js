@@ -45,6 +45,7 @@ export const deleteAdmin = (id) => {
     } catch (error) {
       dispatch(deleteAdminsError(error.toString()));
     }
+    dispatch(getAdmins());
   };
 };
 
