@@ -23,10 +23,11 @@ const ProjectForm = () => {
     clientName: '',
     startDate: '',
     endDate: '',
-    employees: [],
     active: true
   });
+  const [employees, setEmployees] = useState([]);
   const [modalDisplay, setModalDisplay] = useState('');
+  // TODO: get employees from redux and implement select
 
   useEffect(async () => {
     if (isValidId) {
@@ -34,27 +35,32 @@ const ProjectForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
+        console.log('project data', data);
         setProjectBody({
           name: data.data.name,
           clientName: data.data.clientName,
           description: data.data.description,
           startDate: data.data.startDate.substr(0, 10),
-          employees: data.data.employees.filter((item) => item.employee !== null),
           endDate: data.data.endDate.substr(0, 10),
           active: true
         });
+        setEmployees(data.data.employees.filter((item) => item.employee !== null));
       } catch (error) {
         console.error(error);
       }
       dispatch(setFetching(false));
     }
   }, []);
+
   const addProject = () => {
+    console.log('addProject projectBody', projectBody);
+
     dispatch(createProject(projectBody));
     setModalDisplay(true);
   };
 
   const changeProject = () => {
+    console.log('changeProject projectBody', projectBody);
     dispatch(editProject(id, projectBody));
     setModalDisplay(true);
   };
@@ -66,6 +72,50 @@ const ProjectForm = () => {
 
   const onChange = (e) => {
     setProjectBody({ ...projectBody, [e.target.name]: e.target.value });
+  };
+
+  const onChangeEmployee = (e, employee) => {
+    // TODO: considen using the index instead of the id, I think we shouldn't, there should always be
+    setEmployees((employees) => {
+      return employees.map((emp) => {
+        if (emp.employee._id === employee.employee._id) {
+          return {
+            employee: {
+              _id: employee.employee._id,
+              name: employee.employee.name,
+              lastName: employee.employee.lastName,
+              phone: employee.employee.phone,
+              email: employee.employee.email,
+              password: employee.employee.password,
+              dni: employee.employee.dni
+            },
+            role: e.target.name === 'role' ? e.target.value : employee.role,
+            rate: e.target.name === 'rate' ? e.target.value : employee.rate
+          };
+        }
+        return emp;
+      });
+    });
+  };
+
+  useEffect(() => {
+    console.log('project state', projectBody);
+  }, [projectBody]);
+
+  useEffect(() => {
+    console.log('employees state', employees);
+  }, [employees]);
+
+  const deleteEmployee = (e, employee) => {
+    setEmployees((employees) => {
+      return employees.filter((emp) => emp.employee._id !== employee.employee._id);
+    });
+  };
+
+  const addEmployee = () => {
+    setEmployees((employees) => {
+      return [...employees, { employee: {}, rate: 0, role: '' }];
+    });
   };
 
   return (
@@ -106,31 +156,29 @@ const ProjectForm = () => {
             />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
-              {projectBody.employees.map((item, index) => (
+              {employees.map((item, index) => (
                 <div key={index} className={formStyles.employee__form}>
                   <Input
                     title="Employee"
                     name="id"
                     value={item.employee._id}
-                    onChange={() => setProjectBody()}
+                    onChange={(e) => onChangeEmployee(e, item)}
                   />
                   <Input
                     title="Rate"
                     name="rate"
                     value={item.rate}
-                    onChange={() => setProjectBody()}
+                    onChange={(e) => onChangeEmployee(e, item)}
                   />
                   <Input
                     title="Role"
                     name="role"
                     value={item.role}
-                    onChange={() => setProjectBody()}
+                    onChange={(e) => onChangeEmployee(e, item)}
                   />
                   <FunctionalButton
                     title="Delete"
-                    action={(e) => {
-                      e.target.closest('div').remove();
-                    }}
+                    action={(e) => deleteEmployee(e, item)}
                     buttonType="form__button__add__employee"
                     buttonColor="red"
                   />
@@ -138,7 +186,7 @@ const ProjectForm = () => {
               ))}
               <FunctionalButton
                 title="Add"
-                action={() => setProjectBody()}
+                action={addEmployee}
                 buttonType="form__button__add__employee"
                 buttonColor="grayish-navy"
               />
