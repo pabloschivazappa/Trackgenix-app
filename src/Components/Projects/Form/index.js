@@ -27,7 +27,6 @@ const ProjectForm = () => {
   });
   const [employees, setEmployees] = useState([]);
   const [modalDisplay, setModalDisplay] = useState('');
-  // TODO: get employees from redux and implement select
 
   useEffect(async () => {
     if (isValidId) {
@@ -75,7 +74,6 @@ const ProjectForm = () => {
   };
 
   const onChangeEmployee = (e, employee) => {
-    // TODO: considen using the index instead of the id, I think we shouldn't, there should always be
     setEmployees((employees) => {
       return employees.map((emp) => {
         if (emp.employee._id === employee.employee._id) {
