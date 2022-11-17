@@ -6,7 +6,14 @@ import {
   DELETE_TASKS_SUCCESS,
   DELETE_TASKS_ERROR,
   SET_MODAL_TITLE,
-  SET_MODAL_CONTENT
+  SET_MODAL_CONTENT,
+  SET_FETCHING_VALUE,
+  POST_TASKS_PENDING,
+  POST_TASKS_SUCCESS,
+  POST_TASKS_ERROR,
+  PUT_TASKS_PENDING,
+  PUT_TASKS_SUCCESS,
+  PUT_TASKS_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -48,7 +55,6 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: false,
         error: '',
-        list: [...state.list.filter((tasks) => tasks._id !== action.payload)],
         children: 'Task deleted successfully',
         modalTitle: 'Success'
       };
@@ -56,7 +62,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        error: action.payload,
         children: action.payload,
         modalTitle: 'Error'
       };
@@ -73,6 +78,54 @@ const reducer = (state = INITIAL_STATE, action) => {
         fetching: false,
         error: '',
         children: action.payload
+      };
+    case SET_FETCHING_VALUE:
+      return {
+        ...state,
+        fetching: action.payload
+      };
+    case POST_TASKS_PENDING:
+      return {
+        ...state,
+        fetching: true
+      };
+    case POST_TASKS_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        list: [...state.list, action.payload],
+        children: 'Task created successfully',
+        modalTitle: 'Success'
+      };
+    case POST_TASKS_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        children: action.payload,
+        list: [],
+        modalTitle: 'Error'
+      };
+    case PUT_TASKS_PENDING:
+      return {
+        ...state,
+        fetching: true
+      };
+    case PUT_TASKS_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        list: [...state.list, action.payload],
+        children: 'Task edited successfully',
+        modalTitle: 'Success'
+      };
+    case PUT_TASKS_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        children: action.payload,
+        error: action.payload,
+        list: [],
+        modalTitle: 'Error'
       };
     default:
       return state;

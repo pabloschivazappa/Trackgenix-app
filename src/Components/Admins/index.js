@@ -28,7 +28,6 @@ const Admins = () => {
     dispatch(deleteAdmin(id));
     setIsToConfirm(false);
     setModalDisplay(true);
-    dispatch(getAdmins());
   };
 
   const columns = [

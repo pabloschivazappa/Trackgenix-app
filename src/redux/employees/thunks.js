@@ -4,7 +4,13 @@ import {
   getEmployeesError,
   deleteEmployeesLoading,
   deleteEmployeesSuccess,
-  deleteEmployeesError
+  deleteEmployeesError,
+  postEmployeesLoading,
+  postEmployeesSuccess,
+  postEmployeesError,
+  putEmployeesLoading,
+  putEmployeesSuccess,
+  putEmployeesError
 } from './actions';
 
 export const getEmployees = () => {
@@ -16,7 +22,7 @@ export const getEmployees = () => {
       if (response.ok) {
         dispatch(getEmployeesSuccess(data.data));
       } else {
-        dispatch(getEmployeesError(data.error.toString()));
+        dispatch(getEmployeesError(data.message.toString()));
       }
     } catch (error) {
       dispatch(getEmployeesError(error.toString()));
@@ -39,6 +45,47 @@ export const deleteEmployees = (id) => {
       }
     } catch (error) {
       dispatch(deleteEmployeesError(error.toString()));
+    }
+  };
+};
+
+export const createEmployee = (employee) => {
+  return async (dispatch) => {
+    dispatch(postEmployeesLoading());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employee)
+      });
+      const data = await response.json();
+      dispatch(postEmployeesSuccess(data.data));
+    } catch (error) {
+      dispatch(postEmployeesError(error.toString()));
+    }
+  };
+};
+
+export const editEmployee = (id, employee) => {
+  return async (dispatch) => {
+    dispatch(putEmployeesLoading());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(employee)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(putEmployeesSuccess(data.data));
+      } else {
+        dispatch(putEmployeesError(data.message));
+      }
+    } catch (error) {
+      dispatch(putEmployeesError(error.toString()));
     }
   };
 };
