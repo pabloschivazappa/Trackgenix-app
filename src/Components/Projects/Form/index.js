@@ -51,44 +51,40 @@ const ProjectForm = () => {
     }
   }, []);
 
-  const addProject = () => {
-    console.log('addProject projectBody', projectBody);
-
-    dispatch(createProject(projectBody));
+  const addProject = (body) => {
+    dispatch(createProject(body));
     setModalDisplay(true);
   };
 
-  const changeProject = () => {
-    console.log('changeProject projectBody', projectBody);
-    dispatch(editProject(id, projectBody));
+  const changeProject = (body) => {
+    dispatch(editProject(id, body));
     setModalDisplay(true);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    !isValidId ? addProject(projectBody) : changeProject(projectBody);
+
+    const unpopulatedEmployees = employees.map((emp) => {
+      return { role: emp.role, rate: emp.rate, employee: emp.employee._id };
+    });
+
+    const body = { ...projectBody, employees: unpopulatedEmployees };
+    !isValidId ? addProject(body) : changeProject(body);
   };
 
   const onChange = (e) => {
     setProjectBody({ ...projectBody, [e.target.name]: e.target.value });
   };
 
-  const onChangeEmployee = (e, employee) => {
+  const onChangeEmployee = (event, employee) => {
+    // TODO: consider using the index instead of the id, I think we shouldn't, dunno
     setEmployees((employees) => {
       return employees.map((emp) => {
         if (emp.employee._id === employee.employee._id) {
           return {
-            employee: {
-              _id: employee.employee._id,
-              name: employee.employee.name,
-              lastName: employee.employee.lastName,
-              phone: employee.employee.phone,
-              email: employee.employee.email,
-              password: employee.employee.password,
-              dni: employee.employee.dni
-            },
-            role: e.target.name === 'role' ? e.target.value : employee.role,
-            rate: e.target.name === 'rate' ? e.target.value : employee.rate
+            employee: { ...employee.employee },
+            role: event.target.name === 'role' ? event.target.value : employee.role,
+            rate: event.target.name === 'rate' ? event.target.value : employee.rate
           };
         }
         return emp;
@@ -96,6 +92,7 @@ const ProjectForm = () => {
     });
   };
 
+  //TODO: remove
   useEffect(() => {
     console.log('project state', projectBody);
   }, [projectBody]);
@@ -104,14 +101,14 @@ const ProjectForm = () => {
     console.log('employees state', employees);
   }, [employees]);
 
-  const deleteEmployee = (e, employee) => {
+  const deleteEmployee = (employee) => {
     setEmployees((employees) => {
       return employees.filter((emp) => emp.employee._id !== employee.employee._id);
     });
   };
 
   const addEmployee = () => {
-    setEmployees((employees) => {
+    setEmployees(() => {
       return [...employees, { employee: {}, rate: 0, role: '' }];
     });
   };
@@ -159,7 +156,7 @@ const ProjectForm = () => {
                   <Input
                     title="Employee"
                     name="id"
-                    value={item.employee._id}
+                    value={item.employee.name}
                     onChange={(e) => onChangeEmployee(e, item)}
                   />
                   <Input
@@ -176,7 +173,7 @@ const ProjectForm = () => {
                   />
                   <FunctionalButton
                     title="Delete"
-                    action={(e) => deleteEmployee(e, item)}
+                    action={() => deleteEmployee(item)}
                     buttonType="form__button__add__employee"
                     buttonColor="red"
                   />
