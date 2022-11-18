@@ -77,12 +77,14 @@ const ProjectForm = () => {
   };
 
   const onChangeEmployee = (event, employee) => {
-    // TODO: consider using the index instead of the id, I think we shouldn't, dunno
     setEmployees((employees) => {
       return employees.map((emp) => {
         if (emp.employee._id === employee.employee._id) {
           return {
-            employee: { ...employee.employee },
+            employee: {
+              ...employee.employee,
+              _id: event.target.name === 'id' ? event.target.value : employee.employee._id
+            },
             role: event.target.name === 'role' ? event.target.value : employee.role,
             rate: event.target.name === 'rate' ? event.target.value : employee.rate
           };
@@ -92,7 +94,6 @@ const ProjectForm = () => {
     });
   };
 
-  //TODO: remove
   useEffect(() => {
     console.log('project state', projectBody);
   }, [projectBody]);
@@ -156,7 +157,7 @@ const ProjectForm = () => {
                   <Input
                     title="Employee"
                     name="id"
-                    value={item.employee.name}
+                    value={item.employee._id}
                     onChange={(e) => onChangeEmployee(e, item)}
                   />
                   <Input
