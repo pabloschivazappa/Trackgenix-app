@@ -4,7 +4,13 @@ import {
   getProjectsError,
   deleteProjectsPending,
   deleteProjectsSuccess,
-  deleteProjectsError
+  deleteProjectsError,
+  postProjectsPending,
+  postProjectsSuccess,
+  postProjectsError,
+  putProjectsPending,
+  putProjectsSuccess,
+  putProjectsError
 } from './actions';
 
 export const getProjects = () => {
@@ -38,6 +44,48 @@ export const deleteProject = (id) => {
       }
     } catch (error) {
       dispatch(deleteProjectsError(error.toString()));
+    }
+  };
+};
+
+export const createProject = (project) => {
+  return async (dispatch) => {
+    dispatch(postProjectsPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(project)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(postProjectsSuccess(data.data));
+      } else {
+        dispatch(postProjectsError(data.message));
+      }
+    } catch (error) {
+      dispatch(postProjectsError(error.toString()));
+    }
+  };
+};
+
+export const editProject = (id, project) => {
+  return async (dispatch) => {
+    dispatch(putProjectsPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(project)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(putProjectsSuccess(data.data));
+      } else {
+        dispatch(putProjectsError(data.message));
+      }
+    } catch (error) {
+      dispatch(putProjectsError(error.toString()));
     }
   };
 };
