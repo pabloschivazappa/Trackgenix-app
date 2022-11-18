@@ -34,7 +34,6 @@ You will also see any lint errors in the console.
 
 ### Members
 
-(example)
 |Photo | Name  | Mail | Github
 | :-----: | :-----: | :-----: | :-----: |
 <img src="https://avatars.githubusercontent.com/u/108810156?v=4" height="50" width="50">| Amilcar Hernandez | amilcarjh24@gmail.com | [@amilcarHernandez24](https://github.com/amilcarHernandez24)
