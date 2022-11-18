@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Form from '../../Shared/Form';
-import Modal from '../../Shared/Modal';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Form from 'Components/Shared/Form';
+import Modal from 'Components/Shared/Modal';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { createAdmin, editAdmin } from '../../../redux/admins/thunks';
-import { setFetching } from '../../../redux/admins/actions';
+import { createAdmin, editAdmin } from 'redux/admins/thunks';
+import { setFetching } from 'redux/admins/actions';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
