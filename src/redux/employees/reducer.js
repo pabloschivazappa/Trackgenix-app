@@ -35,6 +35,7 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
+        error: '',
         list: action.payload
       };
     case GET_EMPLOYEES_ERROR:
@@ -53,7 +54,6 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        list: state.list.filter((employee) => employee._id !== action.payload),
         children: 'Employee deleted succesfully',
         modalTitle: 'Succes'
       };

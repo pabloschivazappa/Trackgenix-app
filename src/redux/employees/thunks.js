@@ -62,7 +62,11 @@ export const createEmployee = (employee) => {
         body: JSON.stringify(employee)
       });
       const data = await response.json();
-      dispatch(postEmployeesSuccess(data.data));
+      if (response.ok) {
+        dispatch(postEmployeesSuccess(data.data));
+      } else {
+        dispatch(postEmployeesError(data.message));
+      }
     } catch (error) {
       dispatch(postEmployeesError(error.toString()));
     }
