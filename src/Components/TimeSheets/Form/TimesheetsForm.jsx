@@ -37,6 +37,7 @@ const TimesheetsForm = () => {
     employee: '',
     project: ''
   });
+
   const { register, handleSubmit, reset } = useForm({
     mode: 'onChange',
     defaultValues: values
@@ -84,10 +85,6 @@ const TimesheetsForm = () => {
     dispatch(editTimesheet(id, data));
     setModalDisplay(true);
   };
-
-  /*  const onChange = (e) => {
-    setTimesheetsInput({ ...timesheetInput, [e.target.name]: e.target.value });
-  }; */
 
   const onSubmit = async (data) => {
     console.log(values);
