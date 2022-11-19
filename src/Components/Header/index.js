@@ -28,7 +28,12 @@ function Header() {
       </div>
       <nav className={styles.navbar}>
         <div className={styles.appName}>
-          Track<span>GENIX</span>
+          <a
+            href="/home?id=637556a4d6689c383fac4a66"
+            style={{ textDecoration: 'none', color: 'black' }}
+          >
+            Track<span>GENIX</span>
+          </a>
         </div>
         <ul className={styles.rutes}>
           <li>
