@@ -25,7 +25,7 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle }) => {
           <FunctionalButton
             action={onSubmitFunction}
             buttonType="form__button"
-            buttonColor="grayish-navy"
+            buttonColor="green"
             type="submit"
             title={buttonMessage}
           />

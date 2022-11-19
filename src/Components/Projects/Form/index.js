@@ -184,7 +184,7 @@ const ProjectForm = () => {
                 title="Add"
                 action={addEmployee}
                 buttonType="form__button__add__employee"
-                buttonColor="grayish-navy"
+                buttonColor="green"
               />
             </div>
           </>
