@@ -44,8 +44,7 @@ function TaskForm() {
     setModalDisplay(true);
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     urlID ? putTasks() : postTasks();
   };
 

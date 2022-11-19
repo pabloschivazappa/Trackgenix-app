@@ -62,8 +62,7 @@ const SuperAdminsForm = () => {
     setSuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     rowId ? putSuperAdmin() : addSuperAdmin();
   };
 

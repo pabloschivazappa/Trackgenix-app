@@ -1,10 +1,10 @@
 import styles from '../Select/select.module.css';
 
-const Select = ({ input, onChange, list, name, kind, id = null, title }) => {
+const Select = ({ list, name, kind, id = null, title, register }) => {
   return (
     <label className={styles.label}>
       {title}
-      <select name={name} value={input} onChange={onChange} className={styles.select}>
+      <select name={name} className={styles.select} {...register(name)}>
         {!id && <option hidden>- Select {name} -</option>}
         <option hidden>- Please select an existing {name} -</option>
         {list.map((item) => (

@@ -61,9 +61,7 @@ const ProjectForm = () => {
     setModalDisplay(true);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = () => {
     const unpopulatedEmployees = employees.map((emp) => {
       return { role: emp.role, rate: emp.rate, employee: emp.employee._id };
     });

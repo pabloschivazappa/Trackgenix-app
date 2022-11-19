@@ -62,8 +62,7 @@ const FormAdmins = () => {
     setAdminInput({ ...adminInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     rowId ? putAdmin() : addAdmin();
   };
 

@@ -23,7 +23,6 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle }) => {
             title="Cancel"
           />
           <FunctionalButton
-            action={onSubmitFunction}
             buttonType="form__button"
             buttonColor="green"
             type="submit"
