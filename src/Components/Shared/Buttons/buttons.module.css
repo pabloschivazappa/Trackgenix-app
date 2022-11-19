@@ -24,12 +24,12 @@
   transition: 0.2s;
 }
 
-.grayish-navy {
+.green {
   color: white;
   background-color: #49A37B;
 }
 
-.grayish-navy:hover {
+.green:hover {
   background-color: #38805f;
 }
 
