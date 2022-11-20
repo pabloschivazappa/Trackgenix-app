@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import formStyles from './form.module.css';
 import Modal from '../../Shared/Modal';
 import Form from '../../Shared/Form';
@@ -17,7 +18,7 @@ const ProjectForm = () => {
   const isValidId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
-  const [projectBody, setProjectBody] = useState({
+  const [values, setValues] = useState({
     name: '',
     description: '',
     clientName: '',
@@ -35,7 +36,7 @@ const ProjectForm = () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
         console.log('project data', data);
-        setProjectBody({
+        setValues({
           name: data.data.name,
           clientName: data.data.clientName,
           description: data.data.description,
@@ -66,13 +67,13 @@ const ProjectForm = () => {
       return { role: emp.role, rate: emp.rate, employee: emp.employee._id };
     });
 
-    const body = { ...projectBody, employees: unpopulatedEmployees };
+    const body = { ...values, employees: unpopulatedEmployees };
     !isValidId ? addProject(body) : changeProject(body);
   };
 
-  const onChange = (e) => {
-    setProjectBody({ ...projectBody, [e.target.name]: e.target.value });
-  };
+  // const onChange = (e) => {
+  //   setValues({ ...values, [e.target.name]: e.target.value });
+  // };
 
   const onChangeEmployee = (event, employee) => {
     setEmployees((employees) => {
@@ -92,9 +93,18 @@ const ProjectForm = () => {
     });
   };
 
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
+  });
+
   useEffect(() => {
-    console.log('project state', projectBody);
-  }, [projectBody]);
+    reset(values);
+  }, [values]);
+
+  useEffect(() => {
+    console.log('project state', values);
+  }, [values]);
 
   useEffect(() => {
     console.log('employees state', employees);
@@ -115,39 +125,17 @@ const ProjectForm = () => {
   return (
     <>
       <Form
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={isValidId ? 'Edit' : 'Create'}
         formTitle={isValidId ? 'Edit Project' : 'Create Project'}
       >
         {!fetching ? (
           <>
-            <Input title="Project Name" name="name" value={projectBody.name} onChange={onChange} />
-            <Input
-              title="Description"
-              name="description"
-              value={projectBody.description}
-              onChange={onChange}
-            />
-            <Input
-              title="Client Name"
-              name="clientName"
-              value={projectBody.clientName}
-              onChange={onChange}
-            />
-            <Input
-              title="Start Date"
-              type="date"
-              name="startDate"
-              value={projectBody.startDate}
-              onChange={onChange}
-            />
-            <Input
-              title="End Date"
-              type="date"
-              name="endDate"
-              value={projectBody.endDate}
-              onChange={onChange}
-            />
+            <Input register={register} title="Project Name" name="name" />
+            <Input register={register} title="Description" name="description" />
+            <Input register={register} title="Client Name" name="clientName" />
+            <Input register={register} title="Start Date" type="date" name="startDate" />
+            <Input register={register} title="End Date" type="date" name="endDate" />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
               {employees.map((item, index) => (
