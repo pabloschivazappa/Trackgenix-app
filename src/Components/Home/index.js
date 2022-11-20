@@ -13,6 +13,8 @@ function Home() {
   const employeeId = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(employeeId);
+  const [employeesFiltered, setEmployeesFiltered] = useState([]);
+  const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -34,29 +36,50 @@ function Home() {
     project.employees.some((element) => element.employee._id === employeeId)
   );
 
-  console.log(projects);
-  console.log(projectsByEmployee);
-
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
-    const projectsFiltered = projectFindById.employees.filter(
-      (employee) => employee._id !== employeeId
+    console.log('projectFindById:' + projectFindById);
+    setEmployeesFiltered(
+      projectFindById.employees.filter((employee) => employee.employee._id !== employeeId)
     );
-    console.log('Projects filtered' + projectsFiltered);
-    dispatch(editProject(projectId, projectsFiltered));
+    console.log('EmployeesFiltered:' + employeesFiltered);
+    if (!employeesFiltered.length) {
+      setUnpopulatedEmployees([]);
+    } else {
+      setUnpopulatedEmployees(
+        employeesFiltered.map((employee) => {
+          return { role: employee.role, rate: employee.rate, employee: employee.employee._id };
+        })
+      );
+    }
+    console.log(unpopulatedEmployees);
+    dispatch(
+      editProject(projectId, {
+        name: projectFindById.name,
+        startDate: projectFindById.startDate,
+        endDate: projectFindById.endDate,
+        description: projectFindById.description,
+        clientName: projectFindById.clientName,
+        active: projectFindById.active,
+        employees: unpopulatedEmployees
+      })
+    );
+    dispatch(getProjects());
     setIsToConfirm(false);
     setModalDisplay(true);
   };
 
   const columns = [
     { heading: 'Name', value: 'name' },
+    { heading: 'Start Date', value: 'startDate' },
+    { heading: 'End Date', value: 'endDate' },
     { heading: 'Description', value: 'description' },
     { heading: 'Client', value: 'clientName' },
     { heading: 'Actions' }
   ];
 
   return (
-    <>
+    <section className={styles.container}>
       {rowId ? (
         !fetching ? (
           <Table
@@ -91,7 +114,7 @@ function Home() {
           {children}
         </Modal>
       ) : null}
-    </>
+    </section>
   );
 }
 
