@@ -34,11 +34,11 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    setProjectsByEmployee(
-      projects.filter((project) =>
+    setProjectsByEmployee((proj) => {
+      proj.filter((project) =>
         project.employees.some((element) => element.employee._id === employeeId)
-      )
-    );
+      );
+    });
   }, [projects]);
 
   const removeProject = (projectId) => {
@@ -75,9 +75,9 @@ function Home() {
 
   const columns = [
     { heading: 'Name', value: 'name' },
+    { heading: 'Description', value: 'description' },
     { heading: 'Start Date', value: 'startDate' },
     { heading: 'End Date', value: 'endDate' },
-    { heading: 'Description', value: 'description' },
     { heading: 'Client', value: 'clientName' },
     { heading: 'Actions' }
   ];
@@ -115,7 +115,6 @@ function Home() {
           isToConfirm={isToConfirm}
           onClickFunction={() => {
             removeProject(projectId);
-            dispatch(getProjects());
           }}
         >
           {children}

@@ -81,6 +81,7 @@ export const editProject = (id, project) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putProjectsSuccess(data.data));
+        dispatch(getProjects());
       } else {
         dispatch(putProjectsError(data.message));
       }
