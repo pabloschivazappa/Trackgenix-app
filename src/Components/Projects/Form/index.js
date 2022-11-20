@@ -9,6 +9,8 @@ import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
+import { Select } from 'Components/Shared';
+import { getEmployees } from 'redux/employees/thunks';
 
 const ProjectForm = () => {
   const urlValues = window.location.search;
@@ -16,42 +18,60 @@ const ProjectForm = () => {
   const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const isValidId = idRegEx.test(id);
-  const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+  const { children, modalTitle, fetching } = useSelector((state) => state.projects);
+  const { list: employeesList } = useSelector((state) => state.employees);
+  const roles = ['QA', 'DEV', 'TL'];
+  const [modalDisplay, setModalDisplay] = useState('');
   const [values, setValues] = useState({
     name: '',
     description: '',
     clientName: '',
     startDate: '',
     endDate: '',
+    employees: [
+      {
+        role: '',
+        employee: '',
+        rate: ''
+      }
+    ],
     active: true
   });
-  /* const [employees, setEmployees] = useState([]); */
-  const [modalDisplay, setModalDisplay] = useState('');
+
   const { register, handleSubmit, reset, control } = useForm({
     mode: 'onChange',
     defaultValues: values
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'employees' // unique name for your Field Array
+    name: 'employees'
   });
 
   useEffect(async () => {
+    dispatch(getEmployees());
     if (isValidId) {
       dispatch(setFetching(true));
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
+        console.log(data);
         setValues({
           name: data.data.name,
           clientName: data.data.clientName,
           description: data.data.description,
           startDate: data.data.startDate.substr(0, 10),
           endDate: data.data.endDate.substr(0, 10),
+          employees: data.data?.employees.map((employee) => {
+            return {
+              rate: employee.rate,
+              role: employee.role,
+              employee: employee.employee?._id
+            };
+          }),
           active: true
         });
-        /* setValues(data.data.employees.filter((item) => item.employee !== null)); */
       } catch (error) {
         console.error(error);
       }
@@ -59,72 +79,23 @@ const ProjectForm = () => {
     }
   }, []);
 
-  const addProject = (data) => {
-    dispatch(createProject(data));
-    setModalDisplay(true);
-  };
-
-  const changeProject = (data) => {
-    dispatch(editProject(id, data));
-    setModalDisplay(true);
-  };
-
-  const onSubmit = async (data) => {
-    /* const unpopulatedEmployees = employees.map((emp) => {
-      return { role: emp.role, rate: emp.rate, employee: emp.employee._id };
-    }); */
-
-    /* const body = { ...data }; */
-    console.log(data);
-    !isValidId ? addProject(data) : changeProject(data);
-  };
-
-  // const onChange = (e) => {
-  //   setValues({ ...values, [e.target.name]: e.target.value });
-  // };
-
-  /* const onChangeEmployee = (event, employee) => {
-    setEmployees((employees) => {
-      return employees.map((emp) => {
-        if (emp.employee._id === employee.employee._id) {
-          return {
-            employee: {
-              ...employee.employee,
-              _id: event.target.name === 'id' ? event.target.value : employee.employee._id
-            },
-            role: event.target.name === 'role' ? event.target.value : employee.role,
-            rate: event.target.name === 'rate' ? event.target.value : employee.rate
-          };
-        }
-        return emp;
-      });
-    });
-  }; */
-
   useEffect(() => {
     reset(values);
   }, [values]);
 
-  /*   useEffect(() => {
-    console.log('project state', values);
-  }, [values]);
+  const addProject = (data) => {
+    dispatch(createProject(data));
+  };
 
-  useEffect(() => {
-    console.log('employees state', employees);
-  }, [employees]); */
+  const changeProject = (data) => {
+    dispatch(editProject(id, data));
+  };
 
-  /* const deleteEmployee = (employee) => {
-    console.log(employee);
-    setEmployees((employees) => {
-      return employees.filter((emp) => emp.employee._id !== employee.employee._id);
-    });
-  }; */
-
-  /* const addEmployee = () => {
-    setEmployees(() => {
-      return [...employees, { employee: {}, rate: 0, role: '' }];
-    });
-  }; */
+  const onSubmit = async (data) => {
+    console.log(data);
+    !isValidId ? addProject(data) : changeProject(data);
+    setModalDisplay(true);
+  };
 
   return (
     <>
@@ -142,17 +113,26 @@ const ProjectForm = () => {
             <Input register={register} title="End Date" type="date" name="endDate" />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
-              {fields.map((item, index) => (
-                <div key={index} className={formStyles.employee__form}>
-                  {/* <Input title="Employee" name="id" />
-                  <Input title="Rate" name="rate" />
-                  <Input title="Role" name="role" /> */}
-                  <input title="Employee" {...register(`employees[${index}].employee`)}></input>
-                  <label>
-                    Rate
-                    <input {...register(`employees[${index}].rate`)}></input>
+              {fields.map((field, index) => (
+                <div key={field.id} className={formStyles.employee__form}>
+                  <Select
+                    register={register}
+                    list={employeesList}
+                    name={`employees[${index}].employee`}
+                    kind="name"
+                    id={id}
+                    title="Employee"
+                  />
+                  <Input register={register} title="Rate" name={`employees[${index}].rate`} />
+                  <label className={formStyles.label}>
+                    Role
+                    <select className={formStyles.select} {...register(`employees[${index}].role`)}>
+                      <option hidden>- Select a role -</option>
+                      {roles.map((role, index) => (
+                        <option key={index}>{role}</option>
+                      ))}
+                    </select>
                   </label>
-                  <input title="Role" {...register(`employees[${index}].role`)}></input>
                   <FunctionalButton
                     title="Delete"
                     action={() => remove(index)}
@@ -163,7 +143,7 @@ const ProjectForm = () => {
               ))}
               <FunctionalButton
                 title="Add"
-                action={append}
+                action={() => append()}
                 buttonType="form__button__add__employee"
                 buttonColor="green"
               />

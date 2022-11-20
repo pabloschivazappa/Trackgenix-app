@@ -67,7 +67,6 @@ const TimesheetsForm = () => {
       } catch (error) {
         console.error(error);
       }
-      console.log(values);
       dispatch(setFetching(false));
     }
   }, []);
@@ -87,7 +86,6 @@ const TimesheetsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(values);
     haveId ? putTimesheet(data) : addTimesheet(data);
   };
 
