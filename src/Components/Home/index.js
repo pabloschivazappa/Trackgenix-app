@@ -15,6 +15,7 @@ function Home() {
   const rowId = idRegEx.test(employeeId);
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
+  const [projectsByEmployee, setProjectsByEmployee] = useState([]);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -32,9 +33,13 @@ function Home() {
     dispatch(getProjects());
   }, []);
 
-  const projectsByEmployee = projects.filter((project) =>
-    project.employees.some((element) => element.employee._id === employeeId)
-  );
+  useEffect(() => {
+    setProjectsByEmployee(
+      projects.filter((project) =>
+        project.employees.some((element) => element.employee._id === employeeId)
+      )
+    );
+  }, [projects]);
 
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
@@ -64,7 +69,6 @@ function Home() {
         employees: unpopulatedEmployees
       })
     );
-    dispatch(getProjects());
     setIsToConfirm(false);
     setModalDisplay(true);
   };
@@ -109,7 +113,10 @@ function Home() {
           title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
-          onClickFunction={() => removeProject(projectId)}
+          onClickFunction={() => {
+            removeProject(projectId);
+            dispatch(getProjects());
+          }}
         >
           {children}
         </Modal>
