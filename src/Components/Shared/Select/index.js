@@ -1,4 +1,4 @@
-import styles from '../Select/select.module.css';
+import styles from 'Components/Shared/Select/select.module.css';
 
 const Select = ({ list, name, kind, id = null, title, register }) => {
   return (
