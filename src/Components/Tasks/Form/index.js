@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Modal from 'Components/Shared/Modal';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTasks, editTasks } from '../../../redux/tasks/thunks';
-import { setFetching } from '../../../redux/tasks/actions';
+import { createTasks, editTasks } from 'redux/tasks/thunks';
+import { setFetching } from 'redux/tasks/actions';
+import { useForm } from 'react-hook-form';
 
 function TaskForm() {
   const urlValues = window.location.search;
@@ -14,11 +15,12 @@ function TaskForm() {
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const { children, modalTitle, fetching } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
-
-  const [descriptionValue, setDescriptionValue] = useState({
-    description: ''
-  });
+  const [value, setValue] = useState('');
   const [modalDisplay, setModalDisplay] = useState('');
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: value
+  });
 
   useEffect(async () => {
     if (idRegEx.test(urlID)) {
@@ -26,7 +28,7 @@ function TaskForm() {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
-        setDescriptionValue({ description: data.data.description });
+        setValue({ description: data.data.description });
       } catch (error) {
         console.error(error);
       }
@@ -34,40 +36,34 @@ function TaskForm() {
     }
   }, []);
 
-  const postTasks = () => {
-    dispatch(createTasks(descriptionValue));
+  useEffect(() => {
+    reset(value);
+  }, [value]);
+
+  const postTasks = (data) => {
+    dispatch(createTasks(data));
     setModalDisplay(true);
   };
 
-  const putTasks = () => {
-    dispatch(editTasks(urlID, descriptionValue));
+  const putTasks = (data) => {
+    dispatch(editTasks(urlID, data));
     setModalDisplay(true);
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    urlID ? putTasks() : postTasks();
-  };
-
-  const changeDescription = (e) => {
-    setDescriptionValue(e.target.value);
+  const onSubmit = async (data) => {
+    urlID ? putTasks(data) : postTasks(data);
   };
 
   return (
     <>
       <Form
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
         formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
       >
         {!fetching ? (
           <>
-            <Input
-              title="Description"
-              name="description"
-              value={descriptionValue.description}
-              onChange={changeDescription}
-            />
+            <Input title="Description" name="description" register={register} />
           </>
         ) : (
           <Spinner />

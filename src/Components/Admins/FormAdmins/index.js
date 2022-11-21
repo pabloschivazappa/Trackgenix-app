@@ -6,6 +6,7 @@ import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin } from 'redux/admins/thunks';
 import { setFetching } from 'redux/admins/actions';
+import { useForm } from 'react-hook-form';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -15,8 +16,8 @@ const FormAdmins = () => {
   const rowId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
-
-  const [adminInput, setAdminInput] = useState({
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [values, setValues] = useState({
     name: '',
     lastName: '',
     email: '',
@@ -25,7 +26,10 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  const [modalDisplay, setModalDisplay] = useState('');
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
+  });
 
   useEffect(async () => {
     if (rowId) {
@@ -33,7 +37,7 @@ const FormAdmins = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
-        setAdminInput({
+        setValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
@@ -48,51 +52,39 @@ const FormAdmins = () => {
     }
   }, []);
 
-  const addAdmin = () => {
-    dispatch(createAdmin(adminInput));
+  useEffect(() => {
+    reset(values);
+  }, [values]);
+
+  const addAdmin = (data) => {
+    dispatch(createAdmin(data));
     setModalDisplay(true);
   };
 
-  const putAdmin = () => {
-    dispatch(editAdmin(id, adminInput));
+  const putAdmin = (data) => {
+    dispatch(editAdmin(id, data));
     setModalDisplay(true);
   };
 
-  const onChange = (e) => {
-    setAdminInput({ ...adminInput, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    rowId ? putAdmin() : addAdmin();
+  const onSubmit = async (data) => {
+    rowId ? putAdmin(data) : addAdmin(data);
   };
 
   return (
     <>
       <Form
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
       >
         {!fetching ? (
           <>
-            <Input name="name" title="Name" value={adminInput.name} onChange={onChange} />
-            <Input
-              name="lastName"
-              title="Last Name"
-              value={adminInput.lastName}
-              onChange={onChange}
-            />
-            <Input name="email" title="Email" value={adminInput.email} onChange={onChange} />
-            <Input
-              name="password"
-              title="Password"
-              value={adminInput.password}
-              onChange={onChange}
-              type="password"
-            />
-            <Input name="dni" title="DNI" value={adminInput.dni} onChange={onChange} />
-            <Input name="phone" title="Phone" value={adminInput.phone} onChange={onChange} />
+            <Input register={register} name="lastName" title="Last Name" />
+            <Input register={register} name="name" title="Name" />
+            <Input register={register} name="email" title="Email" />
+            <Input register={register} name="password" title="Password" type="password" />
+            <Input register={register} name="dni" title="DNI" />
+            <Input register={register} name="phone" title="Phone" />
           </>
         ) : (
           <Spinner />
