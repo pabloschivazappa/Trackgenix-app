@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEmployees, deleteEmployees } from '../../redux/employees/thunks';
-import styles from './employees.module.css';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
-import Table from '../Shared/Table';
-import { setModalTitle, setModalContent } from '../../redux/employees/actions';
+import { getEmployees, deleteEmployees } from 'redux/employees/thunks';
+import styles from 'Components/Employees/employees.module.css';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
+import { setModalTitle, setModalContent } from 'redux/employees/actions';
 
 function Employees() {
   const {

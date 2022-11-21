@@ -1,11 +1,11 @@
-import styles from './time-sheets.module.css';
-import Spinner from '../Shared/Spinner';
 import { useEffect, useState } from 'react';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
+import styles from 'Components/TimeSheets/time-sheets.module.css';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
+import Modal from 'Components/Shared/Modal';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimesheets, deleteTimesheet } from '../../redux/timeSheets/thunks';
-import { setModalTitle, setModalContent } from '../../redux/timeSheets/actions';
+import { getTimesheets, deleteTimesheet } from 'redux/timeSheets/thunks';
+import { setModalTitle, setModalContent } from 'redux/timeSheets/actions';
 
 const TimeSheets = () => {
   const {

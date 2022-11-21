@@ -1,4 +1,4 @@
-import styles from './spinner.module.css';
+import styles from 'Components/Shared/Spinner/spinner.module.css';
 
 function Spinner() {
   return <div className={styles.loader}></div>;
