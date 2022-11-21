@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSuperAdmin, editSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { setFetching } from '../../../redux/superAdmins/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/SuperAdmins/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const SuperAdminsForm = () => {
   const urlValues = window.location.search;
@@ -27,6 +29,17 @@ const SuperAdminsForm = () => {
   });
 
   const [modalDisplay, setModalDisplay] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: values
+  });
 
   useEffect(async () => {
     if (rowId) {
@@ -53,11 +66,6 @@ const SuperAdminsForm = () => {
     reset(values);
   }, [values]);
 
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onChange',
-    defaultValues: values
-  });
-
   const addSuperAdmin = (data) => {
     dispatch(createSuperAdmin(data));
     setModalDisplay(true);
@@ -81,12 +89,23 @@ const SuperAdminsForm = () => {
       >
         {!fetching ? (
           <>
-            <Input register={register} name="name" title="Name" />
-            <Input register={register} name="lastName" title="Last Name" />
-            <Input register={register} name="email" title="Email" />
-            <Input register={register} name="password" title="Password" type="password" />
-            <Input register={register} name="dni" title="DNI" />
-            <Input register={register} name="phone" title="Phone" />
+            <Input
+              register={register}
+              name="lastName"
+              title="Last Name"
+              error={errors.lastName?.message}
+            />
+            <Input register={register} name="name" title="Name" error={errors.name?.message} />
+            <Input register={register} name="email" title="Email" error={errors.email?.message} />
+            <Input
+              register={register}
+              name="password"
+              title="Password"
+              type="password"
+              error={errors.password?.message}
+            />
+            <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
+            <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>
         ) : (
           <Spinner />

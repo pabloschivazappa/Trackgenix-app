@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, editEmployee } from '../../../redux/employees/thunks';
 import { setFetching } from '../../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/Employees/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeeForm() {
   const dispatch = useDispatch();
@@ -26,8 +28,14 @@ function EmployeeForm() {
     phone: ''
   });
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -79,12 +87,23 @@ function EmployeeForm() {
       >
         {!fetching ? (
           <>
-            <Input register={register} name="name" title="Name" />
-            <Input register={register} name="lastName" title="Last Name" />
-            <Input register={register} name="email" title="Email" />
-            <Input register={register} name="password" title="Password" type="password" />
-            <Input register={register} name="dni" title="DNI" />
-            <Input register={register} name="phone" title="Phone" />
+            <Input
+              register={register}
+              name="lastName"
+              title="Last Name"
+              error={errors.lastName?.message}
+            />
+            <Input register={register} name="name" title="Name" error={errors.name?.message} />
+            <Input register={register} name="email" title="Email" error={errors.email?.message} />
+            <Input
+              register={register}
+              name="password"
+              title="Password"
+              type="password"
+              error={errors.password?.message}
+            />
+            <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
+            <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>
         ) : (
           <Spinner />
