@@ -56,7 +56,6 @@ const ProjectForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
-        console.log(data);
         setValues({
           name: data.data.name,
           clientName: data.data.clientName,
@@ -92,7 +91,6 @@ const ProjectForm = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     !isValidId ? addProject(data) : changeProject(data);
     setModalDisplay(true);
   };
