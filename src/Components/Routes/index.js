@@ -16,7 +16,7 @@ import Tasks from '../Tasks/index';
 import TimesheetsForm from '../TimeSheets/Form/TimesheetsForm';
 import ProjectsForm from '../Projects/Form/index';
 import TasksForm from '../Tasks/Form';
-import ProjectTable from 'Components/Projects Table';
+import ProjectTable from 'Components/ProjectsTable';
 
 const Routes = () => {
   return (

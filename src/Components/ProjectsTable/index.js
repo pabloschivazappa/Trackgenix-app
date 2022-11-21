@@ -25,7 +25,6 @@ function ProjectTable() {
 
   useEffect(() => {
     dispatch(getProjects());
-    console.log(projects);
   }, []);
 
   useEffect(() => {
@@ -73,11 +72,17 @@ function ProjectTable() {
   };
 
   const columns = [
-    { heading: 'Name', value: 'name' },
+    { heading: 'Project name', value: 'name' },
+    {
+      heading: 'Role',
+      value: 'role'
+    },
+    {
+      heading: 'Rate',
+      value: 'rate'
+    },
     { heading: 'Description', value: 'description' },
     { heading: 'Client', value: 'clientName' },
-    { heading: 'Start Date', value: 'startDate' },
-    { heading: 'End Date', value: 'endDate' },
     { heading: 'Actions' }
   ];
 
@@ -85,10 +90,10 @@ function ProjectTable() {
     <section className={styles.container}>
       {!fetching ? (
         <Table
-          title="Projects by Employee"
+          title="Your projects"
           data={projectsByEmployee}
           columns={columns}
-          error={error}
+          error={!projectsByEmployee.length ? `You don't have any project` : error}
           deleteItem={(projectId) => {
             dispatch(setModalTitle('Delete'));
             dispatch(setModalContent('Are you sure you want to delete it?'));
@@ -97,6 +102,7 @@ function ProjectTable() {
             setProjectId(projectId);
           }}
           edit="/projects/form"
+          employeeId={employeeId}
         />
       ) : (
         <Spinner />
