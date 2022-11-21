@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Form from '../../Shared/Form';
-import Modal from '../../Shared/Modal';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Form from 'Components/Shared/Form';
+import Modal from 'Components/Shared/Modal';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { createSuperAdmin, editSuperAdmin } from '../../../redux/superAdmins/thunks';
-import { setFetching } from '../../../redux/superAdmins/actions';
+import { createSuperAdmin, editSuperAdmin } from 'redux/superAdmins/thunks';
+import { setFetching } from 'redux/superAdmins/actions';
 import { useForm } from 'react-hook-form';
 
 const SuperAdminsForm = () => {
