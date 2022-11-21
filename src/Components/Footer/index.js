@@ -32,22 +32,13 @@ function Footer() {
         <div className={styles.copyright}>Copyright © {new Date().getFullYear()} Radium Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            />
+            <i className="fa-brands fa-facebook-f fa-lg"></i>
           </a>
           <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            />
+            <i className="fa-brands fa-twitter fa-lg"></i>
           </a>
           <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            />
+            <i className="fa-brands fa-instagram fa-lg"></i>
           </a>
         </div>
       </div>
