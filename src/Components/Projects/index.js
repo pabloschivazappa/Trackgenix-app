@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import styles from './projects.module.css';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
+import styles from 'Components/Projects/projects.module.css';
+import Table from 'Components/Shared/Table';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProjects, deleteProject } from '../../redux/projects/thunks';
-import { setModalTitle, setModalContent } from '../../redux/projects/actions';
+import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { setModalTitle, setModalContent } from 'redux/projects/actions';
 
 function Projects() {
   const {

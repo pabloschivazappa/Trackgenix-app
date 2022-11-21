@@ -1,21 +1,21 @@
 import React from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import Header from '../Header/index';
-import Footer from '../Footer/index';
-import Admins from '../Admins/index';
-import FormAdmins from '../Admins/FormAdmins';
-import SuperAdmins from '../SuperAdmins/index';
-import SuperAdminsForm from '../SuperAdmins/Form';
-import Home from '../Home/index';
-import styles from './layout.module.css';
-import Employees from '../Employees/index';
-import EmployeesForm from '../Employees/Form';
-import Projects from '../Projects';
-import TimeSheets from '../TimeSheets';
-import Tasks from '../Tasks/index';
-import TimesheetsForm from '../TimeSheets/Form/TimesheetsForm';
-import ProjectsForm from '../Projects/Form/index';
-import TasksForm from '../Tasks/Form';
+import Header from 'Components/Header/index';
+import Footer from 'Components/Footer/index';
+import Admins from 'Components/Admins/index';
+import FormAdmins from 'Components/Admins/FormAdmins';
+import SuperAdmins from 'Components/SuperAdmins/index';
+import SuperAdminsForm from 'Components/SuperAdmins/Form';
+import Home from 'Components/Home/index';
+import styles from 'Components/Routes/layout.module.css';
+import Employees from 'Components/Employees/index';
+import EmployeesForm from 'Components/Employees/Form';
+import Projects from 'Components/Projects';
+import TimeSheets from 'Components/TimeSheets';
+import Tasks from 'Components/Tasks/index';
+import TimesheetsForm from 'Components/TimeSheets/Form/TimesheetsForm';
+import ProjectsForm from 'Components/Projects/Form/index';
+import TasksForm from 'Components/Tasks/Form';
 
 const Routes = () => {
   return (

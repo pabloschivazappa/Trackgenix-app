@@ -1,6 +1,6 @@
 import React from 'react';
-import FunctionalButton from '../Buttons/FunctionalButton';
-import RedirectButton from '../Buttons/RedirectButton';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
+import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './form.module.css';
+import styles from 'Components/Shared/Form/form.module.css';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import { useHistory } from 'react-router-dom';
-import FunctionalButton from '../Buttons/FunctionalButton';
 
 const Form = ({ onSubmitFunction, children, buttonMessage, formTitle }) => {
   let history = useHistory();

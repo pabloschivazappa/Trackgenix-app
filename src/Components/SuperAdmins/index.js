@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import styles from './super-admins.module.css';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
+import styles from 'Components/SuperAdmins/super-admins.module.css';
+import Table from 'Components/Shared/Table';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmin } from '../../redux/superAdmins/thunks';
-import { setModalTitle, setModalContent } from '../../redux/superAdmins/actions';
+import { getSuperAdmins, deleteSuperAdmin } from 'redux/superAdmins/thunks';
+import { setModalTitle, setModalContent } from 'redux/superAdmins/actions';
 
 const SuperAdmins = () => {
   const {

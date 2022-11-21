@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks, deleteTasks } from '../../redux/tasks/thunks';
-import styles from './tasks.module.css';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
-import Spinner from '../Shared/Spinner';
-import { setModalTitle, setModalContent } from '../../redux/tasks/actions';
+import { getTasks, deleteTasks } from 'redux/tasks/thunks';
+import { setModalTitle, setModalContent } from 'redux/tasks/actions';
+import styles from 'Components/Tasks/tasks.module.css';
+import Table from 'Components/Shared/Table';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
 
 function Tasks() {
   const [modalDisplay, setModalDisplay] = useState('');

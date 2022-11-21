@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import formStyles from './form.module.css';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
-import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
+import formStyles from 'Components/Projects/Form/form.module.css';
+import Modal from 'Components/Shared/Modal';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
+import Select from 'Components/Shared/Select';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProject, editProject } from '../../../redux/projects/thunks';
-import { setFetching } from '../../../redux/projects/actions';
-import { Select } from 'Components/Shared';
+import { createProject, editProject } from 'redux/projects/thunks';
+import { setFetching } from 'redux/projects/actions';
 import { getEmployees } from 'redux/employees/thunks';
 
 const ProjectForm = () => {
