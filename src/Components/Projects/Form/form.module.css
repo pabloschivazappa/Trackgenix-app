@@ -54,3 +54,27 @@
   margin: 4px 2px;
   cursor: pointer;
 }
+
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--main-color);
+  font-weight: 600;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.select {
+  align-self: stretch;
+  border: 1px solid transparent;
+  padding: 9px 8px;
+  border-radius: 10px;
+  background-color: #d0d4e4;
+  color: var(--main-color)
+}
+.select:focus {
+  outline: none !important;
+  background-color: #ABB0C3;
+  transition: 0.2s;
+}

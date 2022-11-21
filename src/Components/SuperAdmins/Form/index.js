@@ -6,6 +6,7 @@ import Spinner from '../../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSuperAdmin, editSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { setFetching } from '../../../redux/superAdmins/actions';
+import { useForm } from 'react-hook-form';
 
 const SuperAdminsForm = () => {
   const urlValues = window.location.search;
@@ -16,7 +17,7 @@ const SuperAdminsForm = () => {
   const { children, modalTitle, fetching } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
 
-  const [superAdminInput, setSuperAdminInput] = useState({
+  const [values, setValues] = useState({
     name: '',
     lastName: '',
     email: '',
@@ -33,7 +34,7 @@ const SuperAdminsForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`);
         const data = await response.json();
-        setSuperAdminInput({
+        setValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
@@ -48,51 +49,44 @@ const SuperAdminsForm = () => {
     }
   }, []);
 
-  const addSuperAdmin = () => {
-    dispatch(createSuperAdmin(superAdminInput));
+  useEffect(() => {
+    reset(values);
+  }, [values]);
+
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
+  });
+
+  const addSuperAdmin = (data) => {
+    dispatch(createSuperAdmin(data));
     setModalDisplay(true);
   };
 
-  const putSuperAdmin = () => {
-    dispatch(editSuperAdmin(id, superAdminInput));
+  const putSuperAdmin = (data) => {
+    dispatch(editSuperAdmin(id, data));
     setModalDisplay(true);
   };
 
-  const onChange = (e) => {
-    setSuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    rowId ? putSuperAdmin() : addSuperAdmin();
+  const onSubmit = async (data) => {
+    rowId ? putSuperAdmin(data) : addSuperAdmin(data);
   };
 
   return (
     <>
       <Form
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Super Admin' : 'Create Super Admin'}
       >
         {!fetching ? (
           <>
-            <Input name="name" title="Name" value={superAdminInput.name} onChange={onChange} />
-            <Input
-              name="lastName"
-              title="Last Name"
-              value={superAdminInput.lastName}
-              onChange={onChange}
-            />
-            <Input name="email" title="Email" value={superAdminInput.email} onChange={onChange} />
-            <Input
-              name="password"
-              title="Password"
-              value={superAdminInput.password}
-              onChange={onChange}
-              type="password"
-            />
-            <Input name="dni" title="DNI" value={superAdminInput.dni} onChange={onChange} />
-            <Input name="phone" title="Phone" value={superAdminInput.phone} onChange={onChange} />
+            <Input register={register} name="name" title="Name" />
+            <Input register={register} name="lastName" title="Last Name" />
+            <Input register={register} name="email" title="Email" />
+            <Input register={register} name="password" title="Password" type="password" />
+            <Input register={register} name="dni" title="DNI" />
+            <Input register={register} name="phone" title="Phone" />
           </>
         ) : (
           <Spinner />

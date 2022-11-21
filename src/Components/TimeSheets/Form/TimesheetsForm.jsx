@@ -11,6 +11,8 @@ import { setFetching } from '../../../redux/timeSheets/actions';
 import { getTasks } from '../../../redux/tasks/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getEmployees } from '../../../redux/employees/thunks';
+import { useForm } from 'react-hook-form';
+
 const fixDate = (date) => {
   return date.slice(0, 10);
 };
@@ -27,14 +29,18 @@ const TimesheetsForm = () => {
   const { list: tasksList } = useSelector((state) => state.tasks);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
-
-  const [timesheetInput, setTimesheetsInput] = useState({
-    date: '',
+  const [values, setValues] = useState({
     description: '',
-    task: '',
     hours: '',
+    date: '',
+    task: '',
     employee: '',
     project: ''
+  });
+
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
   });
 
   useEffect(async () => {
@@ -46,7 +52,7 @@ const TimesheetsForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
         const data = await response.json();
-        setTimesheetsInput({
+        setValues({
           description: data.data.description,
           hours: data.data.hours,
           date: fixDate(data.data.date),
@@ -65,51 +71,38 @@ const TimesheetsForm = () => {
     }
   }, []);
 
-  const addTimesheet = () => {
-    dispatch(createTimesheet(timesheetInput));
+  useEffect(() => {
+    reset(values);
+  }, [values]);
+
+  const addTimesheet = (data) => {
+    dispatch(createTimesheet(data));
     setModalDisplay(true);
   };
 
-  const putTimesheet = () => {
-    dispatch(editTimesheet(id, timesheetInput));
+  const putTimesheet = (data) => {
+    dispatch(editTimesheet(id, data));
     setModalDisplay(true);
   };
 
-  const onChange = (e) => {
-    setTimesheetsInput({ ...timesheetInput, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    haveId ? putTimesheet() : addTimesheet();
+  const onSubmit = async (data) => {
+    haveId ? putTimesheet(data) : addTimesheet(data);
   };
 
   return (
     <>
       <Form
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={haveId ? 'Edit' : 'Create'}
         formTitle={haveId ? 'Edit Timesheet' : 'Create Timesheet'}
       >
         {!fetching ? (
           <>
-            <Input
-              title="Description"
-              name="description"
-              value={timesheetInput.description}
-              onChange={onChange}
-            />
-            <Input
-              title="Date"
-              type="date"
-              name="date"
-              value={timesheetInput.date}
-              onChange={onChange}
-            />
-            <Input title="Hours" name="hours" value={timesheetInput.hours} onChange={onChange} />
+            <Input register={register} title="Description" name="description" />
+            <Input register={register} title="Date" type="date" name="date" />
+            <Input register={register} title="Hours" name="hours" />
             <Select
-              input={timesheetInput.task}
-              onChange={onChange}
+              register={register}
               list={tasksList}
               name="task"
               kind="description"
@@ -117,8 +110,7 @@ const TimesheetsForm = () => {
               title="Task"
             />
             <Select
-              input={timesheetInput.employee}
-              onChange={onChange}
+              register={register}
               list={employeesList}
               name="employee"
               kind="name"
@@ -126,8 +118,7 @@ const TimesheetsForm = () => {
               title="Employee"
             />
             <Select
-              input={timesheetInput.project}
-              onChange={onChange}
+              register={register}
               list={projectsList}
               name="project"
               kind="name"
