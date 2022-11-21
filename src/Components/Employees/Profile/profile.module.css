@@ -1,0 +1,17 @@
+.profilePicture{
+    border-radius: 50%;
+    width: 45%;
+}
+
+.formInputs{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5%;
+}
+
+.formColumn{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

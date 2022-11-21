@@ -16,6 +16,7 @@ import Tasks from '../Tasks/index';
 import TimesheetsForm from '../TimeSheets/Form/TimesheetsForm';
 import ProjectsForm from '../Projects/Form/index';
 import TasksForm from '../Tasks/Form';
+import EmployeesProfile from '../Employees/Profile';
 
 const Routes = () => {
   return (
@@ -29,6 +30,7 @@ const Routes = () => {
         <Route exact path="/employees" component={Employees} />
         <Route path="/employees/form" component={EmployeesForm} />
         <Route path="/employees/form?id=" component={EmployeesForm} />
+        <Route path="/employees/profile" component={EmployeesProfile} />
         <Route exact path="/projects" component={Projects} />
         <Route path="/projects/form" component={ProjectsForm} />
         <Route path="/projects/form?id=" component={ProjectsForm} />
