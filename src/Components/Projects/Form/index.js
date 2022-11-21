@@ -11,6 +11,8 @@ import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
 import { Select } from 'Components/Shared';
 import { getEmployees } from 'redux/employees/thunks';
+import { schema } from 'Components/Projects/Form/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const ProjectForm = () => {
   const urlValues = window.location.search;
@@ -39,8 +41,15 @@ const ProjectForm = () => {
     active: true
   });
 
-  const { register, handleSubmit, reset, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    control
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -104,11 +113,38 @@ const ProjectForm = () => {
       >
         {!fetching ? (
           <>
-            <Input register={register} title="Project Name" name="name" />
-            <Input register={register} title="Description" name="description" />
-            <Input register={register} title="Client Name" name="clientName" />
-            <Input register={register} title="Start Date" type="date" name="startDate" />
-            <Input register={register} title="End Date" type="date" name="endDate" />
+            <Input
+              register={register}
+              title="Project Name"
+              name="name"
+              error={errors.name?.message}
+            />
+            <Input
+              register={register}
+              title="Description"
+              name="description"
+              error={errors.description?.message}
+            />
+            <Input
+              register={register}
+              title="Client Name"
+              name="clientName"
+              error={errors.clientName?.message}
+            />
+            <Input
+              register={register}
+              title="Start Date"
+              type="date"
+              name="startDate"
+              error={errors.startDate?.message}
+            />
+            <Input
+              register={register}
+              title="End Date"
+              type="date"
+              name="endDate"
+              error={errors.endDate?.message}
+            />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
               {fields.map((field, index) => (
