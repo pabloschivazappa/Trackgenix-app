@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, editEmployee } from '../../../redux/employees/thunks';
 import { setFetching } from '../../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/Employees/validations';
+import { schema } from 'Components/Employees/Form/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeeForm() {

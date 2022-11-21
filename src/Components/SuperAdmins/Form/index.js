@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSuperAdmin, editSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { setFetching } from '../../../redux/superAdmins/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/SuperAdmins/validations';
+import { schema } from 'Components/SuperAdmins/Form/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const SuperAdminsForm = () => {

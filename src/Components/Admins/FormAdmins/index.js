@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin } from 'redux/admins/thunks';
 import { setFetching } from 'redux/admins/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/Admins/validations';
+import { schema } from 'Components/Admins/FormAdmins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const FormAdmins = () => {

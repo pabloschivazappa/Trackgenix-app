@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createTasks, editTasks } from '../../../redux/tasks/thunks';
 import { setFetching } from '../../../redux/tasks/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/Tasks/Form/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function TaskForm() {
   const urlValues = window.location.search;
@@ -17,8 +19,15 @@ function TaskForm() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const [modalDisplay, setModalDisplay] = useState('');
-  const { register, handleSubmit, reset } = useForm({
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: value
   });
 
@@ -63,7 +72,12 @@ function TaskForm() {
       >
         {!fetching ? (
           <>
-            <Input title="Description" name="description" register={register} />
+            <Input
+              title="Description"
+              name="description"
+              register={register}
+              error={errors.description?.message}
+            />
           </>
         ) : (
           <Spinner />
