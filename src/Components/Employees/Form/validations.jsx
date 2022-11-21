@@ -3,6 +3,7 @@ import Joi from 'joi';
 export const schema = Joi.object({
   name: Joi.string()
     .alphanum()
+    .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
@@ -17,6 +18,7 @@ export const schema = Joi.object({
     }),
   lastName: Joi.string()
     .alphanum()
+    .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
@@ -55,6 +57,7 @@ export const schema = Joi.object({
     }),
   password: Joi.string()
     .alphanum()
+    .trim()
     .min(8)
     .max(50)
     .pattern(/^[a-zA-Z0-9]{8,50}$/)
