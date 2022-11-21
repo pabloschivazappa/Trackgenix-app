@@ -38,12 +38,14 @@
 
 .license {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  width: 100%;
   align-items: center;
   height: 50px;
   width: 90%;
   padding: 0 20px;
-  background-color: #EA3354;
+  background-color: #373867;
+  color: white;
 }
 
 .copyright {
@@ -63,7 +65,7 @@
 
   .license {
     padding: 0 20px;
-    width: calc(60% - 40px);
+    width: calc(100% - 40px);
   }
 
   .socialIcon {
