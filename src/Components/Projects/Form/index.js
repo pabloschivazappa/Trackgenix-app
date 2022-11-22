@@ -31,8 +31,8 @@ const ProjectForm = () => {
     endDate: '',
     employees: [
       {
-        role: '',
-        employee: '',
+        role: '- Select role -',
+        employee: '- Select employee -',
         rate: ''
       }
     ],
@@ -65,7 +65,7 @@ const ProjectForm = () => {
           employees: data.data?.employees.map((employee) => {
             return {
               rate: employee.rate,
-              role: employee.role,
+              role: employee?.role,
               employee: employee.employee?._id
             };
           }),
@@ -125,7 +125,7 @@ const ProjectForm = () => {
                   <label className={formStyles.label}>
                     Role
                     <select className={formStyles.select} {...register(`employees[${index}].role`)}>
-                      <option hidden>- Select a role -</option>
+                      <option>- Select role -</option>
                       {roles.map((role, index) => (
                         <option key={index}>{role}</option>
                       ))}

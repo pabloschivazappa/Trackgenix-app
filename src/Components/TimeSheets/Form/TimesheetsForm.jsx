@@ -33,9 +33,9 @@ const TimesheetsForm = () => {
     description: '',
     hours: '',
     date: '',
-    task: '',
-    employee: '',
-    project: ''
+    task: '- Select task -',
+    employees: '- Select employees -',
+    project: '- Select project -'
   });
 
   const { register, handleSubmit, reset } = useForm({
