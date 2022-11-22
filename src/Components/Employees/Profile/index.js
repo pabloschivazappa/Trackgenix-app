@@ -7,6 +7,7 @@ import Spinner from '../../Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { editEmployee } from '../../../redux/employees/thunks';
 import { setFetching } from '../../../redux/employees/actions';
+import { useForm } from 'react-hook-form';
 
 function EmployeesProfile() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function EmployeesProfile() {
 
   const [modalDisplay, setModalDisplay] = useState('');
 
-  const [employeeInput, setEmployeeInput] = useState({
+  const [values, setValues] = useState({
     name: '',
     lastName: '',
     email: '',
@@ -26,13 +27,18 @@ function EmployeesProfile() {
     phone: ''
   });
 
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
+  });
+
   useEffect(async () => {
     if (rowId) {
       dispatch(setFetching(true));
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
         const data = await response.json();
-        setEmployeeInput({
+        setValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
@@ -47,25 +53,24 @@ function EmployeesProfile() {
     }
   }, []);
 
-  const putEmployee = () => {
-    dispatch(editEmployee(product, employeeInput));
+  useEffect(() => {
+    reset(values);
+  }, [values]);
+
+  const putEmployee = (data) => {
+    dispatch(editEmployee(product, data));
     setModalDisplay(true);
   };
 
-  const onChange = (e) => {
-    setEmployeeInput({ ...employeeInput, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    putEmployee();
+  const onSubmit = async (data) => {
+    putEmployee(data);
   };
 
   return (
     <>
       <Form
         profileFormWidth="form__width__max"
-        onSubmitFunction={onSubmit}
+        onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={'Edit'}
         formTitle={'My Profile'}
       >
@@ -78,25 +83,14 @@ function EmployeesProfile() {
             />
             <div className={styles.formInputs}>
               <div className={styles.formColumn}>
-                <Input name="name" title="Name" value={employeeInput.name} onChange={onChange} />
-                <Input
-                  name="lastName"
-                  title="Last Name"
-                  value={employeeInput.lastName}
-                  onChange={onChange}
-                />
-                <Input name="email" title="Email" value={employeeInput.email} onChange={onChange} />
+                <Input name="name" title="Name" register={register} />
+                <Input name="lastName" title="Last Name" register={register} />
+                <Input name="email" title="Email" register={register} />
               </div>
               <div className={styles.formColumn}>
-                <Input
-                  name="password"
-                  title="Password"
-                  value={employeeInput.password}
-                  onChange={onChange}
-                  type="password"
-                />
-                <Input name="dni" title="DNI" value={employeeInput.dni} onChange={onChange} />
-                <Input name="phone" title="Phone" value={employeeInput.phone} onChange={onChange} />
+                <Input name="password" title="Password" type="password" register={register} />
+                <Input name="dni" title="DNI" register={register} />
+                <Input name="phone" title="Phone" register={register} />
               </div>
             </div>
           </>

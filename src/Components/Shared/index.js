@@ -1,10 +1,10 @@
-import FunctionalButton from './Buttons/FunctionalButton';
-import RedirectButton from './Buttons/RedirectButton';
-import Form from './Form';
-import Input from './Input';
-import Modal from './Modal';
-import Select from './Select';
-import Spinner from './Spinner';
-import Table from './Table';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
+import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Modal from 'Components/Shared/Modal';
+import Select from 'Components/Shared/Select';
+import Spinner from 'Components/Shared/Spinner';
+import Table from 'Components/Shared/Table';
 
 export { FunctionalButton, RedirectButton, Form, Input, Modal, Select, Spinner, Table };

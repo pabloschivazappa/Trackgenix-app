@@ -59,7 +59,7 @@ export const createTasks = (task) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ description: task })
+        body: JSON.stringify(task)
       });
       const data = await response.json();
       if (response.ok) {
@@ -80,7 +80,7 @@ export const editTasks = (id, task) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ description: task })
+        body: JSON.stringify(task)
       });
       const data = await response.json();
       if (response.ok) {
