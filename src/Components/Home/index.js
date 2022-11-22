@@ -12,7 +12,7 @@ function Home() {
       {rowId ? (
         <>
           <h3>
-            <a href="employees/my-profile?id=637556a4d6689c383fac4a66">My Profile</a>
+            <a href="employees/profile?id=637556a4d6689c383fac4a66">My Profile</a>
           </h3>
           <h3>
             <a href="employees/projects?id=637556a4d6689c383fac4a66">Projects</a>
