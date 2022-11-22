@@ -1,9 +1,8 @@
-import React from 'react';
 import styles from './form.module.css';
 import { useHistory } from 'react-router-dom';
 import FunctionalButton from '../Buttons/FunctionalButton';
 
-const Form = ({ onSubmitFunction, children, buttonMessage, formTitle }) => {
+const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, resetFunction }) => {
   let history = useHistory();
   const back = (e) => {
     e.preventDefault();
@@ -27,6 +26,13 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle }) => {
             buttonColor="green"
             type="submit"
             title={buttonMessage}
+          />
+          <FunctionalButton
+            buttonType="form__button"
+            buttonColor="green"
+            type="button"
+            title="Reset"
+            action={resetFunction}
           />
         </div>
       </form>

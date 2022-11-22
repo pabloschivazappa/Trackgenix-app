@@ -26,9 +26,10 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onChange',
-    defaultValues: values
+  const [admin, setAdmin] = useState('');
+
+  const { register, handleSubmit, setValue, reset } = useForm({
+    mode: 'onChange'
   });
 
   useEffect(async () => {
@@ -37,14 +38,7 @@ const FormAdmins = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
-        setValues({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password,
-          dni: data.data.dni,
-          phone: data.data.phone
-        });
+        setAdmin(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -53,8 +47,24 @@ const FormAdmins = () => {
   }, []);
 
   useEffect(() => {
-    reset(values);
-  }, [values]);
+    if (admin && rowId) {
+      setValue('name', admin.name);
+      setValue('lastName', admin.lastName);
+      setValue('email', admin.email);
+      setValue('password', admin.password);
+      setValue('dni', admin.dni);
+      setValue('phone', admin.phone);
+
+      setValues({
+        name: admin.name,
+        lastName: admin.lastName,
+        email: admin.email,
+        password: admin.password,
+        dni: admin.dni,
+        phone: admin.phone
+      });
+    }
+  }, [admin]);
 
   const addAdmin = (data) => {
     dispatch(createAdmin(data));
@@ -67,13 +77,26 @@ const FormAdmins = () => {
   };
 
   const onSubmit = async (data) => {
+    setValues({
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      dni: data.dni,
+      phone: data.phone
+    });
     rowId ? putAdmin(data) : addAdmin(data);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
+        resetFunction={resetForm}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
       >
