@@ -31,17 +31,17 @@ const ProjectForm = () => {
     endDate: '',
     employees: [
       {
-        role: '',
-        employee: '',
+        role: '- Select role -',
+        employee: '- Select employee -',
         rate: ''
       }
     ],
     active: true
   });
+  const [project, setProject] = useState('');
 
-  const { register, handleSubmit, reset, control } = useForm({
-    mode: 'onChange',
-    defaultValues: values
+  const { register, handleSubmit, setValue, reset, control } = useForm({
+    mode: 'onChange'
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -56,21 +56,7 @@ const ProjectForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
-        setValues({
-          name: data.data.name,
-          clientName: data.data.clientName,
-          description: data.data.description,
-          startDate: data.data.startDate.substr(0, 10),
-          endDate: data.data.endDate.substr(0, 10),
-          employees: data.data?.employees.map((employee) => {
-            return {
-              rate: employee.rate,
-              role: employee.role,
-              employee: employee.employee?._id
-            };
-          }),
-          active: true
-        });
+        setProject(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -79,8 +65,41 @@ const ProjectForm = () => {
   }, []);
 
   useEffect(() => {
-    reset(values);
-  }, [values]);
+    if (project && isValidId) {
+      setValue('name', project.name);
+      setValue('clientName', project.clientName);
+      setValue('description', project.description);
+      setValue('startDate', project.startDate.substr(0, 10));
+      setValue('endDate', project.endDate.substr(0, 10));
+      setValue(
+        'employees',
+        project.employees.map((employee) => {
+          return {
+            rate: employee.rate,
+            role: employee.role,
+            employee: employee.employee?._id
+          };
+        })
+      );
+      setValue('active', project.active);
+
+      setValues({
+        name: project.name,
+        clientName: project.clientName,
+        description: project.description,
+        startDate: project.startDate.substr(0, 10),
+        endDate: project.endDate.substr(0, 10),
+        employees: project.employees.map((employee) => {
+          return {
+            rate: employee.rate,
+            role: employee.role,
+            employee: employee.employee?._id
+          };
+        }),
+        active: project.active
+      });
+    }
+  }, [project]);
 
   const addProject = (data) => {
     dispatch(createProject(data));
@@ -91,14 +110,34 @@ const ProjectForm = () => {
   };
 
   const onSubmit = async (data) => {
+    setValues({
+      name: data.name,
+      clientName: data.clientName,
+      description: data.description,
+      startDate: data.startDate.substr(0, 10),
+      endDate: data.endDate.substr(0, 10),
+      employees: data.employees.map((employee) => {
+        return {
+          rate: employee.rate,
+          role: employee.role,
+          employee: employee.employee?._id
+        };
+      }),
+      active: data.active
+    });
     !isValidId ? addProject(data) : changeProject(data);
     setModalDisplay(true);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
+        resetFunction={resetForm}
         buttonMessage={isValidId ? 'Edit' : 'Create'}
         formTitle={isValidId ? 'Edit Project' : 'Create Project'}
       >
