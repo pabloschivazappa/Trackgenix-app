@@ -11,24 +11,29 @@ import { useForm } from 'react-hook-form';
 function TaskForm() {
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
-  const urlID = urlParams.get('id');
+  const id = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const rowId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
   const [modalDisplay, setModalDisplay] = useState('');
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onChange',
-    defaultValues: value
+  const [values, setValues] = useState({
+    description: ''
+  });
+
+  const [task, setTask] = useState('');
+
+  const { register, handleSubmit, setValue, reset } = useForm({
+    mode: 'onChange'
   });
 
   useEffect(async () => {
-    if (idRegEx.test(urlID)) {
+    if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`);
         const data = await response.json();
-        setValue({ description: data.data.description });
+        setTask(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -37,8 +42,14 @@ function TaskForm() {
   }, []);
 
   useEffect(() => {
-    reset(value);
-  }, [value]);
+    if (task && rowId) {
+      setValue('description', task.description);
+
+      setValues({
+        description: task.description
+      });
+    }
+  }, [task]);
 
   const postTasks = (data) => {
     dispatch(createTasks(data));
@@ -46,20 +57,28 @@ function TaskForm() {
   };
 
   const putTasks = (data) => {
-    dispatch(editTasks(urlID, data));
+    dispatch(editTasks(id, data));
     setModalDisplay(true);
   };
 
   const onSubmit = async (data) => {
-    urlID ? putTasks(data) : postTasks(data);
+    setValues({
+      description: task.description
+    });
+    rowId ? putTasks(data) : postTasks(data);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
-        buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
-        formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
+        resetFunction={resetForm}
+        buttonMessage={rowId ? 'Edit' : 'Create'}
+        formTitle={rowId ? 'Edit Task' : 'Create Task'}
       >
         {!fetching ? (
           <>
