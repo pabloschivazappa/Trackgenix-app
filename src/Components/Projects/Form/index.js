@@ -49,6 +49,7 @@ const ProjectForm = () => {
     control
   } = useForm({
     mode: 'onChange',
+    reValidateMode: 'onChange',
     resolver: joiResolver(schema),
     defaultValues: values
   });
@@ -157,7 +158,12 @@ const ProjectForm = () => {
                     id={id}
                     title="Employee"
                   />
-                  <Input register={register} title="Rate" name={`employees[${index}].rate`} />
+                  <Input
+                    register={register}
+                    title="Rate"
+                    name={`employees[${index}].rate`}
+                    error={`errors.employees[${index}].rate`?.message}
+                  />
                   <label className={formStyles.label}>
                     Role
                     <select className={formStyles.select} {...register(`employees[${index}].role`)}>

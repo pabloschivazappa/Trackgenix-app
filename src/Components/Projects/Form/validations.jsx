@@ -1,6 +1,6 @@
 import joi from 'joi';
 
-const employeeValidation = joi.object({
+let employeeValidation = joi.object().keys({
   employee: joi.string().min(3).max(50).required(),
   role: joi.string().valid('DEV', 'QA', 'TL').required(),
   rate: joi.number().required()
@@ -66,7 +66,7 @@ export const schema = joi.object({
     'date.empty': 'End date cannot be empty.',
     'any.required': 'End date is required.'
   }),
-  employees: joi.array().items(employeeValidation)
+  employees: joi.array().items(employeeValidation).min(0)
 });
 
 /*
