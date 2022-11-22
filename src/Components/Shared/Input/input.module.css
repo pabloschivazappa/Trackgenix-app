@@ -23,6 +23,11 @@
   transition: 0.2s;
 }
 
+.label p {
+  color: #b00058;
+  font-size: 12px;
+}
+
 :root {
   --main-color: #373867;
   --form-padding: 20px;
