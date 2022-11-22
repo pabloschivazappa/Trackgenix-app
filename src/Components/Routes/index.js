@@ -16,6 +16,7 @@ import Tasks from 'Components/Tasks/index';
 import TimesheetsForm from 'Components/TimeSheets/Form/TimesheetsForm';
 import ProjectsForm from 'Components/Projects/Form/index';
 import TasksForm from 'Components/Tasks/Form';
+import ProjectTable from 'Components/ProjectsTable';
 
 const Routes = () => {
   return (
@@ -42,8 +43,10 @@ const Routes = () => {
         <Route path="/time-sheets/form" component={TimesheetsForm} />
         <Route path="/time-sheets/form?id=" component={TimesheetsForm} />
         <Route exact path="/">
-          <Redirect to="/home" />
+          <Redirect to="/home?id=637556a4d6689c383fac4a66" />
         </Route>
+        {/* <Route path="/employees/my-profile" component={ProjectTable} /> */}
+        <Route path="/employees/projects" component={ProjectTable} />
       </Switch>
       <Footer />
     </div>

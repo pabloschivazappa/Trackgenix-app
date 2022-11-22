@@ -7,28 +7,24 @@ function Header() {
         <div className={styles.brand}>Radium Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            />
+            <i className="fa-brands fa-facebook-f fa-lg"></i>
           </a>
           <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            />
+            <i className="fa-brands fa-twitter fa-lg"></i>
           </a>
           <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            />
+            <i className="fa-brands fa-instagram fa-lg"></i>
           </a>
         </div>
       </div>
       <nav className={styles.navbar}>
         <div className={styles.appName}>
-          Track<span>GENIX</span>
+          <a
+            href="/home?id=637556a4d6689c383fac4a66"
+            style={{ textDecoration: 'none', color: 'black' }}
+          >
+            Track<span>GENIX</span>
+          </a>
         </div>
         <ul className={styles.rutes}>
           <li>

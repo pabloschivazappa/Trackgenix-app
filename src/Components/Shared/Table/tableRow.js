@@ -2,7 +2,7 @@ import React from 'react';
 import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 
-const TableRow = ({ item, columns, deleteItem, edit }) => {
+const TableRow = ({ item, columns, deleteItem, edit, employeeId }) => {
   return (
     <>
       <tr>
@@ -32,6 +32,26 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
                     e.employee &&
                     e.employee.name + ' ' + e.employee.lastName + ' (' + e.role + ')\n'
                   );
+                })}
+              </td>
+            );
+          }
+
+          if (columnItem.heading === 'Role') {
+            return (
+              <td key={index}>
+                {item.employees.map((e) => {
+                  return e.employee._id === employeeId && e.employee && e.role;
+                })}
+              </td>
+            );
+          }
+
+          if (columnItem.heading === 'Rate') {
+            return (
+              <td key={index}>
+                {item.employees.map((e) => {
+                  return e.employee._id === employeeId && e.employee && e.rate;
                 })}
               </td>
             );

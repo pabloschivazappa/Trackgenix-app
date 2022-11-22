@@ -15,6 +15,7 @@ import {
   SET_MODAL_CONTENT,
   SET_FETCHING_VALUE
 } from './constants';
+// import { getProjects } from './thunks';
 
 const INITIAL_STATE = {
   list: [],
@@ -101,7 +102,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: true
       };
-    case PUT_PROJECTS_SUCCESS:
+    case PUT_PROJECTS_SUCCESS: {
       return {
         ...state,
         fetching: false,
@@ -109,6 +110,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         children: 'Project edited successfully',
         modalTitle: 'Success'
       };
+    }
     case PUT_PROJECTS_ERROR:
       return {
         ...state,
