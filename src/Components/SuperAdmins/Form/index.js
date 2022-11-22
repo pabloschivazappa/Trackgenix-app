@@ -16,7 +16,7 @@ const SuperAdminsForm = () => {
   const rowId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
-
+  const [modalDisplay, setModalDisplay] = useState('');
   const [values, setValues] = useState({
     name: '',
     lastName: '',
@@ -26,7 +26,11 @@ const SuperAdminsForm = () => {
     phone: ''
   });
 
-  const [modalDisplay, setModalDisplay] = useState('');
+  const [superAdmins, setSuperAdmins] = useState('');
+
+  const { register, handleSubmit, setValue, reset } = useForm({
+    mode: 'onChange'
+  });
 
   useEffect(async () => {
     if (rowId) {
@@ -34,14 +38,7 @@ const SuperAdminsForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`);
         const data = await response.json();
-        setValues({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password,
-          dni: data.data.dni,
-          phone: data.data.phone
-        });
+        setSuperAdmins(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -50,13 +47,24 @@ const SuperAdminsForm = () => {
   }, []);
 
   useEffect(() => {
-    reset(values);
-  }, [values]);
+    if (superAdmins && rowId) {
+      setValue('name', superAdmins.name);
+      setValue('lastName', superAdmins.lastName);
+      setValue('email', superAdmins.email);
+      setValue('password', superAdmins.password);
+      setValue('dni', superAdmins.dni);
+      setValue('phone', superAdmins.phone);
 
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onChange',
-    defaultValues: values
-  });
+      setValues({
+        name: superAdmins.name,
+        lastName: superAdmins.lastName,
+        email: superAdmins.email,
+        password: superAdmins.password,
+        dni: superAdmins.dni,
+        phone: superAdmins.phone
+      });
+    }
+  }, [superAdmins]);
 
   const addSuperAdmin = (data) => {
     dispatch(createSuperAdmin(data));
@@ -69,13 +77,26 @@ const SuperAdminsForm = () => {
   };
 
   const onSubmit = async (data) => {
+    setValues({
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      dni: data.dni,
+      phone: data.phone
+    });
     rowId ? putSuperAdmin(data) : addSuperAdmin(data);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
+        resetFunction={resetForm}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Super Admin' : 'Create Super Admin'}
       >
