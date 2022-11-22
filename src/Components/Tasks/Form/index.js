@@ -63,7 +63,7 @@ function TaskForm() {
 
   const onSubmit = async (data) => {
     setValues({
-      description: task.description
+      description: data.description
     });
     rowId ? putTasks(data) : postTasks(data);
   };
