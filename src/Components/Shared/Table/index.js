@@ -3,7 +3,17 @@ import TableRow from 'Components/Shared/Table/tableRow.js';
 import styles from 'Components/Shared/Table/table.module.css';
 import RedirectButton from 'Components/Shared/Buttons/RedirectButton.jsx';
 
-const Table = ({ title, columns, data, deleteItem, edit, error, employeeId }) => {
+const Table = ({
+  title,
+  columns,
+  data,
+  deleteItem,
+  edit,
+  error,
+  employeeId,
+  inProfile = false,
+  setHours
+}) => {
   return (
     <>
       <h2 className={styles.entity}>{title}</h2>
@@ -26,6 +36,8 @@ const Table = ({ title, columns, data, deleteItem, edit, error, employeeId }) =>
                   deleteItem={deleteItem}
                   edit={edit}
                   employeeId={employeeId}
+                  setHours={setHours}
+                  inProfile={inProfile}
                 />
               );
             })}

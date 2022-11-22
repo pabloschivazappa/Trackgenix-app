@@ -2,7 +2,7 @@ import React from 'react';
 import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 
-const TableRow = ({ item, columns, deleteItem, edit, employeeId }) => {
+const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = false, setHours }) => {
   return (
     <>
       <tr>
@@ -10,11 +10,20 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId }) => {
           if (columnItem.heading === 'Actions') {
             return (
               <td key={index}>
-                <RedirectButton
-                  path={`${edit}?id=${item._id}`}
-                  icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
-                  buttonType="list__button"
-                />
+                {inProfile ? (
+                  <FunctionalButton
+                    action={() => setHours(item._id)}
+                    icon={<i className="fa-regular fa-clock"></i>}
+                    buttonType="list__button"
+                  />
+                ) : (
+                  <RedirectButton
+                    path={`${edit}?id=${item._id}`}
+                    icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
+                    buttonType="list__button"
+                  />
+                )}
+
                 <FunctionalButton
                   action={() => deleteItem(item._id)}
                   icon={<i className="fa-solid fa-xmark fa-lg"></i>}

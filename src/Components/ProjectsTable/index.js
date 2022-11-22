@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalTitle, setModalContent } from '../../redux/projects/actions';
-import { getProjects, editProject } from '../../redux/projects/thunks';
+import { setModalTitle, setModalContent } from 'redux/projects/actions';
+import { getProjects, editProject } from 'redux/projects/thunks';
 import { Spinner } from 'Components/Shared';
-import Modal from '../Shared/Modal';
-import Table from '../Shared/Table';
-import styles from './project.table.module.css';
+import Modal from 'Components/Shared/Modal';
+import Table from 'Components/Shared/Table';
+import styles from 'Components/ProjectsTable/project.table.module.css';
 
 function ProjectTable() {
   const urlValues = window.location.search;
@@ -20,7 +20,13 @@ function ProjectTable() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
-  const { list: projects, fetching, error, children } = useSelector((state) => state.projects);
+  const {
+    list: projects,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,21 +101,28 @@ function ProjectTable() {
           columns={columns}
           error={!projectsByEmployee.length ? `You don't have any project` : error}
           deleteItem={(projectId) => {
-            dispatch(setModalTitle('Delete'));
-            dispatch(setModalContent('Are you sure you want to delete it?'));
+            dispatch(setModalTitle('Quit project'));
+            dispatch(setModalContent('Are you sure you want to leave the project?'));
             setIsToConfirm(true);
             setModalDisplay(true);
             setProjectId(projectId);
           }}
           edit="/projects/form"
           employeeId={employeeId}
+          setHours={() => {
+            dispatch(setModalTitle('Add Hours'));
+            dispatch(setModalContent('HOURS'));
+            setModalDisplay(true);
+            setIsToConfirm(false);
+          }}
+          inProfile={true}
         />
       ) : (
         <Spinner />
       )}
       {modalDisplay ? (
         <Modal
-          title={'Delete project'}
+          title={modalTitle}
           setModalDisplay={setModalDisplay}
           isToConfirm={isToConfirm}
           onClickFunction={() => {
