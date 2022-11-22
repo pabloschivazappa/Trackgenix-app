@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editEmployee } from '../../../redux/employees/thunks';
 import { setFetching } from '../../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/Employees/Profile/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeesProfile() {
   const dispatch = useDispatch();
@@ -27,8 +29,14 @@ function EmployeesProfile() {
     phone: ''
   });
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -83,14 +91,35 @@ function EmployeesProfile() {
             />
             <div className={styles.formInputs}>
               <div className={styles.formColumn}>
-                <Input name="name" title="Name" register={register} />
-                <Input name="lastName" title="Last Name" register={register} />
-                <Input name="email" title="Email" register={register} />
+                <Input name="name" title="Name" register={register} error={errors.name?.message} />
+                <Input
+                  name="lastName"
+                  title="Last Name"
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+                <Input
+                  name="email"
+                  title="Email"
+                  register={register}
+                  error={errors.email?.message}
+                />
               </div>
               <div className={styles.formColumn}>
-                <Input name="password" title="Password" type="password" register={register} />
-                <Input name="dni" title="DNI" register={register} />
-                <Input name="phone" title="Phone" register={register} />
+                <Input
+                  name="password"
+                  title="Password"
+                  type="password"
+                  register={register}
+                  error={errors.password?.message}
+                />
+                <Input name="dni" title="DNI" register={register} error={errors.dni?.message} />
+                <Input
+                  name="phone"
+                  title="Phone"
+                  register={register}
+                  error={errors.phone?.message}
+                />
               </div>
             </div>
           </>
