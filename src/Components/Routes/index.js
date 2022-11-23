@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from 'Components/Shared/Spinner';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 const Header = React.lazy(() => import('Components/Header/index'));
 const Footer = React.lazy(() => import('Components/Footer/index'));
@@ -21,7 +22,13 @@ const EmployeesProfile = React.lazy(() => import('Components/Employees/Profile')
 
 const Routes = () => {
   return (
-    <React.Suspense fallback={''}>
+    <React.Suspense
+      fallback={
+        <div className={styles.spinner__container}>
+          <Spinner />
+        </div>
+      }
+    >
       <div className={styles.container}>
         <Header />
         <Switch>

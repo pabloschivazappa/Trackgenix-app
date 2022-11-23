@@ -4,3 +4,11 @@
   justify-content: space-between;
   min-height: 100vh;
 }
+
+.spinner__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
