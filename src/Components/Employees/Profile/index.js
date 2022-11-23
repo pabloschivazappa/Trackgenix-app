@@ -72,6 +72,11 @@ function EmployeesProfile() {
 
   const onSubmit = async (data) => {
     putEmployee(data);
+    setValues(data);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -81,6 +86,7 @@ function EmployeesProfile() {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={'Edit'}
         formTitle={'My Profile'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
