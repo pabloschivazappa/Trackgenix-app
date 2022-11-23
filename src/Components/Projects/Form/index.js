@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import formStyles from './form.module.css';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
-import FunctionalButton from '../../Shared/Buttons/FunctionalButton';
+import formStyles from 'Components/Projects/Form/form.module.css';
+import Modal from 'Components/Shared/Modal';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
+import Select from 'Components/Shared/Select';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProject, editProject } from '../../../redux/projects/thunks';
-import { setFetching } from '../../../redux/projects/actions';
-import { Select } from 'Components/Shared';
+import { createProject, editProject } from 'redux/projects/thunks';
+import { setFetching } from 'redux/projects/actions';
 import { getEmployees } from 'redux/employees/thunks';
 
 const ProjectForm = () => {
@@ -38,10 +38,10 @@ const ProjectForm = () => {
     ],
     active: true
   });
-  const [project, setProject] = useState('');
 
-  const { register, handleSubmit, setValue, reset, control } = useForm({
-    mode: 'onChange'
+  const { register, handleSubmit, reset, control } = useForm({
+    mode: 'onChange',
+    defaultValues: values
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -56,7 +56,21 @@ const ProjectForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
         const data = await response.json();
-        setProject(data.data);
+        setValues({
+          name: data.data.name,
+          clientName: data.data.clientName,
+          description: data.data.description,
+          startDate: data.data.startDate.substr(0, 10),
+          endDate: data.data.endDate.substr(0, 10),
+          employees: data.data?.employees.map((employee) => {
+            return {
+              rate: employee.rate,
+              role: employee?.role,
+              employee: employee.employee?._id
+            };
+          }),
+          active: true
+        });
       } catch (error) {
         console.error(error);
       }
@@ -65,41 +79,8 @@ const ProjectForm = () => {
   }, []);
 
   useEffect(() => {
-    if (project && isValidId) {
-      setValue('name', project.name);
-      setValue('clientName', project.clientName);
-      setValue('description', project.description);
-      setValue('startDate', project.startDate.substr(0, 10));
-      setValue('endDate', project.endDate.substr(0, 10));
-      setValue(
-        'employees',
-        project.employees.map((employee) => {
-          return {
-            rate: employee.rate,
-            role: employee.role,
-            employee: employee.employee?._id
-          };
-        })
-      );
-      setValue('active', project.active);
-
-      setValues({
-        name: project.name,
-        clientName: project.clientName,
-        description: project.description,
-        startDate: project.startDate.substr(0, 10),
-        endDate: project.endDate.substr(0, 10),
-        employees: project.employees.map((employee) => {
-          return {
-            rate: employee.rate,
-            role: employee.role,
-            employee: employee.employee?._id
-          };
-        }),
-        active: project.active
-      });
-    }
-  }, [project]);
+    reset(values);
+  }, [values]);
 
   const addProject = (data) => {
     dispatch(createProject(data));
@@ -110,22 +91,8 @@ const ProjectForm = () => {
   };
 
   const onSubmit = async (data) => {
-    setValues({
-      name: data.name,
-      clientName: data.clientName,
-      description: data.description,
-      startDate: data.startDate.substr(0, 10),
-      endDate: data.endDate.substr(0, 10),
-      employees: data.employees.map((employee) => {
-        return {
-          rate: employee.rate,
-          role: employee.role,
-          employee: employee.employee?._id
-        };
-      }),
-      active: data.active
-    });
     !isValidId ? addProject(data) : changeProject(data);
+    setValues(values);
     setModalDisplay(true);
   };
 
@@ -137,9 +104,9 @@ const ProjectForm = () => {
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
-        resetFunction={resetForm}
         buttonMessage={isValidId ? 'Edit' : 'Create'}
         formTitle={isValidId ? 'Edit Project' : 'Create Project'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
@@ -164,7 +131,7 @@ const ProjectForm = () => {
                   <label className={formStyles.label}>
                     Role
                     <select className={formStyles.select} {...register(`employees[${index}].role`)}>
-                      <option hidden>- Select a role -</option>
+                      <option>- Select role -</option>
                       {roles.map((role, index) => (
                         <option key={index}>{role}</option>
                       ))}

@@ -10,7 +10,8 @@ import {
   postProjectsError,
   putProjectsPending,
   putProjectsSuccess,
-  putProjectsError
+  putProjectsError,
+  setModalContent
 } from './actions';
 
 export const getProjects = () => {
@@ -69,7 +70,7 @@ export const createProject = (project) => {
   };
 };
 
-export const editProject = (id, project) => {
+export const editProject = (id, project, isForDelete = false) => {
   return async (dispatch) => {
     dispatch(putProjectsPending());
     try {
@@ -81,6 +82,8 @@ export const editProject = (id, project) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putProjectsSuccess(data.data));
+        dispatch(getProjects());
+        isForDelete === true && dispatch(setModalContent('Project deleted'));
       } else {
         dispatch(putProjectsError(data.message));
       }

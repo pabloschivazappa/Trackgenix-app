@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Modal from 'Components/Shared/Modal';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTasks, editTasks } from '../../../redux/tasks/thunks';
-import { setFetching } from '../../../redux/tasks/actions';
+import { createTasks, editTasks } from 'redux/tasks/thunks';
+import { setFetching } from 'redux/tasks/actions';
 import { useForm } from 'react-hook-form';
 
 function TaskForm() {

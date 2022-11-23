@@ -23,6 +23,11 @@
   text-align: center
 }
 
+.tRow {
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.073);
+  border-radius: 15px;
+}
+
 .tRow td {
   font-weight: 300;
   padding-block: 15px;

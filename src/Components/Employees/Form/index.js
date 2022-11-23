@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Modal from 'Components/Shared/Modal';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Spinner from 'Components/Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { createEmployee, editEmployee } from '../../../redux/employees/thunks';
-import { setFetching } from '../../../redux/employees/actions';
+import { createEmployee, editEmployee } from 'redux/employees/thunks';
+import { setFetching } from 'redux/employees/actions';
 import { useForm } from 'react-hook-form';
 
 function EmployeeForm() {
