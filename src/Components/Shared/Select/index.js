@@ -1,6 +1,6 @@
 import styles from 'Components/Shared/Select/select.module.css';
 
-const Select = ({ list, name, kind, id = null, title, register, objectN = null }) => {
+const Select = ({ list, name, kind, id = null, title, register, error, objectN = null }) => {
   const registerFn = objectN ? { ...register(name, objectN) } : { ...register(name) };
 
   return (
@@ -17,6 +17,7 @@ const Select = ({ list, name, kind, id = null, title, register, objectN = null }
         ))}
         {!list.length && <option disabled>- The {title.toLowerCase()}s list is empty -</option>}
       </select>
+      {error && <p className={styles.label}>{error}</p>}
     </label>
   );
 };

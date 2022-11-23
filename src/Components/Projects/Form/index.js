@@ -159,6 +159,7 @@ const ProjectForm = () => {
                     kind="name"
                     id={id}
                     title="Employee"
+                    error={`errors.employees[${index}].employee`?.message}
                     objectN={registerOptions.employee}
                   />
                   <Input

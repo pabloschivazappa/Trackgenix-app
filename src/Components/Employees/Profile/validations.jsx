@@ -9,7 +9,7 @@ export const schema = Joi.object({
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Name must not contain special characters.',
+      'string.alphanum': 'Name must not contain numbers or special characters.',
       'string.min': 'Name must be at least 3 characters long.',
       'string.max': 'Name must be no longer than 50 characters.',
       'string.pattern.base': 'Name must have only letters.',
@@ -24,7 +24,7 @@ export const schema = Joi.object({
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Last name must not contain special characters.',
+      'string.alphanum': 'Last name must not contain numbers or special characters.',
       'string.min': 'Last name must be at least 3 characters long.',
       'string.max': 'Last name must be no longer than 50 characters.',
       'string.pattern.base': 'Last name must have only letters.',

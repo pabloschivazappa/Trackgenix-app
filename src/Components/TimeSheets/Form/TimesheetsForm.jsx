@@ -36,7 +36,7 @@ const TimesheetsForm = () => {
     hours: '',
     date: '',
     task: '- Select task -',
-    employees: '- Select employees -',
+    employee: '- Select employees -',
     project: '- Select project -'
   });
 
@@ -127,6 +127,7 @@ const TimesheetsForm = () => {
               kind="description"
               id={id}
               title="Task"
+              error={errors.task?.message}
             />
             <Select
               register={register}
@@ -135,6 +136,7 @@ const TimesheetsForm = () => {
               kind="name"
               id={id}
               title="Employee"
+              error={errors.employee?.message}
             />
             <Select
               register={register}
@@ -143,6 +145,7 @@ const TimesheetsForm = () => {
               kind="name"
               id={id}
               title="Project"
+              error={errors.project?.message}
             />
           </>
         ) : (
