@@ -26,10 +26,9 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  const [admin, setAdmin] = useState('');
-
-  const { register, handleSubmit, setValue, reset } = useForm({
-    mode: 'onChange'
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
   });
 
   useEffect(async () => {
@@ -38,7 +37,14 @@ const FormAdmins = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
         const data = await response.json();
-        setAdmin(data.data);
+        setValues({
+          name: data.data.name,
+          lastName: data.data.lastName,
+          email: data.data.email,
+          password: data.data.password,
+          dni: data.data.dni,
+          phone: data.data.phone
+        });
       } catch (error) {
         console.error(error);
       }
@@ -47,24 +53,8 @@ const FormAdmins = () => {
   }, []);
 
   useEffect(() => {
-    if (admin && rowId) {
-      setValue('name', admin.name);
-      setValue('lastName', admin.lastName);
-      setValue('email', admin.email);
-      setValue('password', admin.password);
-      setValue('dni', admin.dni);
-      setValue('phone', admin.phone);
-
-      setValues({
-        name: admin.name,
-        lastName: admin.lastName,
-        email: admin.email,
-        password: admin.password,
-        dni: admin.dni,
-        phone: admin.phone
-      });
-    }
-  }, [admin]);
+    reset(values);
+  }, [values]);
 
   const addAdmin = (data) => {
     dispatch(createAdmin(data));
@@ -77,15 +67,8 @@ const FormAdmins = () => {
   };
 
   const onSubmit = async (data) => {
-    setValues({
-      name: data.name,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      dni: data.dni,
-      phone: data.phone
-    });
     rowId ? putAdmin(data) : addAdmin(data);
+    setValues(values);
   };
 
   const resetForm = () => {
@@ -96,9 +79,9 @@ const FormAdmins = () => {
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
-        resetFunction={resetForm}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
@@ -121,4 +104,5 @@ const FormAdmins = () => {
     </>
   );
 };
+
 export default FormAdmins;
