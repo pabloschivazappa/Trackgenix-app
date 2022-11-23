@@ -11,8 +11,7 @@ import { createProject, editProject } from '../../../redux/projects/thunks';
 import { setFetching } from '../../../redux/projects/actions';
 import { Select } from 'Components/Shared';
 import { getEmployees } from 'redux/employees/thunks';
-import { schema } from 'Components/Projects/Form/validations';
-import { joiResolver } from '@hookform/resolvers/joi';
+//import { registerOptions } from 'Components/Projects/Form/validations';
 
 const ProjectForm = () => {
   const urlValues = window.location.search;
@@ -41,16 +40,20 @@ const ProjectForm = () => {
     active: true
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    control
-  } = useForm({
+  const registerOptions = {
+    name: { required: 'Name is required' },
+    email: { required: 'Email is required' },
+    password: {
+      required: 'Password is required',
+      minLength: {
+        value: 8,
+        message: 'Password must have at least 8 characters'
+      }
+    }
+  };
+
+  const { register, handleSubmit, errors, reset, control } = useForm({
     mode: 'onChange',
-    reValidateMode: 'onChange',
-    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -115,9 +118,9 @@ const ProjectForm = () => {
         {!fetching ? (
           <>
             <Input
-              register={register}
+              {...register('name', registerOptions.name)}
               title="Project Name"
-              name="name"
+              name="'registerOptions.name"
               error={errors.name?.message}
             />
             <Input

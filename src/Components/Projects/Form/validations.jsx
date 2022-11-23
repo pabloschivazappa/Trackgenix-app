@@ -1,10 +1,47 @@
+export const registerOptions = {
+  name: { required: 'Name is required' },
+  email: { required: 'Email is required' },
+  password: {
+    required: 'Password is required',
+    minLength: {
+      value: 8,
+      message: 'Password must have at least 8 characters'
+    }
+  }
+};
+
+/*
+const validateCreation = (req, res, next) => {
+  const employeeValidation = joi.object({
+    employee: joi.string().min(3).max(50).required(),
+    role: joi.string().valid('DEV', 'QA', 'TL').required(),
+    rate: joi.number().required(),
+  });
+  const projectValidation = joi.object({
+    name: joi.string().min(3).max(50).required(),
+    startDate: joi.date().required(),
+    endDate: joi.date().greater(joi.ref('startDate')),
+    description: joi.string().min(10).max(50).required(),
+    clientName: joi.string().min(3).max(50).required(),
+    active: joi.boolean().required(),
+    employees: joi.array().items(employeeValidation),
+  });
+  */
+
+/*
 import joi from 'joi';
 
-let employeeValidation = joi.object().keys({
-  employee: joi.string().min(3).max(50).required(),
-  role: joi.string().valid('DEV', 'QA', 'TL').required(),
-  rate: joi.number().required()
-});
+let employeeValidation = joi
+  .object({
+    employee: joi.string().required(),
+    role: joi.string().valid('DEV', 'QA', 'TL').required(),
+    rate: joi.number().required().positive().messages({
+      'string.empty': 'Rate is required',
+      'number.pattern.base': 'Rate should be positive numbers only',
+      'any.required': 'Rate is required'
+    })
+  })
+  .required();
 
 export const schema = joi.object({
   name: joi
@@ -68,21 +105,4 @@ export const schema = joi.object({
   }),
   employees: joi.array().items(employeeValidation).min(0)
 });
-
-/*
-const validateCreation = (req, res, next) => {
-  const employeeValidation = joi.object({
-    employee: joi.string().min(3).max(50).required(),
-    role: joi.string().valid('DEV', 'QA', 'TL').required(),
-    rate: joi.number().required(),
-  });
-  const projectValidation = joi.object({
-    name: joi.string().min(3).max(50).required(),
-    startDate: joi.date().required(),
-    endDate: joi.date().greater(joi.ref('startDate')),
-    description: joi.string().min(10).max(50).required(),
-    clientName: joi.string().min(3).max(50).required(),
-    active: joi.boolean().required(),
-    employees: joi.array().items(employeeValidation),
-  });
-  */
+*/
