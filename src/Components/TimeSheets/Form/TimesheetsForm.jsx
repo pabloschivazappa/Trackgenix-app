@@ -38,10 +38,9 @@ const TimesheetsForm = () => {
     project: '- Select project -'
   });
 
-  const [timeSheets, setTimeSheets] = useState('');
-
-  const { register, handleSubmit, setValue, reset } = useForm({
-    mode: 'onChange'
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
   });
 
   useEffect(async () => {
@@ -53,7 +52,18 @@ const TimesheetsForm = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
         const data = await response.json();
-        setTimeSheets(data.data);
+        setValues({
+          description: data.data.description,
+          hours: data.data.hours,
+          date: fixDate(data.data.date),
+          task: data.data.task ? data.data.task._id : '- Please select an existing task -',
+          employee: data.data.employee
+            ? data.data.employee._id
+            : '- Please select an existing employee -',
+          project: data.data.project
+            ? data.data.project._id
+            : '- Please select an existing project -'
+        });
       } catch (error) {
         console.error(error);
       }
@@ -61,40 +71,9 @@ const TimesheetsForm = () => {
     }
   }, []);
 
-  console.log(setTimeSheets);
-
   useEffect(() => {
-    if (timeSheets && haveId) {
-      setValue('description', timeSheets.description);
-      setValue('hours', timeSheets.hours);
-      setValue('date', fixDate(timeSheets.date));
-      setValue(
-        'task',
-        timeSheets.task ? timeSheets.task._id : '- Please select an existing task -'
-      );
-      setValue(
-        'employee',
-        timeSheets.employee ? timeSheets.employee._id : '- Please select an existing employee -'
-      );
-      setValue(
-        'project',
-        timeSheets.project ? timeSheets.project._id : '- Please select an existing project -'
-      );
-
-      setValues({
-        description: timeSheets.description,
-        hours: timeSheets.hours,
-        date: fixDate(timeSheets.date),
-        task: timeSheets.task ? timeSheets.task._id : '- Please select an existing task -',
-        employee: timeSheets.employee
-          ? timeSheets.employee._id
-          : '- Please select an existing employee -',
-        project: timeSheets.project
-          ? timeSheets.project._id
-          : '- Please select an existing project -'
-      });
-    }
-  }, [timeSheets]);
+    reset(values);
+  }, [values]);
 
   const addTimesheet = (data) => {
     dispatch(createTimesheet(data));
@@ -107,17 +86,8 @@ const TimesheetsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    setValues({
-      description: timeSheets.description,
-      hours: timeSheets.hours,
-      date: fixDate(timeSheets.date),
-      task: timeSheets.task ? timeSheets.task._id : '- Please select an existing task -',
-      employee: timeSheets.employee
-        ? timeSheets.employee._id
-        : '- Please select an existing employee -',
-      project: timeSheets.project ? timeSheets.project._id : '- Please select an existing project -'
-    });
     haveId ? putTimesheet(data) : addTimesheet(data);
+    setValues(values);
   };
 
   const resetForm = () => {
@@ -128,9 +98,9 @@ const TimesheetsForm = () => {
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
-        resetFunction={resetForm}
         buttonMessage={haveId ? 'Edit' : 'Create'}
         formTitle={haveId ? 'Edit Timesheet' : 'Create Timesheet'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
