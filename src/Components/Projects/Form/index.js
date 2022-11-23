@@ -91,8 +91,12 @@ const ProjectForm = () => {
   };
 
   const onSubmit = async (data) => {
-    !isValidId ? addProject(data) : changeProject(data);
-    setValues(values);
+    if (!isValidId) {
+      addProject(data);
+    } else {
+      changeProject(data);
+      setValues(data);
+    }
     setModalDisplay(true);
   };
 

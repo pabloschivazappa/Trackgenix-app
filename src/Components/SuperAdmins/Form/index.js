@@ -69,8 +69,12 @@ const SuperAdminsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putSuperAdmin(data) : addSuperAdmin(data);
-    setValues(values);
+    if (rowId) {
+      putSuperAdmin(data);
+      setValues(data);
+    } else {
+      addSuperAdmin(data);
+    }
   };
 
   const resetForm = () => {

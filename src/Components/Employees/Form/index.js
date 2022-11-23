@@ -67,8 +67,12 @@ function EmployeeForm() {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putEmployee(data) : postEmployee(data);
-    setValues(values);
+    if (rowId) {
+      putEmployee(data);
+      setValues(data);
+    } else {
+      postEmployee(data);
+    }
   };
 
   const resetForm = () => {

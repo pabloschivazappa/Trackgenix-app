@@ -54,8 +54,12 @@ function TaskForm() {
   };
 
   const onSubmit = async (data) => {
-    urlID ? putTasks(data) : postTasks(data);
-    setValues(values);
+    if (urlID) {
+      putTasks(data);
+      setValues(data);
+    } else {
+      postTasks(data);
+    }
   };
 
   const resetForm = () => {

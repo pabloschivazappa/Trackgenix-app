@@ -86,8 +86,12 @@ const TimesheetsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    haveId ? putTimesheet(data) : addTimesheet(data);
-    setValues(values);
+    if (haveId) {
+      putTimesheet(data);
+      setValues(data);
+    } else {
+      addTimesheet(data);
+    }
   };
 
   const resetForm = () => {

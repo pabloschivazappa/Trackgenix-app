@@ -67,8 +67,12 @@ const FormAdmins = () => {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putAdmin(data) : addAdmin(data);
-    setValues(values);
+    if (rowId) {
+      putAdmin(data);
+      setValues(data);
+    } else {
+      addAdmin(data);
+    }
   };
 
   const resetForm = () => {
