@@ -1,8 +1,8 @@
 import React from 'react';
-import FunctionalButton from '../Buttons/FunctionalButton';
-import RedirectButton from '../Buttons/RedirectButton';
+import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
+import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 
-const TableRow = ({ item, columns, deleteItem, edit }) => {
+const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = false, setHours }) => {
   return (
     <>
       <tr>
@@ -10,11 +10,20 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           if (columnItem.heading === 'Actions') {
             return (
               <td key={index}>
-                <RedirectButton
-                  path={`${edit}?id=${item._id}`}
-                  icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
-                  buttonType="list__button"
-                />
+                {inProfile ? (
+                  <FunctionalButton
+                    action={() => setHours(item._id)}
+                    icon={<i className="fa-regular fa-clock"></i>}
+                    buttonType="list__button"
+                  />
+                ) : (
+                  <RedirectButton
+                    path={`${edit}?id=${item._id}`}
+                    icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
+                    buttonType="list__button"
+                  />
+                )}
+
                 <FunctionalButton
                   action={() => deleteItem(item._id)}
                   icon={<i className="fa-solid fa-xmark fa-lg"></i>}
@@ -32,6 +41,26 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
                     e.employee &&
                     e.employee.name + ' ' + e.employee.lastName + ' (' + e.role + ')\n'
                   );
+                })}
+              </td>
+            );
+          }
+
+          if (columnItem.heading === 'Role') {
+            return (
+              <td key={index}>
+                {item.employees.map((e) => {
+                  return e.employee._id === employeeId && e.employee && e.role;
+                })}
+              </td>
+            );
+          }
+
+          if (columnItem.heading === 'Rate') {
+            return (
+              <td key={index}>
+                {item.employees.map((e) => {
+                  return e.employee._id === employeeId && e.employee && e.rate;
                 })}
               </td>
             );

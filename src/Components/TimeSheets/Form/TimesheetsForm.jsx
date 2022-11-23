@@ -1,16 +1,16 @@
 import React from 'react';
-import Modal from '../../Shared/Modal';
-import Spinner from '../../Shared/Spinner';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
+import Modal from 'Components/Shared/Modal';
+import Spinner from 'Components/Shared/Spinner';
+import Form from 'Components/Shared/Form';
+import Input from 'Components/Shared/Input';
+import Select from 'Components/Shared/Select';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTimesheet, editTimesheet } from '../../../redux/timeSheets/thunks';
-import { setFetching } from '../../../redux/timeSheets/actions';
-import { getTasks } from '../../../redux/tasks/thunks';
-import { getProjects } from '../../../redux/projects/thunks';
-import { getEmployees } from '../../../redux/employees/thunks';
+import { createTimesheet, editTimesheet } from 'redux/timeSheets/thunks';
+import { setFetching } from 'redux/timeSheets/actions';
+import { getTasks } from 'redux/tasks/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getEmployees } from 'redux/employees/thunks';
 import { useForm } from 'react-hook-form';
 import { schema } from 'Components/TimeSheets/Form/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -35,9 +35,9 @@ const TimesheetsForm = () => {
     description: '',
     hours: '',
     date: '',
-    task: '',
-    employee: '',
-    project: ''
+    task: '- Select task -',
+    employees: '- Select employees -',
+    project: '- Select project -'
   });
 
   const {

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './modal.module.css';
-import Button from '../Buttons/FunctionalButton';
+import styles from 'Components/Shared/Modal/modal.module.css';
+import Button from 'Components/Shared/Buttons/FunctionalButton';
 
 const Modal = ({ title, children, setModalDisplay, isToConfirm, onClickFunction }) => {
   return (
