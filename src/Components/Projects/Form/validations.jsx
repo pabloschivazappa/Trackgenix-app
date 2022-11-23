@@ -1,38 +1,67 @@
 export const registerOptions = {
-  name: { required: 'Name is required' },
-  email: { required: 'Email is required' },
-  password: {
-    required: 'Password is required',
+  name: {
+    required: 'Name is required',
     minLength: {
-      value: 8,
-      message: 'Password must have at least 8 characters'
+      value: 3,
+      message: 'Name must be at least 3 characters long.'
+    },
+    maxLength: {
+      value: 50,
+      message: 'Name must be no longer than 50 characters.'
+    },
+    pattern: {
+      value: /^([^0-9]*)$/i,
+      message: 'Name must have only letters.'
     }
-  }
+  },
+  description: {
+    required: 'Description is required',
+    minLength: {
+      value: 10,
+      message: 'Description must be at least 10 characters long.'
+    },
+    maxLength: {
+      value: 50,
+      message: 'Description must be no longer than 50 characters.'
+    },
+    pattern: {
+      value: /^([^0-9]*)$/i,
+      message: 'Description must have only letters.'
+    }
+  },
+  clientName: {
+    required: 'Client name is required',
+    minLength: {
+      value: 3,
+      message: 'Client name must be at least 3 characters long.'
+    },
+    maxLength: {
+      value: 50,
+      message: 'Client name must be no longer than 50 characters.'
+    },
+    pattern: {
+      value: /^([^0-9]*)$/i,
+      message: 'Client name must have only letters.'
+    }
+  },
+  startDate: { required: 'Start date is required' },
+  endDate: { required: 'End date is required' },
+  employee: { required: 'Employee is required' },
+  rate: {
+    required: 'Rate is required',
+    min: {
+      value: 1,
+      message: 'Rate must be a positive number'
+    }
+  },
+  role: { required: 'Role is required' }
 };
-
-/*
-const validateCreation = (req, res, next) => {
-  const employeeValidation = joi.object({
-    employee: joi.string().min(3).max(50).required(),
-    role: joi.string().valid('DEV', 'QA', 'TL').required(),
-    rate: joi.number().required(),
-  });
-  const projectValidation = joi.object({
-    name: joi.string().min(3).max(50).required(),
-    startDate: joi.date().required(),
-    endDate: joi.date().greater(joi.ref('startDate')),
-    description: joi.string().min(10).max(50).required(),
-    clientName: joi.string().min(3).max(50).required(),
-    active: joi.boolean().required(),
-    employees: joi.array().items(employeeValidation),
-  });
-  */
 
 /*
 import joi from 'joi';
 
 let employeeValidation = joi
-  .object({
+.object({
     employee: joi.string().required(),
     role: joi.string().valid('DEV', 'QA', 'TL').required(),
     rate: joi.number().required().positive().messages({
@@ -106,3 +135,21 @@ export const schema = joi.object({
   employees: joi.array().items(employeeValidation).min(0)
 });
 */
+
+/*
+const validateCreation = (req, res, next) => {
+  const employeeValidation = joi.object({
+    employee: joi.string().min(3).max(50).required(),
+    role: joi.string().valid('DEV', 'QA', 'TL').required(),
+    rate: joi.number().required(),
+  });
+  const projectValidation = joi.object({
+    name: joi.string().min(3).max(50).required(),
+    startDate: joi.date().required(),
+    endDate: joi.date().greater(joi.ref('startDate')),
+    description: joi.string().min(10).max(50).required(),
+    clientName: joi.string().min(3).max(50).required(),
+    active: joi.boolean().required(),
+    employees: joi.array().items(employeeValidation),
+  });
+  */
