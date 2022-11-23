@@ -13,9 +13,9 @@ function EmployeeForm() {
   const { children, modalTitle, fetching } = useSelector((state) => state.employees);
   const urlValues = window.location.search;
   const urlParams = new URLSearchParams(urlValues);
-  const id = urlParams.get('id');
+  const product = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-  const rowId = idRegEx.test(id);
+  const rowId = idRegEx.test(product);
   const [modalDisplay, setModalDisplay] = useState('');
   const [values, setValues] = useState({
     name: '',
@@ -26,19 +26,25 @@ function EmployeeForm() {
     phone: ''
   });
 
-  const [employee, setEmployee] = useState('');
-
-  const { register, handleSubmit, setValue, reset } = useForm({
-    mode: 'onChange'
+  const { register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    defaultValues: values
   });
 
   useEffect(async () => {
     if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
         const data = await response.json();
-        setEmployee(data.data);
+        setValues({
+          name: data.data.name,
+          lastName: data.data.lastName,
+          email: data.data.email,
+          password: data.data.password,
+          dni: data.data.dni,
+          phone: data.data.phone
+        });
       } catch (error) {
         console.error(error);
       }
@@ -47,24 +53,8 @@ function EmployeeForm() {
   }, []);
 
   useEffect(() => {
-    if (employee && rowId) {
-      setValue('name', employee.name);
-      setValue('lastName', employee.lastName);
-      setValue('email', employee.email);
-      setValue('password', employee.password);
-      setValue('dni', employee.dni);
-      setValue('phone', employee.phone);
-
-      setValues({
-        name: employee.name,
-        lastName: employee.lastName,
-        email: employee.email,
-        password: employee.password,
-        dni: employee.dni,
-        phone: employee.phone
-      });
-    }
-  }, [employee]);
+    reset(values);
+  }, [values]);
 
   const postEmployee = (data) => {
     dispatch(createEmployee(data));
@@ -72,20 +62,13 @@ function EmployeeForm() {
   };
 
   const putEmployee = (data) => {
-    dispatch(editEmployee(id, data));
+    dispatch(editEmployee(product, data));
     setModalDisplay(true);
   };
 
   const onSubmit = async (data) => {
-    setValues({
-      name: data.name,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      dni: data.dni,
-      phone: data.phone
-    });
     rowId ? putEmployee(data) : postEmployee(data);
+    setValues(values);
   };
 
   const resetForm = () => {
@@ -96,9 +79,9 @@ function EmployeeForm() {
     <>
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
-        resetFunction={resetForm}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Employee' : 'Create Employee'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
