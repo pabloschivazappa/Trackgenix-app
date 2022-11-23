@@ -65,12 +65,12 @@ const SuperAdminsForm = () => {
 
   const putSuperAdmin = (data) => {
     dispatch(editSuperAdmin(id, data));
-    setValues(values);
     setModalDisplay(true);
   };
 
   const onSubmit = async (data) => {
     rowId ? putSuperAdmin(data) : addSuperAdmin(data);
+    setValues(values);
   };
 
   const resetForm = () => {
