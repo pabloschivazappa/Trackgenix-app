@@ -98,8 +98,17 @@ const ProjectForm = () => {
   };
 
   const onSubmit = async (data) => {
-    !isValidId ? addProject(data) : changeProject(data);
+    if (!isValidId) {
+      addProject(data);
+    } else {
+      changeProject(data);
+      setValues(data);
+    }
     setModalDisplay(true);
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -108,6 +117,7 @@ const ProjectForm = () => {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={isValidId ? 'Edit' : 'Create'}
         formTitle={isValidId ? 'Edit Project' : 'Create Project'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>

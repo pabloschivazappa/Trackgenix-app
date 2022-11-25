@@ -75,7 +75,16 @@ const FormAdmins = () => {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putAdmin(data) : addAdmin(data);
+    if (rowId) {
+      putAdmin(data);
+      setValues(data);
+    } else {
+      addAdmin(data);
+    }
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -84,6 +93,7 @@ const FormAdmins = () => {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Admin' : 'Create Admin'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>
@@ -117,4 +127,5 @@ const FormAdmins = () => {
     </>
   );
 };
+
 export default FormAdmins;
