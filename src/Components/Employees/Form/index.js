@@ -67,7 +67,16 @@ function EmployeeForm() {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putEmployee(data) : postEmployee(data);
+    if (rowId) {
+      putEmployee(data);
+      setValues(data);
+    } else {
+      postEmployee(data);
+    }
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -76,6 +85,7 @@ function EmployeeForm() {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Employee' : 'Create Employee'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>

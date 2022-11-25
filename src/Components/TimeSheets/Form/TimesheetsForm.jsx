@@ -86,7 +86,16 @@ const TimesheetsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    haveId ? putTimesheet(data) : addTimesheet(data);
+    if (haveId) {
+      putTimesheet(data);
+      setValues(data);
+    } else {
+      addTimesheet(data);
+    }
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -95,6 +104,7 @@ const TimesheetsForm = () => {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={haveId ? 'Edit' : 'Create'}
         formTitle={haveId ? 'Edit Timesheet' : 'Create Timesheet'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>

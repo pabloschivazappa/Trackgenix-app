@@ -15,11 +15,14 @@ function TaskForm() {
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const { children, modalTitle, fetching } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
   const [modalDisplay, setModalDisplay] = useState('');
+  const [values, setValues] = useState({
+    description: ''
+  });
+
   const { register, handleSubmit, reset } = useForm({
     mode: 'onChange',
-    defaultValues: value
+    defaultValues: values
   });
 
   useEffect(async () => {
@@ -28,7 +31,7 @@ function TaskForm() {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
         const data = await response.json();
-        setValue({ description: data.data.description });
+        setValues({ description: data.data.description });
       } catch (error) {
         console.error(error);
       }
@@ -37,8 +40,8 @@ function TaskForm() {
   }, []);
 
   useEffect(() => {
-    reset(value);
-  }, [value]);
+    reset(values);
+  }, [values]);
 
   const postTasks = (data) => {
     dispatch(createTasks(data));
@@ -51,7 +54,16 @@ function TaskForm() {
   };
 
   const onSubmit = async (data) => {
-    urlID ? putTasks(data) : postTasks(data);
+    if (urlID) {
+      putTasks(data);
+      setValues(data);
+    } else {
+      postTasks(data);
+    }
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -60,6 +72,7 @@ function TaskForm() {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={idRegEx.test(urlID) ? 'Edit' : 'Create'}
         formTitle={idRegEx.test(urlID) ? 'Edit Task' : 'Create Task'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>

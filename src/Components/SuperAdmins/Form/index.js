@@ -69,7 +69,16 @@ const SuperAdminsForm = () => {
   };
 
   const onSubmit = async (data) => {
-    rowId ? putSuperAdmin(data) : addSuperAdmin(data);
+    if (rowId) {
+      putSuperAdmin(data);
+      setValues(data);
+    } else {
+      addSuperAdmin(data);
+    }
+  };
+
+  const resetForm = () => {
+    reset(values);
   };
 
   return (
@@ -78,6 +87,7 @@ const SuperAdminsForm = () => {
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage={rowId ? 'Edit' : 'Create'}
         formTitle={rowId ? 'Edit Super Admin' : 'Create Super Admin'}
+        resetFunction={() => resetForm()}
       >
         {!fetching ? (
           <>

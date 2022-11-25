@@ -3,7 +3,14 @@ import styles from 'Components/Shared/Form/form.module.css';
 import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import { useHistory } from 'react-router-dom';
 
-const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, profileFormWidth = '' }) => {
+const Form = ({
+  onSubmitFunction,
+  children,
+  buttonMessage,
+  formTitle,
+  resetFunction,
+  profileFormWidth = ''
+}) => {
   let history = useHistory();
   const back = (e) => {
     e.preventDefault();
@@ -27,6 +34,13 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, profileFor
             buttonColor="green"
             type="submit"
             title={buttonMessage}
+          />
+          <FunctionalButton
+            buttonType="form__button"
+            buttonColor="green"
+            type="button"
+            title="Reset"
+            action={resetFunction}
           />
         </div>
       </form>
