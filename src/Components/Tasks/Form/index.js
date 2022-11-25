@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createTasks, editTasks } from 'redux/tasks/thunks';
 import { setFetching } from 'redux/tasks/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/Tasks/Form/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function TaskForm() {
   const urlValues = window.location.search;
@@ -20,7 +22,13 @@ function TaskForm() {
     description: ''
   });
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(schema),
     mode: 'onChange',
     defaultValues: values
   });
@@ -76,7 +84,12 @@ function TaskForm() {
       >
         {!fetching ? (
           <>
-            <Input title="Description" name="description" register={register} />
+            <Input
+              title="Description"
+              name="description"
+              register={register}
+              error={errors.description?.message}
+            />
           </>
         ) : (
           <Spinner />

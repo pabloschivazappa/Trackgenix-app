@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createProject, editProject } from 'redux/projects/thunks';
 import { setFetching } from 'redux/projects/actions';
 import { getEmployees } from 'redux/employees/thunks';
+import { registerOptions } from 'Components/Projects/Form/validations';
 
 const ProjectForm = () => {
   const urlValues = window.location.search;
@@ -39,7 +40,13 @@ const ProjectForm = () => {
     active: true
   });
 
-  const { register, handleSubmit, reset, control } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    control
+  } = useForm({
     mode: 'onChange',
     defaultValues: values
   });
@@ -114,11 +121,43 @@ const ProjectForm = () => {
       >
         {!fetching ? (
           <>
-            <Input register={register} title="Project Name" name="name" />
-            <Input register={register} title="Description" name="description" />
-            <Input register={register} title="Client Name" name="clientName" />
-            <Input register={register} title="Start Date" type="date" name="startDate" />
-            <Input register={register} title="End Date" type="date" name="endDate" />
+            <Input
+              register={register}
+              title="Project Name"
+              name="name"
+              error={errors.name?.message}
+              objectN={registerOptions.name}
+            />
+            <Input
+              register={register}
+              title="Description"
+              name="description"
+              error={errors.description?.message}
+              objectN={registerOptions.description}
+            />
+            <Input
+              register={register}
+              title="Client Name"
+              name="clientName"
+              error={errors.clientName?.message}
+              objectN={registerOptions.clientName}
+            />
+            <Input
+              register={register}
+              title="Start Date"
+              type="date"
+              name="startDate"
+              error={errors.startDate?.message}
+              objectN={registerOptions.startDate}
+            />
+            <Input
+              register={register}
+              title="End Date"
+              type="date"
+              name="endDate"
+              error={errors.endDate?.message}
+              objectN={registerOptions.endDate}
+            />
             <div className={formStyles.form__container}>
               <label className={formStyles.form__label}> Add Employees (optional)</label>
               {fields.map((field, index) => (
@@ -130,12 +169,23 @@ const ProjectForm = () => {
                     kind="name"
                     id={id}
                     title="Employee"
+                    error={`errors.employees[${index}].employee`?.message}
+                    objectN={registerOptions.employee}
                   />
-                  <Input register={register} title="Rate" name={`employees[${index}].rate`} />
+                  <Input
+                    register={register}
+                    title="Rate"
+                    name={`employees[${index}].rate`}
+                    error={`errors.employees[${index}].rate`?.message}
+                    objectN={registerOptions.rate}
+                  />
                   <label className={formStyles.label}>
                     Role
-                    <select className={formStyles.select} {...register(`employees[${index}].role`)}>
-                      <option>- Select role -</option>
+                    <select
+                      className={formStyles.select}
+                      {...register(`employees[${index}].role`, registerOptions.role)}
+                    >
+                      <option hidden>- Select a role -</option>
                       {roles.map((role, index) => (
                         <option key={index}>{role}</option>
                       ))}

@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin } from 'redux/admins/thunks';
 import { setFetching } from 'redux/admins/actions';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/Admins/FormAdmins/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const FormAdmins = () => {
   const urlValues = window.location.search;
@@ -26,8 +28,14 @@ const FormAdmins = () => {
     phone: ''
   });
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -89,12 +97,23 @@ const FormAdmins = () => {
       >
         {!fetching ? (
           <>
-            <Input register={register} name="lastName" title="Last Name" />
-            <Input register={register} name="name" title="Name" />
-            <Input register={register} name="email" title="Email" />
-            <Input register={register} name="password" title="Password" type="password" />
-            <Input register={register} name="dni" title="DNI" />
-            <Input register={register} name="phone" title="Phone" />
+            <Input
+              register={register}
+              name="lastName"
+              title="Last Name"
+              error={errors.lastName?.message}
+            />
+            <Input register={register} name="name" title="Name" error={errors.name?.message} />
+            <Input register={register} name="email" title="Email" error={errors.email?.message} />
+            <Input
+              register={register}
+              name="password"
+              title="Password"
+              type="password"
+              error={errors.password?.message}
+            />
+            <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
+            <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>
         ) : (
           <Spinner />

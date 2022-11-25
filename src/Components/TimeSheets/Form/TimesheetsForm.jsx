@@ -12,6 +12,8 @@ import { getTasks } from 'redux/tasks/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 import { useForm } from 'react-hook-form';
+import { schema } from 'Components/TimeSheets/Form/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const fixDate = (date) => {
   return date.slice(0, 10);
@@ -34,12 +36,18 @@ const TimesheetsForm = () => {
     hours: '',
     date: '',
     task: '- Select task -',
-    employees: '- Select employees -',
+    employee: '- Select employees -',
     project: '- Select project -'
   });
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: values
   });
 
@@ -108,9 +116,20 @@ const TimesheetsForm = () => {
       >
         {!fetching ? (
           <>
-            <Input register={register} title="Description" name="description" />
-            <Input register={register} title="Date" type="date" name="date" />
-            <Input register={register} title="Hours" name="hours" />
+            <Input
+              register={register}
+              title="Description"
+              name="description"
+              error={errors.description?.message}
+            />
+            <Input
+              register={register}
+              title="Date"
+              type="date"
+              name="date"
+              error={errors.date?.message}
+            />
+            <Input register={register} title="Hours" name="hours" error={errors.hours?.message} />
             <Select
               register={register}
               list={tasksList}
@@ -118,6 +137,7 @@ const TimesheetsForm = () => {
               kind="description"
               id={id}
               title="Task"
+              error={errors.task?.message}
             />
             <Select
               register={register}
@@ -126,6 +146,7 @@ const TimesheetsForm = () => {
               kind="name"
               id={id}
               title="Employee"
+              error={errors.employee?.message}
             />
             <Select
               register={register}
@@ -134,6 +155,7 @@ const TimesheetsForm = () => {
               kind="name"
               id={id}
               title="Project"
+              error={errors.project?.message}
             />
           </>
         ) : (

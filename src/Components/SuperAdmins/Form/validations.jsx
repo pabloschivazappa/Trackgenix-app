@@ -48,10 +48,10 @@ export const schema = Joi.object({
     'any.required': 'DNI is required.'
   }),
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': 'Invalid email (must end in .com or .net).',
+      'string.email': 'Invalid email.',
       'string.empty': 'Email must not be an empty field.',
       'any.required': 'Email is required.'
     }),
