@@ -1,4 +1,5 @@
 import styles from 'Components/Home/home.module.css';
+import { RedirectButton } from 'Components/Shared';
 
 const urlParams = new URLSearchParams(window.location.search);
 const employeeId = urlParams.get('id');
@@ -21,10 +22,10 @@ function Home() {
       ) : (
         <>
           <h3>
-            <a href="#">Log In</a>
+            <RedirectButton path="sign-in" title="Sign in" />
           </h3>
           <h3>
-            <a href="#">Sign Up</a>
+            <RedirectButton path="sign-up" title="Sign up" />
           </h3>
         </>
       )}
