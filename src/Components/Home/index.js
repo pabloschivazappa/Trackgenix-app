@@ -22,7 +22,7 @@ function Home() {
       ) : (
         <>
           <h3>
-            <RedirectButton path="sign-in" title="Sign in" />
+            <RedirectButton path="login" title="Login" />
           </h3>
           <h3>
             <RedirectButton path="sign-up" title="Sign up" />

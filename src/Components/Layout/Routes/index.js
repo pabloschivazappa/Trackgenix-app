@@ -5,7 +5,7 @@ const FormAdmins = React.lazy(() => import('Components/Admins/FormAdmins'));
 const SuperAdmins = React.lazy(() => import('Components/SuperAdmins/index'));
 const SuperAdminsForm = React.lazy(() => import('Components/SuperAdmins/Form'));
 const Home = React.lazy(() => import('Components/Home/index'));
-const SignIn = React.lazy(() => import('Components/Auth/SignIn'));
+const Login = React.lazy(() => import('Components/Auth/Login'));
 const SignUp = React.lazy(() => import('Components/Auth/SignUp'));
 const LogOut = React.lazy(() => import('Components/Auth/LogOut'));
 const Employees = React.lazy(() => import('Components/Employees/index'));
@@ -26,9 +26,9 @@ const Routes = () => {
         <Redirect to="/home" />
       </Route>
       <Route exact path="/home" component={Home} />
-      <Route exact path="/sign-in" component={SignIn} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/sign-up" component={SignUp} />
-      <Route exact path="/sign-up" component={LogOut} />
+      <Route exact path="/log-out" component={LogOut} />
       <Route exact path="/admins" component={Admins} />
       <Route path="/admins/form" component={FormAdmins} />
       <Route path="/admins/form?id=" component={FormAdmins} />
