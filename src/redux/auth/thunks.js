@@ -1,5 +1,5 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { loginLoading, loginSuccess, loginError } from './actions';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { loginLoading, loginError, logoutLoading, logoutError } from './actions';
 import { auth } from 'helpers/firebase';
 
 export const login = (data) => {
@@ -12,10 +12,21 @@ export const login = (data) => {
         claims: { role }
       } = await userCredentials.user.getIdTokenResult();
       sessionStorage.setItem('token', token);
-      console.log();
-      return dispatch(loginSuccess({ token, role }));
+      return role;
     } catch (error) {
       return dispatch(loginError());
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    dispatch(logoutLoading());
+    try {
+      await signOut();
+      sessionStorage.clear();
+    } catch (error) {
+      return dispatch(logoutError(error.toString()));
     }
   };
 };

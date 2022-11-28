@@ -1,9 +1,9 @@
-import { LOGIN_LOADING, LOGIN_ERROR, LOGIN_SUCCESS } from './constants';
+import { LOGIN_LOADING, LOGIN_ERROR, SET_LOGGED_IN, SET_LOGGED_OUT } from './constants';
 
 const INITIAL_STATE = {
   fetching: true,
   autheticated: false,
-  role: null,
+  data: null,
   email: null,
   error: null
 };
@@ -15,18 +15,24 @@ const authReducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetching: true
       };
-    case LOGIN_SUCCESS:
+    case SET_LOGGED_IN:
       return {
         ...state,
         fetching: false,
         autheticated: true,
-        role: action.payload
+        data: action.payload
       };
     case LOGIN_ERROR:
       return {
         ...state,
         fetching: false,
         error: action.payload
+      };
+    case SET_LOGGED_OUT:
+      return {
+        ...state,
+        fetching: false,
+        data: null
       };
     default:
       return state;
