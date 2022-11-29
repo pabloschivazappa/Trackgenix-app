@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setAuthentication } from '../redux/auth/actions';
+import { setLoggedIn } from 'redux/auth/actions';
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const dispatch = useDispatch();
@@ -9,12 +9,11 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const role = sessionStorage.getItem('role');
-    const email = sessionStorage.getItem('email');
-    if (token && role && email) {
+    if (token && role) {
       dispatch(
-        setAuthentication({
+        setLoggedIn({
           role,
-          email
+          token
         })
       );
     }
@@ -27,7 +26,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
         if (sessionStorage.getItem('token') && sessionStorage.getItem('role') == rest.role) {
           return <RouteComponent {...routeProps} />;
         }
-        return <Redirect to={'/auth/login'} />;
+        return <Redirect to={'/login'} />;
       }}
     />
   );
