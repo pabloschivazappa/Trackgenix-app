@@ -13,11 +13,15 @@ import {
   putEmployeesError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getEmployees = () => {
   return async (dispatch) => {
     dispatch(getEmployeesLoading());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`, {
+        headers: { token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getEmployeesSuccess(data.data));
@@ -36,7 +40,7 @@ export const deleteEmployees = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-type': 'application/json' }
+        headers: { 'Content-type': 'application/json', token }
       });
       if (response.ok) {
         dispatch(deleteEmployeesSuccess(id));
@@ -79,7 +83,7 @@ export const editEmployee = (id, employee) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(employee)
       });
       const data = await response.json();
