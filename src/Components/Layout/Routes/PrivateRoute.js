@@ -1,32 +1,26 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Spinner } from 'Components/Shared';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setLoggedIn } from 'redux/auth/actions';
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    const role = sessionStorage.getItem('role');
-    if (token && role) {
-      dispatch(
-        setLoggedIn({
-          role,
-          token
-        })
-      );
-    }
-  }, []);
-
+  const auth = useSelector((store) => {
+    return store.auth;
+  });
+  console.log(auth);
   return (
     <Route
       {...rest}
       render={(routeProps) => {
-        if (sessionStorage.getItem('token') && sessionStorage.getItem('role') == rest.role) {
+        if (auth.fetching) {
+          return <Spinner />;
+        }
+
+        console.log(rest.role.includes(auth.data));
+
+        if (rest.role.includes(auth.data)) {
           return <RouteComponent {...routeProps} />;
         }
-        return <Redirect to={'/login'} />;
+        return <Redirect to={'/home'} />;
       }}
     />
   );

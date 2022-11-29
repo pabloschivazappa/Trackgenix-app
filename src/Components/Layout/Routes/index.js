@@ -34,26 +34,78 @@ const Routes = () => {
       <Route exact path="/home" component={Home} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/sign-up" component={SignUp} />
-      <PrivateRoute exact path="/admins" component={Admins} />
-      <PrivateRoute path="/admins/form" component={FormAdmins} />
-      <PrivateRoute path="/admins/form?id=" component={FormAdmins} />
-      <PrivateRoute exact path="/employees" component={Employees} />
-      <PrivateRoute path="/employees/form" component={EmployeesForm} />
-      <PrivateRoute path="/employees/form?id=" component={EmployeesForm} />
-      <PrivateRoute path="/employees/profile" component={EmployeesProfile} />
-      <PrivateRoute exact path="/projects" component={Projects} />
-      <PrivateRoute path="/projects/form" component={ProjectsForm} />
-      <PrivateRoute path="/projects/form?id=" component={ProjectsForm} />
-      <PrivateRoute exact path="/super-admins" component={SuperAdmins} />
-      <PrivateRoute path="/super-admins/form" component={SuperAdminsForm} />
-      <PrivateRoute path="/super-admins/form?id=" component={SuperAdminsForm} />
-      <PrivateRoute exact path="/tasks" component={Tasks} />
-      <PrivateRoute path="/tasks/form" component={TasksForm} />
-      <PrivateRoute path="/tasks/form?id=" component={TasksForm} />
-      <PrivateRoute exact path="/time-sheets" component={TimeSheets} />
-      <PrivateRoute path="/time-sheets/form" component={TimesheetsForm} />
-      <PrivateRoute path="/time-sheets/form?id=" component={TimesheetsForm} />
-      <PrivateRoute path="/employees/projects" component={ProjectTable} />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} exact path="/admins" component={Admins} />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} path="/admins/form" component={FormAdmins} />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} path="/admins/form?id=" component={FormAdmins} />
+      <PrivateRoute
+        exact
+        path="/employees"
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        component={Employees}
+      />
+      <PrivateRoute
+        role={['ADMIN', 'SUPERADMIN']}
+        path="/employees/form"
+        component={EmployeesForm}
+      />
+      <PrivateRoute
+        role={['ADMIN', 'SUPERADMIN']}
+        path="/employees/form?id="
+        component={EmployeesForm}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        path="/employees/profile"
+        component={EmployeesProfile}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        exact
+        path="/projects"
+        component={Projects}
+      />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} path="/projects/form" component={ProjectsForm} />
+      <PrivateRoute
+        role={['ADMIN', 'SUPERADMIN']}
+        path="/projects/form?id="
+        component={ProjectsForm}
+      />
+      <PrivateRoute role={['SUPERADMIN']} exact path="/super-admins" component={SuperAdmins} />
+      <PrivateRoute role={['SUPERADMIN']} path="/super-admins/form" component={SuperAdminsForm} />
+      <PrivateRoute
+        role={['SUPERADMIN']}
+        path="/super-admins/form?id="
+        component={SuperAdminsForm}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        exact
+        path="/tasks"
+        component={Tasks}
+      />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} path="/tasks/form" component={TasksForm} />
+      <PrivateRoute role={['ADMIN', 'SUPERADMIN']} path="/tasks/form?id=" component={TasksForm} />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        exact
+        path="/time-sheets"
+        component={TimeSheets}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        path="/time-sheets/form"
+        component={TimesheetsForm}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        path="/time-sheets/form?id="
+        component={TimesheetsForm}
+      />
+      <PrivateRoute
+        role={['EMPLOYEE', 'ADMIN', 'SUPERADMIN']}
+        path="/employees/projects"
+        component={ProjectTable}
+      />
     </Switch>
   );
 };
