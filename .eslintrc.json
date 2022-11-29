@@ -7,9 +7,10 @@
     "env": {
         "browser": true,
         "node": true,
-        "es2021": true
+        "es2021": true,
+        "jasmine" : true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended","plugin:wdio/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -18,7 +19,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "wdio"
     ],
     "rules": {
         "semi": [2, "always"],
