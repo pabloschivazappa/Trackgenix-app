@@ -50,6 +50,7 @@ export const deleteEmployees = (id) => {
     } catch (error) {
       dispatch(deleteEmployeesError(error.toString()));
     }
+    dispatch(getEmployees());
   };
 };
 

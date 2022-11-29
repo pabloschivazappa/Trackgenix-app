@@ -19,11 +19,11 @@ const FormAdmins = () => {
   const { children, modalTitle, fetching } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({
     name: '',
     lastName: '',
     email: '',
-    password: '',
     dni: '',
     phone: ''
   });
@@ -43,13 +43,14 @@ const FormAdmins = () => {
     if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
-          password: data.data.password,
           dni: data.data.dni,
           phone: data.data.phone
         });
@@ -105,13 +106,6 @@ const FormAdmins = () => {
             />
             <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input register={register} name="email" title="Email" error={errors.email?.message} />
-            <Input
-              register={register}
-              name="password"
-              title="Password"
-              type="password"
-              error={errors.password?.message}
-            />
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
             <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>

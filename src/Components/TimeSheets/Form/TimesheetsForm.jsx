@@ -28,6 +28,7 @@ const TimesheetsForm = () => {
   const { children, modalTitle, fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const { list: tasksList } = useSelector((state) => state.tasks);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
@@ -58,7 +59,9 @@ const TimesheetsForm = () => {
     if (haveId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           description: data.data.description,

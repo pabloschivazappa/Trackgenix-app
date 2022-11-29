@@ -35,7 +35,7 @@ const Routes = () => {
       <Route exact path="/login" component={Login} />
       <Route exact path="/sign-up" component={SignUp} />
       <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} exact path="/admins" component={Admins} />
-      <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} path="/admins/form" component={FormAdmins} />
+      <PrivateRoute role={['SUPER_ADMIN']} path="/admins/form" component={FormAdmins} />
       <PrivateRoute
         role={['ADMIN', 'SUPER_ADMIN']}
         path="/admins/form?id="
