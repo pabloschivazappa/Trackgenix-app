@@ -14,11 +14,15 @@ import {
   setModalContent
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getProjects = () => {
   return async (dispatch) => {
     dispatch(getProjectsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+        headers: { token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getProjectsSuccess(data.data));
@@ -36,7 +40,8 @@ export const deleteProject = (id) => {
     dispatch(deleteProjectsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token }
       });
       if (response.ok) {
         dispatch(deleteProjectsSuccess(id));
@@ -55,7 +60,7 @@ export const createProject = (project) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(project)
       });
       const data = await response.json();
@@ -76,7 +81,7 @@ export const editProject = (id, project, isForDelete = false) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(project)
       });
       const data = await response.json();

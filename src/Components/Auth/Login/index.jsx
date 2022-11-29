@@ -19,6 +19,14 @@ const Login = () => {
         case 'EMPLOYEE':
           history.push('/employees');
       }
+      switch (role) {
+        case 'SUPER_ADMIN':
+          history.push('/super-admins');
+      }
+      switch (role) {
+        case 'ADMIN':
+          history.push('/admins');
+      }
     }
     console.log(role);
   };

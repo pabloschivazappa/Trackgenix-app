@@ -24,6 +24,7 @@ const ProjectForm = () => {
   const { list: employeesList } = useSelector((state) => state.employees);
   const roles = ['QA', 'DEV', 'TL'];
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({
     name: '',
     description: '',
@@ -61,7 +62,9 @@ const ProjectForm = () => {
     if (isValidId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           name: data.data.name,

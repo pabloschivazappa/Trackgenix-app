@@ -17,13 +17,13 @@ const SuperAdminsForm = () => {
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(id);
   const { children, modalTitle, fetching } = useSelector((state) => state.superAdmins);
+  const token = sessionStorage.getItem('token');
   const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     name: '',
     lastName: '',
     email: '',
-    password: '',
     dni: '',
     phone: ''
   });
@@ -45,13 +45,14 @@ const SuperAdminsForm = () => {
     if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
-          password: data.data.password,
           dni: data.data.dni,
           phone: data.data.phone
         });
@@ -107,13 +108,6 @@ const SuperAdminsForm = () => {
             />
             <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input register={register} name="email" title="Email" error={errors.email?.message} />
-            <Input
-              register={register}
-              name="password"
-              title="Password"
-              type="password"
-              error={errors.password?.message}
-            />
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
             <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>

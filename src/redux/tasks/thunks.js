@@ -13,11 +13,15 @@ import {
   putTasksError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getTasks = () => {
   return async (dispatch) => {
     dispatch(getTasksPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+        headers: { token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getTasksSuccess(data.data));
@@ -36,7 +40,7 @@ export const deleteTasks = (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-type': 'application/json' }
+        headers: { 'Content-type': 'application/json', token }
       });
       if (response.ok) {
         dispatch(deleteTasksSuccess(id));
@@ -57,7 +61,8 @@ export const createTasks = (task) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(task)
       });
@@ -79,7 +84,7 @@ export const editTasks = (id, task) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
-        headers: { 'Content-type': 'application/json' },
+        headers: { 'Content-type': 'application/json', token },
         body: JSON.stringify(task)
       });
       const data = await response.json();

@@ -18,6 +18,7 @@ function TaskForm() {
   const { children, modalTitle, fetching } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({
     description: ''
   });
@@ -37,7 +38,9 @@ function TaskForm() {
     if (idRegEx.test(urlID)) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${urlID}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({ description: data.data.description });
       } catch (error) {

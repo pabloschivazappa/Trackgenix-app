@@ -13,11 +13,15 @@ import {
   putAdminsError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getAdmins = () => {
   return async (dispatch) => {
     dispatch(getAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+        headers: { token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getAdminsSuccess(data.data));
@@ -35,7 +39,8 @@ export const deleteAdmin = (id) => {
     dispatch(deleteAdminsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token }
       });
       if (response.ok) {
         dispatch(deleteAdminsSuccess(id));
@@ -55,7 +60,7 @@ export const createAdmin = (admin) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(admin)
       });
       const data = await response.json();
@@ -76,7 +81,7 @@ export const editAdmin = (id, admin) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(admin)
       });
       const data = await response.json();

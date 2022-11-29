@@ -13,11 +13,15 @@ import {
   putTimesheetsError
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getTimesheets = () => {
   return async (dispatch) => {
     dispatch(getTimesheetsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`, {
+        headers: { token }
+      });
       const data = await response.json();
       if (response.ok) {
         dispatch(getTimesheetsSuccess(data.data));
@@ -35,7 +39,8 @@ export const deleteTimesheet = (id) => {
     dispatch(deleteTimesheetsPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token }
       });
       if (response.ok) {
         dispatch(deleteTimesheetsSuccess());
@@ -55,7 +60,7 @@ export const createTimesheet = (timesheet) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(timesheet)
       });
       const data = await response.json();
@@ -76,7 +81,7 @@ export const editTimesheet = (id, timesheet) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', token },
         body: JSON.stringify(timesheet)
       });
       const data = await response.json();

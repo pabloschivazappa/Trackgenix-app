@@ -16,24 +16,26 @@ export const firebaseApp = initializeApp(fireBaseConfig);
 
 export const auth = getAuth(firebaseApp);
 
-onIdTokenChanged(auth, async (user) => {
-  console.log('onIdTokenChanged');
-  if (user) {
-    try {
-      const {
-        token,
-        claims: { role, email }
-      } = await user.getIdTokenResult();
-      console.log('onIdTokenChanged tokenResult:', { token, role, email: email });
-      if (token) {
-        store.dispatch(setLoggedIn(role, email));
+export const tokenListener = () => {
+  onIdTokenChanged(auth, async (user) => {
+    console.log('onIdTokenChanged');
+    if (user) {
+      try {
+        const {
+          token,
+          claims: { role, email }
+        } = await user.getIdTokenResult();
+        console.log('onIdTokenChanged tokenResult:', { token, role, email: email });
+        if (token) {
+          store.dispatch(setLoggedIn(role, email));
+        }
+        sessionStorage.setItem('token', token);
+      } catch (error) {
+        console.log('error', error);
       }
-      sessionStorage.setItem('token', token);
-    } catch (error) {
-      console.log('error', error);
+    } else {
+      console.log('no user');
+      store.dispatch(setLoggedOut());
     }
-  } else {
-    console.log('no user');
-    store.dispatch(setLoggedOut());
-  }
-});
+  });
+};
