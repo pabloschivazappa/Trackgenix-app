@@ -32,8 +32,15 @@ footer i {
 
 
 .copyright {
+  display: flex;
+  align-items: center;
   font-family: var(--font-family);
   font-size: 0.7rem;
+}
+
+.copyright img {
+  width: 20px;
+  margin-left: 5px;
 }
 
 .socialIcon {
