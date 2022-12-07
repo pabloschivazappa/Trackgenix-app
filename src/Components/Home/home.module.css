@@ -161,3 +161,31 @@
   line-height: 1.6rem;
   color: var(--color-text);
 }
+
+.about_us__container {
+  display: flex;
+  padding: 2rem;
+  margin-top: 100px;
+  margin-left: 25rem;
+  margin-right: 25rem;
+  border-radius: 1rem;
+  background: var(--gradient-bar);
+}
+
+.about_us__content h3{
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 3rem;
+  color: #0E0E0E;
+}
+
+.about_us__content p {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2rem;
+  color: #0E0E0E;
+}

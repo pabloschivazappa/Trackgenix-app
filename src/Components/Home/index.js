@@ -94,6 +94,23 @@ function Home() {
           </div>
         </div>
       </section>
+      <section>
+        <div className={styles.about_us__container}>
+          <div className={styles.about_us__content}>
+            <h3>About Us</h3>
+            <p>
+              RadiumRocket developed TrackGenix as a software solution for optimal time-tracking and
+              project management as a request for one of its most trusted clients, GigaTech Software
+              Solutions, in late 2021, and swiftly became one of the most requested services in all
+              of the million-dollar South American productivity industry. RadiumRocket are a group
+              of passionate people fond of the latest cutting edge technologies in software
+              development. They position ourselves at your side through all the process of
+              development being responsible and co-workers with you to successfully get your product
+              moving.
+            </p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
