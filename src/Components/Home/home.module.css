@@ -41,6 +41,7 @@
 .whyshoulduse__container {
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
   margin-left: 25rem;
   margin-right: 25rem;
   padding: 2rem;
@@ -88,6 +89,74 @@
 }
 
 .whyshoulduse__content_feature p {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  color: var(--color-text);
+}
+
+.company__container {
+  display: flex;
+  margin-top: 100px;
+  margin-left: 25rem;
+  margin-right: 25rem;
+}
+
+.company__img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.company__img img{
+  width: 400px;
+  margin-right: 2rem;
+  margin-left: 1rem;
+}
+
+.company__content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #fff
+}
+
+.company__gradient_text {
+  font-size: 34px;
+  line-height: 45px;
+  font-weight: 800;
+  font-family: var(--font-family);
+  max-width: 510px;
+  margin: 0;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.company__content_feature {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.company__content_feature div {
+  width: 38px;
+  height: 3px;
+  margin-top: 15px;
+  background: var(--gradient-bar);
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+}
+
+.company__content_feature h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.company__content_feature p {
+  margin: 0;
   font-size: 1rem;
   line-height: 1.6rem;
   color: var(--color-text);

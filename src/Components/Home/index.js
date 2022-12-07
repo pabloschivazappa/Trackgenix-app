@@ -1,5 +1,6 @@
 import styles from 'Components/Home/home.module.css';
 import Rocket from '../../assets/Rocket.png';
+import Company from '../../assets/company.png';
 
 function Home() {
   return (
@@ -50,6 +51,45 @@ function Home() {
               <div />
               <h3>Work traceability</h3>
               <p>Keep track of specs, changes, requests, results, and versions</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className={styles.company__container}>
+          <div className={styles.company__img}>
+            <img src={Company} alt="Company" />
+          </div>
+          <div className={styles.company__content}>
+            <div>
+              <h2 className={styles.company__gradient_text}>Company</h2>
+            </div>
+            <div className={styles.company__content_feature}>
+              <div />
+              <h3>Gigatech Software Solutions SA building</h3>
+              <p>
+                Trackgenix is a HR software company that streamlines human resource management for
+                clients in more than 1,200 cities around the world.
+              </p>
+            </div>
+            <div className={styles.company__content_feature}>
+              <div />
+              <h3>An inclusive workplace for everyone</h3>
+              <p>
+                Get to know our team and our offices and join us in our leap towards better human
+                resources management. Learn how companies from all sectors already manage talent in
+                a more efficient and humane way with our human resources software.
+              </p>
+            </div>
+            <div className={styles.company__content_feature}>
+              <div />
+              <h3>Our workplace, our world</h3>
+              <p>
+                Trackgenix was created remotely in 2008 by Yves Hiernaux and Mic Cvilic after many
+                years of working with hard-to-manage and even harder-to-understand reports and
+                timesheets. Although we have grown, we continue with the same goal of offering a
+                flexible, reliable and easy-to-use time control tool.
+              </p>
             </div>
           </div>
         </div>
