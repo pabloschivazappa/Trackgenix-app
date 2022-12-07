@@ -1,34 +1,20 @@
 import styles from 'Components/Home/home.module.css';
-import { RedirectButton } from 'Components/Shared';
-
-const urlParams = new URLSearchParams(window.location.search);
-const employeeId = urlParams.get('id');
-const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-const rowId = idRegEx.test(employeeId);
+import Rocket from '../../assets/Rocket.png';
 
 function Home() {
   return (
     <section className={styles.container}>
-      <h2>Home</h2>
-      {rowId ? (
-        <>
-          <h3>
-            <a href="employees/profile?id=637556a4d6689c383fac4a66">My Profile</a>
-          </h3>
-          <h3>
-            <a href="employees/projects?id=637556a4d6689c383fac4a66">Projects</a>
-          </h3>
-        </>
-      ) : (
-        <>
-          <h3>
-            <RedirectButton path="login" title="Login" />
-          </h3>
-          <h3>
-            <RedirectButton path="sign-up" title="Sign up" />
-          </h3>
-        </>
-      )}
+      <div className={styles.main__content}>
+        <h1 className={styles.gradient__text}>Welcome to TrackGENIX</h1>
+        <p>
+          TRACKGENIX is a revolutionary system designed fot Gigatech Software Solutions SA. This
+          System sill allow them to efficiently manage thir proyects, schedule flow, selected work
+          teams and much more.
+        </p>
+      </div>
+      <div className={styles.main__rocket}>
+        <img src={Rocket} alt="Rocket"></img>
+      </div>
     </section>
   );
 }

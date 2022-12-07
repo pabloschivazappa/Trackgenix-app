@@ -1,7 +1,39 @@
 .container {
+  display: flex;
+  margin-left: 25rem;
+  margin-right: 25rem;
+}
+
+.main__content {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
+}
+.main__content h1 {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 4rem;
+  line-height: 5rem;
+}
+
+.main__content p {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-text)
+}
+
+.main__rocket img{
+  width: 250px;
+  rotate: 10deg;
+  margin-left: 50px;
+}
+
+.gradient__text {
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
