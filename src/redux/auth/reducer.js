@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   fetching: true,
   authenticated: false,
   data: null,
-  email: null,
+  id: null,
   error: null
 };
 

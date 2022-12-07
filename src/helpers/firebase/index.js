@@ -23,11 +23,11 @@ export const tokenListener = () => {
       try {
         const {
           token,
-          claims: { role, email }
+          claims: { role, email, user_id }
         } = await user.getIdTokenResult();
-        console.log('onIdTokenChanged tokenResult:', { token, role, email: email });
+        console.log('onIdTokenChanged tokenResult:', { token, role, email: email, user_id });
         if (token) {
-          store.dispatch(setLoggedIn(role, email));
+          store.dispatch(setLoggedIn(role, email, user_id));
         }
         sessionStorage.setItem('token', token);
       } catch (error) {

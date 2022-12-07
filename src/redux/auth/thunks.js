@@ -8,10 +8,9 @@ export const login = (data) => {
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
       const {
-        token,
-        claims: { role }
+        claims: { role, user_id }
       } = await userCredentials.user.getIdTokenResult();
-      sessionStorage.setItem('token', token);
+      console.log(user_id);
       return role;
     } catch (error) {
       return dispatch(loginError());

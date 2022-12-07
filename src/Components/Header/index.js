@@ -19,7 +19,7 @@ function Header() {
       </div>
       <nav className={styles.navbar}>
         <div className={styles.appName}>
-          <a href="/" style={{ textDecoration: 'none', color: 'black' }}>
+          <a href="/employees/projects" style={{ textDecoration: 'none', color: 'black' }}>
             Track<span>GENIX</span>
           </a>
         </div>
