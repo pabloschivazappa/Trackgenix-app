@@ -26,14 +26,14 @@ footer i {
   height: 50px;
   width: 90%;
   padding: 0 20px;
-  background-color: #373867;
+  background: var(--color-footer);
   color: white;
 }
 
 
 .copyright {
+  font-family: var(--font-family);
   font-size: 0.7rem;
-  font-style: italic;
 }
 
 .socialIcon {
