@@ -1,13 +1,15 @@
 .form h2 {
   margin-top: 10px;
   margin-bottom: 10px;
-  color: white;
-  width: 100%;
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: center;
   border-radius: 10px;
   font-family: var(--font-family);
-  font-weight: 500;
-  padding-block: 5px;
+  font-size: 2rem;
+  font-weight: 800;
 }
 
 .form__container {
@@ -22,7 +24,7 @@
 
 .box {
   position: relative;
-  background: #1c1c1c;
+  background: #000000;
   border-radius: 8px;
   overflow: hidden;
   padding: 2px;
@@ -36,7 +38,7 @@
   width: 100%;
   top: -50%;
   left: -50%;
-  background: linear-gradient(0deg,transparent,#F49867,#F49867);
+  background: linear-gradient(0deg,transparent,#AE67FA,#AE67FA);
   transform-origin: bottom right;
   animation: animate 6s linear infinite;
   z-index: -1;
@@ -49,7 +51,7 @@
   width: 100%;
   top: -50%;
   left: -50%;
-  background: linear-gradient(0deg,transparent,#F49867,#F49867);
+  background: linear-gradient(0deg,transparent,#AE67FA,#AE67FA);
   transform-origin: bottom right;
   animation: animate 6s linear infinite;
   animation-delay: -3s;
@@ -74,7 +76,7 @@
   padding: 20px;
   color: var(--main-color);
   inset: 2px;
-  background: #28282d;
+  background: rgb(8, 22, 36);
   z-index: 1;
 }
 
