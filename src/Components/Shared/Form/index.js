@@ -31,7 +31,7 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, resetFunct
             />
             <FunctionalButton
               buttonType="form__button"
-              buttonColor="green"
+              buttonColor="blue"
               type="button"
               title="Reset"
               action={resetFunction}

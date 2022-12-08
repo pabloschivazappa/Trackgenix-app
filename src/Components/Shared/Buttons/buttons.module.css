@@ -1,10 +1,74 @@
 .form__button {
-  width: 95px;
-  height: var(--button-height);
+  position: relative;
+  background: #81AFDD;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: 0.5s;
+  padding: 5px 10px;
   border: none;
-  border-radius: 10px;
-  font-weight: 600;
   cursor: pointer;
+}
+
+.form__button:hover {
+  letter-spacing: 0.25rem;
+}
+
+.form__button:before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: rgb(8, 22, 36);
+}
+
+.form__button div {
+  position: relative;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  z-index: 1;
+}
+
+.form__button i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.form__button i::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80%;
+  width: 10px;
+  height: 4px;
+  background: rgb(8, 22, 36);
+  transform: translateX(-50%) skewX(325deg);
+  transition: 0.5s;
+}
+
+.form__button:hover i::before {
+  width: 20px;
+  left: 20%;
+}
+
+.form__button i::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 10px;
+  height: 4px;
+  background: rgb(8, 22, 36);
+  transform: translateX(-50%) skewX(325deg);
+  transition: 0.5s;
+}
+
+.form__button:hover i::after {
+  width: 20px;
+  left: 80%;
 }
 
 .form__button__add__employee {
@@ -26,20 +90,29 @@
 
 .green {
   color: white;
-  background-color: #49A37B;
 }
 
 .green:hover {
-  background-color: #38805f;
+  background: #6eff3e;
+  box-shadow: 0 0 10px #6eff3e;
 }
 
 .red {
-  background-color: #f13312;
   color: white;
 }
 
 .red:hover {
-  background-color: #bd2a10;
+  background: #ff1867;
+  box-shadow: 0 0 10px #ff1867;
+}
+
+.blue {
+  color: white;
+}
+
+.blue:hover {
+  background: #1e9bff;
+  box-shadow: 0 0 10px #1e9bff;
 }
 
 .create__button {
