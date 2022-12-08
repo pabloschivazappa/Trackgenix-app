@@ -6,6 +6,7 @@ const RedirectButton = ({ path, title = null, icon = null, buttonType }) => {
     <Link to={path} className={styles[buttonType]}>
       {title}
       {icon}
+      <i></i>
     </Link>
   );
 };
