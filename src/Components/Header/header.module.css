@@ -3,53 +3,79 @@ header i {
   margin-left: 15px;
 }
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
-  height: 50px;
-  background-color: #373867;
-  color: white;
-}
-
-.brand {
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.socialIcon {
-  margin-left: 15px;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
   min-height: 100px;
-  background-color: #f0f4f9;
 }
 
-.appName {
-  font-size: 2rem;
-  font-weight: bold;
+.trackgenix_logo {
+  width: 200px;
 }
 
 .rutes {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
   list-style-type: none;
 }
 
 .rutes > li > a {
-  margin-left: 15px;
+  position: relative;
+  margin: 5px;
+  text-decoration: none;
+  font-family: var(--font-family);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   text-transform: capitalize;
-  color: black;
+  color: #a0a0a0;
+}
+
+.rutes > li > a::after {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  width: 0;
+  left: 0;
+  height: 1.5px;
+  display: block;
+  transition: 0.3s;
+}
+
+.rutes > li > a:hover {
+  color: #fff;
+}
+
+.rutes > li > a:hover:after {
+  width: 100%;
+}
+
+.sign{
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+}
+.sign button{
+  width: 82px;
+  height: 40px;
+  left: 1153px;
+  top: 55px;
+  margin-left: 15px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background: #ff4820;
+  border-radius: 5px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 750px) {
