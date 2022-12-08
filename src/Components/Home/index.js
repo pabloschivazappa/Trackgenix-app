@@ -1,6 +1,15 @@
 import styles from 'Components/Home/home.module.css';
 import Rocket from '../../assets/Rocket.png';
 import Company from '../../assets/company.png';
+import Amilcar from '../../assets/Amilcar.jpg';
+import Eial from '../../assets/Eial.jpg';
+import Juan from '../../assets/Juan.png';
+import Julian from '../../assets/Julian.jpg';
+import Julieta from '../../assets/Julieta.png';
+import Lean from '../../assets/Lean.jpg';
+import Martin from '../../assets/Martin.png';
+import Pablo from '../../assets/Pablo.jpg';
+import Tomas from '../../assets/Tomas.jpg';
 
 function Home() {
   return (
@@ -108,6 +117,100 @@ function Home() {
               development being responsible and co-workers with you to successfully get your product
               moving.
             </p>
+          </div>
+        </div>
+      </section>
+      <section className={styles.our_team}>
+        <div>
+          <h2 className={styles.our_team__gradient_text}>Our Team</h2>
+        </div>
+        <div>
+          <div className={styles.boxes__three_boxes}>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Amilcar} alt="Amilcar" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Amilcar Hernandez</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Juan} alt="Juan" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Juan Andrés Cappuccio</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Julian} alt="Julian" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Julian Conti</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.boxes__three_boxes}>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Martin} alt="Martin" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Martin Gabriel Riolfo</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Pablo} alt="Pablo" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Pablo Schivazappa</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Tomas} alt="Tomas" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Tomas Bettini</h2>
+                <p>DEVELOPER</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.boxes__three_boxes}>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Eial} alt="Eial" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Eial Yafe</h2>
+                <p>QA</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Julieta} alt="Julieta" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Julieta Lara Balcaza</h2>
+                <p>QA</p>
+              </div>
+            </div>
+            <div className={styles.box}>
+              <div className={styles.box__img}>
+                <img src={Lean} alt="Leandro" />
+              </div>
+              <div className={styles.box__content}>
+                <h2>Leandro Di Simone</h2>
+                <p>QA</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
