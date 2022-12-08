@@ -17,19 +17,40 @@ header i {
 
 .rutes {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
   list-style-type: none;
 }
 
 .rutes > li > a {
-  margin-left: 10px;
+  position: relative;
+  margin: 5px;
+  text-decoration: none;
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
   text-transform: capitalize;
+  color: #a0a0a0;
+}
+
+.rutes > li > a::after {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  width: 0;
+  left: 0;
+  height: 1.5px;
+  display: block;
+  transition: 0.3s;
+}
+
+.rutes > li > a:hover {
   color: #fff;
+}
+
+.rutes > li > a:hover:after {
+  width: 100%;
 }
 
 .sign{
