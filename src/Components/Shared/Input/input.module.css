@@ -28,6 +28,10 @@
   font-size: 12px;
 }
 
+.inputRed {
+  border: 1px solid #b00058 !important;
+}
+
 :root {
   --main-color: #373867;
   --form-padding: 20px;
