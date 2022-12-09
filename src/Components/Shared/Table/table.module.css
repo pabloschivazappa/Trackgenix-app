@@ -22,9 +22,19 @@
   color: #81AFDD;
 }
 
+.icons a:hover {
+  color: #fff;
+  transition: 0.5s;
+}
+
 .icons button {
   background: transparent;
   color: #81AFDD;
+}
+
+.icons button:hover {
+  color: #fff;
+  transition: 0.5s;
 }
 
 .tHead tr {
