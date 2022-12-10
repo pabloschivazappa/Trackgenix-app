@@ -22,9 +22,9 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   margin-top: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.132);
   padding-bottom: 10px;
@@ -40,6 +40,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size: 1.4rem;
 }
 
 .content {

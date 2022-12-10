@@ -55,7 +55,7 @@ const Login = () => {
       <FunctionalButton title="Logout" action={() => quit()} />
       <span>
         {`You don't have a user? Please `}
-        <RedirectButton title="sign up" path="sign-up" />
+        <RedirectButton title="Sign up" path="sign-up" />
       </span>
     </Form>
   );
