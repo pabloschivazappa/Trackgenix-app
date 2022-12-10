@@ -8,14 +8,12 @@ import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
 
 function ProjectTable() {
-  const urlValues = window.location.search;
-  const urlParams = new URLSearchParams(urlValues);
-  const employeeId = urlParams.get('id');
   // const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   // const rowId = idRegEx.test(employeeId);
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
+  const { id: employeeId } = useSelector((state) => state.auth);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -27,6 +25,7 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,12 +33,21 @@ function ProjectTable() {
   }, []);
 
   useEffect(() => {
-    setProjectsByEmployee(
-      projects.filter((project) =>
-        project.employees.some((element) => element.employee._id === employeeId)
-      )
-    );
+    if (projects.length) {
+      console.log('Projects: ' + projects.length);
+      console.log('employeeId: ' + employeeId);
+      console.log('Employee : ' + projects[0].employees[0].employee);
+      console.log('Employee Id by data: ' + projects?.[0].employees?.[0].employee._id);
+      setProjectsByEmployee(
+        projects.filter((project) =>
+          project.employees.some((element) => element.employee._id === employeeId)
+        )
+      );
+    }
   }, [projects]);
+
+  console.log('Projects', projects);
+  console.log('Projects by employee', projectsByEmployee);
 
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
