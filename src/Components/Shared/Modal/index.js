@@ -19,15 +19,15 @@ const Modal = ({ title, children, setModalDisplay, isToConfirm, onClickFunction 
           <p className={styles.content__message}>{children}</p>
           <span>
             <Button
-              buttonType="options__button"
-              buttonColor="options__close"
+              buttonType="form__button"
+              buttonColor="red"
               action={() => setModalDisplay(false)}
               title="Close"
             />
             {isToConfirm ? (
               <Button
-                buttonType="options__button"
-                buttonColor="red"
+                buttonType="form__button"
+                buttonColor="green"
                 action={() => onClickFunction()}
                 title="Confirm"
               />
