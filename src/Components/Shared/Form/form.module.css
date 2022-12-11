@@ -109,3 +109,25 @@
   align-items: center;
   width: max-content!important;
 }
+
+.form select {
+  font-size: 0.8rem;
+  background-color: #21252e6b;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.form select:hover {
+  background: #32374169;
+}
+
+.form select:focus {
+  outline: none !important;
+  background-color: #797d8a5e;
+  transition: 0.2s;
+}
+
+.form select option {
+  background-color: rgb(8, 22, 36);
+}
