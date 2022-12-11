@@ -73,7 +73,7 @@ function SignUp() {
 
             <span>
               {`You already have a user? Please `}
-              <RedirectButton title="login" path="login" />
+              <RedirectButton title="Login" path="login" />
             </span>
           </>
         ) : (
