@@ -90,10 +90,3 @@
   margin-top: 25px;
   gap: 30px;
 }
-
-.form__width__max{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: max-content!important;
-}

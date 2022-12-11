@@ -5,7 +5,6 @@ const Select = ({ list, name, kind, id = null, title, register, error, objectN =
 
   return (
     <label className={styles.label}>
-      {title}
       <select className={styles.select} {...registerFn}>
         {!id && <option hidden>- Select {title.toLowerCase()} -</option>}
         <option hidden>- Please select an existing {title.toLowerCase()} -</option>
@@ -17,6 +16,7 @@ const Select = ({ list, name, kind, id = null, title, register, error, objectN =
         ))}
         {!list.length && <option disabled>- The {title.toLowerCase()}s list is empty -</option>}
       </select>
+      {title}
       {error && <p className={styles.label}>{error}</p>}
     </label>
   );
