@@ -3,8 +3,7 @@ import {
   LOGIN_ERROR,
   SET_LOGGED_IN,
   SET_LOGGED_OUT,
-  SET_ID_VALUE,
-  SET_ID_NULL
+  SET_ID_VALUE
 } from './constants';
 
 const INITIAL_STATE = {
@@ -46,11 +45,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         id: action.payload
-      };
-    case SET_ID_NULL:
-      return {
-        ...state,
-        id: null
       };
     default:
       return state;

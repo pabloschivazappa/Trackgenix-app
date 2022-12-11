@@ -32,7 +32,8 @@ export const loginError = (error) => {
 export const setLoggedOut = () => {
   return {
     type: SET_LOGGED_OUT,
-    payload: null
+    payload: null,
+    id: null
   };
 };
 

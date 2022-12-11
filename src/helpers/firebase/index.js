@@ -27,18 +27,22 @@ export const tokenListener = () => {
         } = await user.getIdTokenResult();
         console.log('onIdTokenChanged tokenResult:', { token, role, email: email, user_id });
         if (token) {
-          store.dispatch(setLoggedIn(role, email, user_id));
+          store.dispatch(setLoggedIn(role, email));
+        }
+        sessionStorage.setItem('token', token);
+        if (role === 'EMPLOYEE') {
           await fetch(`${process.env.REACT_APP_API_URL}/employees/fuid/${user_id}`, {
             headers: { token }
           })
             .then((res) => res.json())
             .then((response) => {
-              console.log(response.data);
-              console.log(response.data[0]._id);
+              console.log(response);
+              console.log('employeeId by login:', response.data[0]._id);
+              sessionStorage.setItem('id', response.data[0]._id);
               store.dispatch(setIdValue(response.data[0]._id));
             });
+          console.log(user_id);
         }
-        sessionStorage.setItem('token', token);
       } catch (error) {
         console.log('error', error);
       }

@@ -8,12 +8,11 @@ import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
 
 function ProjectTable() {
-  // const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-  // const rowId = idRegEx.test(employeeId);
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
   const { id: employeeId } = useSelector((state) => state.auth);
+  console.log('employeeId:', employeeId);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -33,14 +32,10 @@ function ProjectTable() {
   }, []);
 
   useEffect(() => {
-    if (projects.length) {
-      console.log('Projects: ' + projects.length);
-      console.log('employeeId: ' + employeeId);
-      console.log('Employee : ' + projects[0].employees[0].employee);
-      console.log('Employee Id by data: ' + projects?.[0].employees?.[0].employee._id);
+    if (projects.length > 0) {
       setProjectsByEmployee(
         projects.filter((project) =>
-          project.employees.some((element) => element.employee._id === employeeId)
+          project.employees.some((element) => element?.employee?._id === employeeId)
         )
       );
     }
