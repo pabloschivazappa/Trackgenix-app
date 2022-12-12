@@ -1,24 +1,38 @@
 .form__label {
   font-weight: 600;
-  margin-bottom: 5px;
 }
 
 .form__container {
   display: flex;
   align-items: center;
   flex-direction: column;
+  font-size: 0.9rem;
+  color: #AE67FA;
 }
 
 .employee__form {
   display: flex;
   flex-direction: column;
   width: 70%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 0.8rem;
+}
+
+.employee__form label {
+  color: #AE67FA;
 }
 
 .employee__form button{
   margin-top: 10px;
   align-self: center;
+}
+
+.employee__form input {
+  margin-top: 10px;
+}
+
+.employee__form select{
+  margin-top: 15px;
 }
 
 .formRaws{
@@ -59,10 +73,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: var(--main-color);
   font-weight: 600;
   gap: 5px;
   margin-top: 3px;
+  color: #AE67FA;
 }
 
 .select {
@@ -71,7 +85,7 @@
   padding: 9px 8px;
   border-radius: 10px;
   background-color: #d0d4e4;
-  color: var(--main-color)
+  margin-top: 15px;
 }
 .select:focus {
   outline: none !important;
