@@ -1,7 +1,6 @@
 import styles from 'Components/Header/header.module.css';
 import TrackgenixLogo from '../../assets/TrackGENIX-logo.png';
 import { RedirectButton } from 'Components/Shared';
-import { FunctionalButton } from 'Components/Shared';
 import store from 'redux/store';
 import { logout } from 'redux/auth/thunks';
 // const urlParams = new URLSearchParams(window.location.search);
@@ -56,9 +55,7 @@ function Header() {
           {sessionStorage.getItem('token') ? (
             <>
               <div>
-                <a href="/login">
-                  <FunctionalButton title="Logout" action={() => quit()} />
-                </a>
+                <RedirectButton path="home" title="Logout" action={() => quit()} />
               </div>
             </>
           ) : (
@@ -66,7 +63,7 @@ function Header() {
               <div className={styles.login}>
                 <RedirectButton path="login" title="Login" />
               </div>
-              <button type="button">
+              <button type="button" className={styles.signup__button}>
                 <RedirectButton path="sign-up" title="Sign up" />
               </button>
             </>
