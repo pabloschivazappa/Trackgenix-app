@@ -90,11 +90,13 @@ function EmployeesProfile() {
       >
         {!fetching ? (
           <>
-            <img
-              className={styles.profilePicture}
-              src="https://avatars.githubusercontent.com/u/53354878?v=4"
-              alt="Profile Picture"
-            />
+            <div className={styles.profilePicture__container}>
+              <img
+                className={styles.profilePicture}
+                src="https://avatars.githubusercontent.com/u/53354878?v=4"
+                alt="Profile Picture"
+              />
+            </div>
             <div className={styles.formInputs}>
               <div className={styles.formColumn}>
                 <Input name="name" title="Name" register={register} error={errors.name?.message} />
