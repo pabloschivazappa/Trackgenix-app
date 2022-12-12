@@ -46,7 +46,7 @@ function Header() {
             <a href="/tasks">tasks</a>
           </li>
           <li>
-            <a href="/employees/profile?id=638e915bb8c5bda70ac0a890">Profile</a>
+            <a href="/employees/profile?id=638e915bb8c5bda70ac0a890">My Profile</a>
           </li>
           <li>
             <a href="/employees/projects?id=638e915bb8c5bda70ac0a890">My Projects</a>
@@ -63,7 +63,7 @@ function Header() {
             </>
           ) : (
             <>
-              <div>
+              <div className={styles.login}>
                 <RedirectButton path="login" title="Login" />
               </div>
               <button type="button">

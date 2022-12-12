@@ -59,14 +59,16 @@ header i {
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 500;
-  color: white;
+  color: #fff;
 }
 .sign button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 82px;
   height: 40px;
   left: 1153px;
   top: 55px;
-  margin-left: 15px;
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 500;
@@ -76,6 +78,10 @@ header i {
   border: 0;
   outline: none;
   cursor: pointer;
+}
+
+.login {
+  margin-right: 15px;
 }
 
 @media screen and (min-width: 750px) {
