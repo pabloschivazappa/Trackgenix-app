@@ -4,6 +4,7 @@ import Spinner from 'Components/Shared/Spinner';
 import Form from 'Components/Shared/Form';
 import Input from 'Components/Shared/Input';
 import Select from 'Components/Shared/Select';
+import styles from './timesheets.module.css';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTimesheet, editTimesheet } from 'redux/timeSheets/thunks';
@@ -28,6 +29,7 @@ const TimesheetsForm = () => {
   const { children, modalTitle, fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const { list: tasksList } = useSelector((state) => state.tasks);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
@@ -58,7 +60,9 @@ const TimesheetsForm = () => {
     if (haveId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           description: data.data.description,
@@ -130,33 +134,39 @@ const TimesheetsForm = () => {
               error={errors.date?.message}
             />
             <Input register={register} title="Hours" name="hours" error={errors.hours?.message} />
-            <Select
-              register={register}
-              list={tasksList}
-              name="task"
-              kind="description"
-              id={id}
-              title="Task"
-              error={errors.task?.message}
-            />
-            <Select
-              register={register}
-              list={employeesList}
-              name="employee"
-              kind="name"
-              id={id}
-              title="Employee"
-              error={errors.employee?.message}
-            />
-            <Select
-              register={register}
-              list={projectsList}
-              name="project"
-              kind="name"
-              id={id}
-              title="Project"
-              error={errors.project?.message}
-            />
+            <div className={styles.select__title}>
+              <Select
+                register={register}
+                list={tasksList}
+                name="task"
+                kind="description"
+                id={id}
+                title="Task"
+                error={errors.task?.message}
+              />
+            </div>
+            <div className={styles.select__title}>
+              <Select
+                register={register}
+                list={employeesList}
+                name="employee"
+                kind="name"
+                id={id}
+                title="Employee"
+                error={errors.employee?.message}
+              />
+            </div>
+            <div className={styles.select__title}>
+              <Select
+                register={register}
+                list={projectsList}
+                name="project"
+                kind="name"
+                id={id}
+                title="Project"
+                error={errors.project?.message}
+              />
+            </div>
           </>
         ) : (
           <Spinner />

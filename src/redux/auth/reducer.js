@@ -2,7 +2,7 @@ import { LOGIN_LOADING, LOGIN_ERROR, SET_LOGGED_IN, SET_LOGGED_OUT } from './con
 
 const INITIAL_STATE = {
   fetching: true,
-  autheticated: false,
+  authenticated: false,
   data: null,
   email: null,
   error: null
@@ -19,7 +19,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        autheticated: true,
+        authenticated: true,
         data: action.payload
       };
     case LOGIN_ERROR:
@@ -32,7 +32,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        data: null
+        data: null,
+        authenticated: false
       };
     default:
       return state;

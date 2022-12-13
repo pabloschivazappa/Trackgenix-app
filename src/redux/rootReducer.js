@@ -9,13 +9,13 @@ import timeSheetsReducer from './timeSheets/reducer';
 import authReducer from './auth/reducer';
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   admins: adminsReducer,
   employees: employeesReducer,
   projects: projectsReducer,
   superAdmins: superAdminsReducer,
   tasks: tasksReducer,
-  timeSheets: timeSheetsReducer,
-  auth: authReducer
+  timeSheets: timeSheetsReducer
 });
 
 export default rootReducer;

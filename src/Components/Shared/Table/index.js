@@ -47,10 +47,10 @@ const Table = ({
         <h3>{error}</h3>
       )}
       <RedirectButton
-        title="Create "
-        icon={<i className="fa-solid fa-plus"></i>}
-        path={`${edit}`}
         buttonType="create__button"
+        buttonColor="green"
+        title="Create"
+        path={`${edit}`}
       />
     </>
   );

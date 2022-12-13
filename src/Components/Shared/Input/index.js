@@ -5,9 +5,14 @@ const Input = ({ type = 'text', name, title, register, defaultValue, error, obje
 
   return (
     <label className={Styles.label}>
-      {title}
-      <input type={type} {...registerFn} defaultValue={defaultValue} />
+      <input
+        type={type}
+        {...registerFn}
+        defaultValue={defaultValue}
+        className={error ? Styles.inputRed : ''}
+      />
       {error && <p className={Styles.label}>{error}</p>}
+      {title}
     </label>
   );
 };

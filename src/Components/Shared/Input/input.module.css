@@ -1,25 +1,26 @@
 .label {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  color: var(--main-color);
-  font-weight: 600;
-  gap: 5px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  color: #AE67FA;
+  gap: 2px;
   margin-top: 3px;
 }
 
 .label input {
+  position: relative;
   align-self: stretch;
-  border: 1px solid transparent;
   padding: 9px 8px;
-  border-radius: 10px;
-  background-color: #d0d4e4;
-  color: #1F1F45
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-bottom: solid #AE67FA 1px;
 }
 
 .label input:focus {
   outline: none !important;
-  background-color: #abb0c3;
   transition: 0.2s;
 }
 
@@ -28,7 +29,6 @@
   font-size: 12px;
 }
 
-:root {
-  --main-color: #373867;
-  --form-padding: 20px;
+.inputRed {
+  border: 1px solid #b00058 !important;
 }

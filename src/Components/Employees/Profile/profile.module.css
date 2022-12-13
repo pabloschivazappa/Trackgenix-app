@@ -1,3 +1,8 @@
+.profilePicture__container {
+    display: flex;
+    justify-content: center;
+}
+
 .profilePicture{
     border-radius: 50%;
     width: 45%;
@@ -5,7 +10,7 @@
 
 .formInputs{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     gap: 5%;
 }
@@ -13,5 +18,5 @@
 .formColumn{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 45%;
 }

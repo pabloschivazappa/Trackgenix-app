@@ -24,6 +24,7 @@ const ProjectForm = () => {
   const { list: employeesList } = useSelector((state) => state.employees);
   const roles = ['QA', 'DEV', 'TL'];
   const [modalDisplay, setModalDisplay] = useState('');
+  const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({
     name: '',
     description: '',
@@ -61,7 +62,9 @@ const ProjectForm = () => {
     if (isValidId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           name: data.data.name,
@@ -180,7 +183,6 @@ const ProjectForm = () => {
                     objectN={registerOptions.rate}
                   />
                   <label className={formStyles.label}>
-                    Role
                     <select
                       className={formStyles.select}
                       {...register(`employees[${index}].role`, registerOptions.role)}
@@ -190,19 +192,20 @@ const ProjectForm = () => {
                         <option key={index}>{role}</option>
                       ))}
                     </select>
+                    Role
                   </label>
                   <FunctionalButton
                     title="Delete"
                     action={() => remove(index)}
-                    buttonType="form__button__add__employee"
+                    buttonType="form__button"
                     buttonColor="red"
                   />
                 </div>
               ))}
               <FunctionalButton
-                title="Add"
+                title="Add Employee"
                 action={() => append()}
-                buttonType="form__button__add__employee"
+                buttonType="form__button"
                 buttonColor="green"
               />
             </div>

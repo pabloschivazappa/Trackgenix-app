@@ -23,7 +23,7 @@ export const logout = () => {
   return async (dispatch) => {
     dispatch(logoutLoading());
     try {
-      await signOut();
+      await signOut(auth);
       sessionStorage.clear();
     } catch (error) {
       return dispatch(logoutError(error.toString()));
