@@ -1,34 +1,37 @@
 .label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    color: var(--main-color);
-    font-weight: 600;
-    gap: 5px;
-    margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 600;
+  gap: 5px;
+  margin-top: 3px;
   }
 
 .select {
-    align-self: stretch;
-    border: 1px solid transparent;
-    padding: 9px 8px;
-    border-radius: 10px;
-    background-color: #d0d4e4;
-    color: var(--main-color)
-}
-.select:focus {
-    outline: none !important;
-    background-color: #ABB0C3;
-    transition: 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border: 1px solid transparent;
+  padding: 9px 8px;
+  border-radius: 8px;
+  background-color: #21252e6b;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
+select:hover {
+  background: #32374169;
+}
+
+.select:focus {
+  outline: none !important;
+  background-color: #797d8a5e;
+  transition: 0.2s;
+}
 
 .label p {
-    color: #b00058;
-    font-size: 12px;
+  color: #b00058;
+  font-size: 12px;
   }
-
-:root {
-    --main-color: #373867;
-    --form-padding: 20px;
-}

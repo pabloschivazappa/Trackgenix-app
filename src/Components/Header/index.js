@@ -1,26 +1,28 @@
 import styles from 'Components/Header/header.module.css';
+import TrackgenixLogo from '../../assets/TrackGENIX-logo.png';
+import { RedirectButton } from 'Components/Shared';
+import store from 'redux/store';
+import { logout } from 'redux/auth/thunks';
+// const urlParams = new URLSearchParams(window.location.search);
+// const employeeId = urlParams.get('id');
+// const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+// const rowId = idRegEx.test(employeeId);
+
+const quit = async () => {
+  store.dispatch(logout());
+};
 
 function Header() {
   return (
     <header>
-      <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
-        <div>
-          <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <i className="fa-brands fa-facebook-f fa-lg"></i>
-          </a>
-          <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <i className="fa-brands fa-twitter fa-lg"></i>
-          </a>
-          <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <i className="fa-brands fa-instagram fa-lg"></i>
-          </a>
-        </div>
-      </div>
       <nav className={styles.navbar}>
-        <div className={styles.appName}>
-          <a href="/employees/projects" style={{ textDecoration: 'none', color: 'black' }}>
-            Track<span>GENIX</span>
+        <div>
+          <a href="/employees/projects">
+            <img
+              src={TrackgenixLogo}
+              alt="TrackGENIX Logo"
+              className={styles.trackgenix_logo}
+            ></img>
           </a>
         </div>
         <ul className={styles.rutes}>
@@ -42,7 +44,31 @@ function Header() {
           <li>
             <a href="/tasks">tasks</a>
           </li>
+          <li>
+            <a href="/employees/profile?id=638e915bb8c5bda70ac0a890">My Profile</a>
+          </li>
+          <li>
+            <a href="/employees/projects?id=638e915bb8c5bda70ac0a890">My Projects</a>
+          </li>
         </ul>
+        <div className={styles.sign}>
+          {sessionStorage.getItem('token') ? (
+            <>
+              <div>
+                <RedirectButton path="home" title="Logout" action={() => quit()} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.login}>
+                <RedirectButton path="login" title="Login" />
+              </div>
+              <button type="button" className={styles.signup__button}>
+                <RedirectButton path="sign-up" title="Sign up" />
+              </button>
+            </>
+          )}
+        </div>
       </nav>
     </header>
   );

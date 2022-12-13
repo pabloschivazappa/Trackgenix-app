@@ -1,6 +1,7 @@
 import React from 'react';
 import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
+import styles from 'Components/Shared/Table/table.module.css';
 
 const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = false, setHours }) => {
   console.log('Item', item);
@@ -10,7 +11,7 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = fal
         {columns.map((columnItem, index) => {
           if (columnItem.heading === 'Actions') {
             return (
-              <td key={index}>
+              <td className={styles.icons} key={index}>
                 {inProfile ? (
                   <FunctionalButton
                     action={() => setHours(item._id)}
