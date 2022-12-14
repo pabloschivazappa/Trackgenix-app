@@ -20,6 +20,7 @@ function Projects() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const { data } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -38,7 +39,7 @@ function Projects() {
     { heading: 'Start Date', value: 'startDate' },
     { heading: 'End Date', value: 'endDate' },
     { heading: 'Employees', value: 'employees' },
-    { heading: 'Actions' }
+    data !== 'EMPLOYEE' && { heading: 'Actions' }
   ];
 
   return (
@@ -59,6 +60,7 @@ function Projects() {
                 setId(id);
               }}
               edit="/projects/form"
+              canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
             />
           </>
         ) : (
