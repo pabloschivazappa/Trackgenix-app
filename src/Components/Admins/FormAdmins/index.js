@@ -112,6 +112,7 @@ const FormAdmins = () => {
                 name="password"
                 title="Password"
                 error={errors.password?.message}
+                type="password"
               />
             )}
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />

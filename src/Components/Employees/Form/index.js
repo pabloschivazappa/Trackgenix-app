@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, editEmployee } from 'redux/employees/thunks';
 import { setFetching } from 'redux/employees/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/Employees/Form/validations';
+import { schemaEdit, schemaCreate } from 'Components/Employees/Form/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeeForm() {
@@ -35,7 +35,7 @@ function EmployeeForm() {
     reset
   } = useForm({
     mode: 'onChange',
-    resolver: joiResolver(schema),
+    resolver: joiResolver(rowId ? schemaEdit : schemaCreate),
     defaultValues: values
   });
 
@@ -98,14 +98,23 @@ function EmployeeForm() {
       >
         {!fetching ? (
           <>
+            <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input
               register={register}
               name="lastName"
               title="Last Name"
               error={errors.lastName?.message}
             />
-            <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input register={register} name="email" title="Email" error={errors.email?.message} />
+            {!rowId && (
+              <Input
+                register={register}
+                name="password"
+                title="Password"
+                error={errors.password?.message}
+                type="password"
+              />
+            )}
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
             <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>
