@@ -55,7 +55,7 @@ function Header() {
           {sessionStorage.getItem('token') ? (
             <>
               <div>
-                <RedirectButton path="home" title="Logout" action={() => quit()} />
+                <RedirectButton path="/" title="Logout" action={() => quit()} />
               </div>
             </>
           ) : (
