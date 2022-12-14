@@ -6,7 +6,6 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const auth = useSelector((store) => {
     return store.auth;
   });
-  console.log(auth);
   return (
     <Route
       {...rest}
@@ -14,8 +13,6 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
         if (auth.fetching) {
           return <Spinner />;
         }
-
-        console.log(rest.role.includes(auth.data));
 
         if (rest.role.includes(auth.data)) {
           return <RouteComponent {...routeProps} />;

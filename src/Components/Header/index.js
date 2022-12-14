@@ -2,22 +2,24 @@ import styles from 'Components/Header/header.module.css';
 import TrackgenixLogo from '../../assets/TrackGENIX-logo.png';
 import { RedirectButton } from 'Components/Shared';
 import store from 'redux/store';
+import { useSelector } from 'react-redux';
 import { logout } from 'redux/auth/thunks';
 // const urlParams = new URLSearchParams(window.location.search);
 // const employeeId = urlParams.get('id');
 // const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 // const rowId = idRegEx.test(employeeId);
 
-const quit = async () => {
-  store.dispatch(logout());
-};
-
 function Header() {
+  const { authenticated, fetching } = useSelector((state) => state.auth);
+  const quit = async () => {
+    store.dispatch(logout());
+  };
+
   return (
     <header>
       <nav className={styles.navbar}>
         <div>
-          <a href="/employees/projects">
+          <a href="/home">
             <img
               src={TrackgenixLogo}
               alt="TrackGENIX Logo"
@@ -45,30 +47,32 @@ function Header() {
             <a href="/tasks">tasks</a>
           </li>
           <li>
-            <a href="/employees/profile?id=638e915bb8c5bda70ac0a890">My Profile</a>
+            <a href="/employees/profile">My Profile</a>
           </li>
           <li>
-            <a href="/employees/projects?id=638e915bb8c5bda70ac0a890">My Projects</a>
+            <a href="/employees/projects">My Projects</a>
           </li>
         </ul>
-        <div className={styles.sign}>
-          {sessionStorage.getItem('token') ? (
-            <>
-              <div>
-                <RedirectButton path="home" title="Logout" action={() => quit()} />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={styles.login}>
-                <RedirectButton path="login" title="Login" />
-              </div>
-              <button type="button" className={styles.signup__button}>
-                <RedirectButton path="sign-up" title="Sign up" />
-              </button>
-            </>
-          )}
-        </div>
+        {!fetching && (
+          <div className={styles.sign}>
+            {authenticated ? (
+              <>
+                <div>
+                  <RedirectButton path="/" title="Logout" action={() => quit()} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.login}>
+                  <RedirectButton path="login" title="Login" />
+                </div>
+                <button type="button" className={styles.signup__button}>
+                  <RedirectButton path="sign-up" title="Sign up" />
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </nav>
     </header>
   );

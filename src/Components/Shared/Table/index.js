@@ -14,7 +14,6 @@ const Table = ({
   inProfile = false,
   setHours
 }) => {
-  console.log('data', data);
   if (!data) return null;
   return (
     <>

@@ -12,8 +12,6 @@ export const login = (data) => {
         claims: { role }
       } = await userCredentials.user.getIdTokenResult();
       sessionStorage.setItem('token', token);
-      console.log('Role:', role);
-
       return role;
     } catch (error) {
       return dispatch(loginError());
@@ -26,6 +24,7 @@ export const logout = () => {
     dispatch(logoutLoading());
     try {
       await signOut(auth);
+      //window.location.reload();
       sessionStorage.clear();
     } catch (error) {
       return dispatch(logoutError(error.toString()));
