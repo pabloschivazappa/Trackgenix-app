@@ -2,6 +2,7 @@ footer i {
   color: white;
   margin-left: 15px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -44,8 +45,13 @@ footer i {
   margin-left: 5px;
 }
 
-.socialIcon {
-  margin-left: 5px;
+.social_networks a i {
+  color: #a0a0a0;
+  transition: 0.5s;
+}
+
+.social_networks a i:hover {
+  color: #fff;
 }
 
 @media screen and (min-width: 750px) {
