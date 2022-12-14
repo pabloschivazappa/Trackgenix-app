@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSuperAdmin, editSuperAdmin } from 'redux/superAdmins/thunks';
 import { setFetching } from 'redux/superAdmins/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/SuperAdmins/Form/validations';
+import { schemaEdit, schemaCreate } from 'Components/SuperAdmins/Form/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const SuperAdminsForm = () => {
@@ -37,7 +37,7 @@ const SuperAdminsForm = () => {
     reset
   } = useForm({
     mode: 'onChange',
-    resolver: joiResolver(schema),
+    resolver: joiResolver(rowId ? schemaEdit : schemaCreate),
     defaultValues: values
   });
 
@@ -108,6 +108,15 @@ const SuperAdminsForm = () => {
             />
             <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input register={register} name="email" title="Email" error={errors.email?.message} />
+            {!rowId && (
+              <Input
+                register={register}
+                name="password"
+                title="Password"
+                error={errors.password?.message}
+                type="password"
+              />
+            )}
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />
             <Input register={register} name="phone" title="Phone" error={errors.phone?.message} />
           </>
