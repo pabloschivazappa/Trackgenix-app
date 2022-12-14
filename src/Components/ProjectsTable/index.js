@@ -23,6 +23,7 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const { data } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -112,6 +113,7 @@ function ProjectTable() {
             setIsToConfirm(false);
           }}
           inProfile={true}
+          canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
       ) : (
         <Spinner />

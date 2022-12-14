@@ -12,7 +12,8 @@ const Table = ({
   error,
   employeeId,
   inProfile = false,
-  setHours
+  setHours,
+  canCreate = true
 }) => {
   if (!data) return null;
   return (
@@ -47,12 +48,14 @@ const Table = ({
       ) : (
         <h3>{error}</h3>
       )}
-      <RedirectButton
-        buttonType="create__button"
-        buttonColor="green"
-        title="Create"
-        path={`${edit}`}
-      />
+      {canCreate && (
+        <RedirectButton
+          buttonType="create__button"
+          buttonColor="green"
+          title="Create"
+          path={`${edit}`}
+        />
+      )}
     </>
   );
 };
