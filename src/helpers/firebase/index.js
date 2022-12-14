@@ -18,14 +18,12 @@ export const auth = getAuth(firebaseApp);
 
 export const tokenListener = () => {
   onIdTokenChanged(auth, async (user) => {
-    console.log('onIdTokenChanged');
     if (user) {
       try {
         const {
           token,
           claims: { role, email, user_id }
         } = await user.getIdTokenResult();
-        console.log('onIdTokenChanged tokenResult:', { token, role, email: email, user_id });
         if (token) {
           store.dispatch(setLoggedIn(role, email));
         }
@@ -36,18 +34,14 @@ export const tokenListener = () => {
           })
             .then((res) => res.json())
             .then((response) => {
-              console.log(response);
-              console.log('employeeId by login:', response.data[0]._id);
               sessionStorage.setItem('id', response.data[0]._id);
               store.dispatch(setIdValue(response.data[0]._id));
             });
-          console.log(user_id);
         }
       } catch (error) {
-        console.log('error', error);
+        console.error(error);
       }
     } else {
-      console.log('no user');
       store.dispatch(setLoggedOut());
     }
   });

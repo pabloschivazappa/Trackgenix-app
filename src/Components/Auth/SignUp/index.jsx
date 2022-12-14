@@ -48,7 +48,7 @@ function SignUp() {
       <Form
         onSubmitFunction={handleSubmit(onSubmit)}
         buttonMessage="Sign up"
-        formTitle="Create user"
+        formTitle="Sign up"
         resetFunction={() => resetForm()}
       >
         {!fetching ? (

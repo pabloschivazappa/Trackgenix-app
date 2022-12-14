@@ -34,11 +34,10 @@ const Login = () => {
           history.push('/admins');
       }
     }
-    console.log(role);
   };
 
   return (
-    <Form onSubmitFunction={handleSubmit(onSubmit)} buttonMessage="Login" formTitle="Sign in">
+    <Form onSubmitFunction={handleSubmit(onSubmit)} buttonMessage="Login" formTitle="Login">
       <Input title="Email" name="email" register={register} error={errors.email?.message} />
       <Input
         type="password"

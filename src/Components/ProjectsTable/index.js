@@ -12,7 +12,6 @@ function ProjectTable() {
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
   const { id: employeeId } = useSelector((state) => state.auth);
-  console.log('employeeId:', employeeId);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -41,16 +40,11 @@ function ProjectTable() {
     }
   }, [projects]);
 
-  console.log('Projects', projects);
-  console.log('Projects by employee', projectsByEmployee);
-
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
-    console.log('projectFindById:' + projectFindById);
     setEmployeesFiltered(
       projectFindById.employees.filter((employee) => employee.employee._id !== employeeId)
     );
-    console.log('EmployeesFiltered:' + employeesFiltered);
     if (!employeesFiltered.length) {
       setUnpopulatedEmployees([]);
     } else {
@@ -60,7 +54,6 @@ function ProjectTable() {
         })
       );
     }
-    console.log(unpopulatedEmployees);
     dispatch(
       editProject(
         projectId,
@@ -99,7 +92,7 @@ function ProjectTable() {
     <section className={styles.container}>
       {!fetching ? (
         <Table
-          title="Your projects"
+          title="My Projects"
           data={projectsByEmployee}
           columns={columns}
           error={!projectsByEmployee.length ? `You don't have any project` : error}

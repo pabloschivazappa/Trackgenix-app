@@ -12,11 +12,12 @@ import { schema } from 'Components/Employees/Profile/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeesProfile() {
+  const { id: product } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { children, modalTitle, fetching } = useSelector((state) => state.employees);
-  const product = '637556a4d6689c383fac4a66';
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const rowId = idRegEx.test(product);
+  const token = sessionStorage.getItem('token');
 
   const [modalDisplay, setModalDisplay] = useState('');
 
@@ -44,7 +45,9 @@ function EmployeesProfile() {
     if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`, {
+          headers: { token }
+        });
         const data = await response.json();
         setValues({
           name: data.data.name,
@@ -59,7 +62,7 @@ function EmployeesProfile() {
       }
       dispatch(setFetching(false));
     }
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     reset(values);

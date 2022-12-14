@@ -4,7 +4,6 @@ import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 import styles from 'Components/Shared/Table/table.module.css';
 
 const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = false, setHours }) => {
-  console.log('Item', item);
   return (
     <>
       <tr>
@@ -52,7 +51,6 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = fal
             return (
               <td key={index}>
                 {item.employees.map((e) => {
-                  console.log('Item', item);
                   return e.employee?._id === employeeId && e.employee && e.role;
                 })}
               </td>

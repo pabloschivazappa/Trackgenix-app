@@ -22,7 +22,6 @@ const EmployeesProfile = React.lazy(() => import('Components/Employees/Profile')
 
 const Routes = () => {
   useEffect(() => {
-    console.log('Checkeo de token listener');
     tokenListener();
   }, []);
 
