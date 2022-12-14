@@ -17,7 +17,7 @@ function Header() {
     <header>
       <nav className={styles.navbar}>
         <div>
-          <a href="/">
+          <a href="/employees/projects">
             <img
               src={TrackgenixLogo}
               alt="TrackGENIX Logo"

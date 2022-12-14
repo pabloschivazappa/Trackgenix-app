@@ -4,7 +4,9 @@ import {
   SET_LOGGED_IN,
   SET_LOGGED_OUT,
   LOGOUT_LOADING,
-  LOGOUT_ERROR
+  LOGOUT_ERROR,
+  SET_ID_VALUE,
+  SET_ID_NULL
 } from './constants';
 
 export const loginLoading = () => {
@@ -30,7 +32,8 @@ export const loginError = (error) => {
 export const setLoggedOut = () => {
   return {
     type: SET_LOGGED_OUT,
-    payload: null
+    payload: null,
+    id: null
   };
 };
 
@@ -44,5 +47,18 @@ export const logoutError = (error) => {
   return {
     type: LOGOUT_ERROR,
     payload: error
+  };
+};
+
+export const setIdValue = (payload) => {
+  return {
+    type: SET_ID_VALUE,
+    payload
+  };
+};
+
+export const setIdNull = () => {
+  return {
+    type: SET_ID_NULL
   };
 };

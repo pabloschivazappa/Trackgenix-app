@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onIdTokenChanged } from 'firebase/auth';
-import { setLoggedIn, setLoggedOut } from 'redux/auth/actions';
+import { setLoggedIn, setLoggedOut, setIdValue } from 'redux/auth/actions';
 import store from 'redux/store';
 
 const fireBaseConfig = {
@@ -23,13 +23,26 @@ export const tokenListener = () => {
       try {
         const {
           token,
-          claims: { role, email }
+          claims: { role, email, user_id }
         } = await user.getIdTokenResult();
-        console.log('onIdTokenChanged tokenResult:', { token, role, email: email });
+        console.log('onIdTokenChanged tokenResult:', { token, role, email: email, user_id });
         if (token) {
           store.dispatch(setLoggedIn(role, email));
         }
         sessionStorage.setItem('token', token);
+        if (role === 'EMPLOYEE') {
+          await fetch(`${process.env.REACT_APP_API_URL}/employees/fuid/${user_id}`, {
+            headers: { token }
+          })
+            .then((res) => res.json())
+            .then((response) => {
+              console.log(response);
+              console.log('employeeId by login:', response.data[0]._id);
+              sessionStorage.setItem('id', response.data[0]._id);
+              store.dispatch(setIdValue(response.data[0]._id));
+            });
+          console.log(user_id);
+        }
       } catch (error) {
         console.log('error', error);
       }

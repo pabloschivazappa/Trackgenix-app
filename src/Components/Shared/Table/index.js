@@ -14,6 +14,8 @@ const Table = ({
   inProfile = false,
   setHours
 }) => {
+  console.log('data', data);
+  if (!data) return null;
   return (
     <>
       <h2 className={styles.entity}>{title}</h2>

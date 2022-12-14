@@ -1,10 +1,16 @@
-import { LOGIN_LOADING, LOGIN_ERROR, SET_LOGGED_IN, SET_LOGGED_OUT } from './constants';
+import {
+  LOGIN_LOADING,
+  LOGIN_ERROR,
+  SET_LOGGED_IN,
+  SET_LOGGED_OUT,
+  SET_ID_VALUE
+} from './constants';
 
 const INITIAL_STATE = {
   fetching: true,
   authenticated: false,
   data: null,
-  email: null,
+  id: null,
   error: null
 };
 
@@ -34,6 +40,11 @@ const authReducer = (state = INITIAL_STATE, action) => {
         fetching: false,
         data: null,
         authenticated: false
+      };
+    case SET_ID_VALUE:
+      return {
+        ...state,
+        id: action.payload
       };
     default:
       return state;
