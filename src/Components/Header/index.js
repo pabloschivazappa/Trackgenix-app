@@ -10,7 +10,8 @@ import { logout } from 'redux/auth/thunks';
 // const rowId = idRegEx.test(employeeId);
 
 function Header() {
-  const { authenticated, fetching } = useSelector((state) => state.auth);
+  const { authenticated, fetching, data } = useSelector((state) => state.auth);
+  console.log(data);
   const quit = async () => {
     store.dispatch(logout());
   };
@@ -27,32 +28,39 @@ function Header() {
             ></img>
           </a>
         </div>
-        <ul className={styles.rutes}>
-          <li>
-            <a href="/admins">admins</a>
-          </li>
-          <li>
-            <a href="/super-admins">super admins</a>
-          </li>
-          <li>
-            <a href="/employees">employees</a>
-          </li>
-          <li>
-            <a href="/projects">projects</a>
-          </li>
-          <li>
-            <a href="/time-sheets">timesheets</a>
-          </li>
-          <li>
-            <a href="/tasks">tasks</a>
-          </li>
-          <li>
-            <a href="/employees/profile">My Profile</a>
-          </li>
-          <li>
-            <a href="/employees/projects">My Projects</a>
-          </li>
-        </ul>
+        {authenticated && (
+          <ul className={styles.rutes}>
+            {data === 'SUPER_ADMIN' && (
+              <li>
+                <a href="/super-admins">super admins</a>
+              </li>
+            )}
+            {(data === 'SUPER_ADMIN' || data === 'ADMIN') && (
+              <li>
+                <a href="/admins">admins</a>
+              </li>
+            )}
+            <li>
+              <a href="/employees">employees</a>
+            </li>
+            <li>
+              <a href="/projects">projects</a>
+            </li>
+            <li>
+              <a href="/time-sheets">timesheets</a>
+            </li>
+            <li>
+              <a href="/tasks">tasks</a>
+            </li>
+            <li>
+              <a href="/employees/profile">My Profile</a>
+            </li>
+            <li>
+              <a href="/employees/projects">My Projects</a>
+            </li>
+          </ul>
+        )}
+
         {!fetching && (
           <div className={styles.sign}>
             {authenticated ? (

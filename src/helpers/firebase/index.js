@@ -34,7 +34,6 @@ export const tokenListener = () => {
           })
             .then((res) => res.json())
             .then((response) => {
-              sessionStorage.setItem('id', response.data[0]._id);
               store.dispatch(setIdValue(response.data[0]._id));
             });
         }
