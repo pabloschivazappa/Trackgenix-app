@@ -24,7 +24,7 @@ export const logout = () => {
     dispatch(logoutLoading());
     try {
       await signOut(auth);
-      window.location.reload();
+      //window.location.reload();
       sessionStorage.clear();
     } catch (error) {
       return dispatch(logoutError(error.toString()));
