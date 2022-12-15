@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import styles from './profile.module.css';
-import Modal from '../../Shared/Modal';
-import Form from '../../Shared/Form';
-import Input from '../../Shared/Input';
-import Spinner from '../../Shared/Spinner';
+import Modal from '../Shared/Modal';
+import Form from '../Shared/Form';
+import Input from '../Shared/Input';
+import Spinner from '../Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { editEmployee } from '../../../redux/employees/thunks';
-import { setFetching } from '../../../redux/employees/actions';
+import { editEmployee } from '../../redux/employees/thunks';
+import { setFetching } from '../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
-import { schema } from 'Components/Employees/Profile/validations';
+import { schema } from 'Components/Profile/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 function EmployeesProfile() {
-  const { id: product } = useSelector((state) => state.auth);
+  const { id: product, data: role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { children, modalTitle, fetching } = useSelector((state) => state.employees);
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
@@ -41,11 +41,23 @@ function EmployeesProfile() {
     defaultValues: values
   });
 
+  const param = (data) => {
+    if (data == 'SUPER_ADMIN') {
+      return 'super-admins';
+    }
+    if (data == 'EMPLOYEE') {
+      return 'employees';
+    }
+    if (data == 'ADMIN') {
+      return 'admins';
+    }
+  };
+
   useEffect(async () => {
     if (rowId) {
       dispatch(setFetching(true));
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${product}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/${param(role)}/${product}`, {
           headers: { token }
         });
         const data = await response.json();
@@ -53,7 +65,6 @@ function EmployeesProfile() {
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
-          password: data.data.password,
           dni: data.data.dni,
           phone: data.data.phone
         });
@@ -117,13 +128,6 @@ function EmployeesProfile() {
                 />
               </div>
               <div className={styles.formColumn}>
-                <Input
-                  name="password"
-                  title="Password"
-                  type="password"
-                  register={register}
-                  error={errors.password?.message}
-                />
                 <Input name="dni" title="DNI" register={register} error={errors.dni?.message} />
                 <Input
                   name="phone"
