@@ -21,7 +21,7 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, resetFunct
               action={back}
               buttonType="form__button"
               buttonColor="red"
-              title="Cancel"
+              title="Go back"
             />
             <FunctionalButton
               buttonType="form__button"
