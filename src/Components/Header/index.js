@@ -11,7 +11,6 @@ import { logout } from 'redux/auth/thunks';
 
 function Header() {
   const { authenticated, fetching, data } = useSelector((state) => state.auth);
-  console.log(data);
   const quit = async () => {
     store.dispatch(logout());
   };
