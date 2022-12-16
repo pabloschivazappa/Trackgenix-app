@@ -13,6 +13,7 @@ import { schema } from 'Components/TimeSheets/FormToProjects/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const TimesheetsFormToProjects = ({ setModalDisplay, projectId }) => {
+  console.log('Project Id: ', projectId);
   const { fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
   const { id: employeeId } = useSelector((state) => state.auth);

@@ -24,25 +24,30 @@ const Form = ({
           <h2>{formTitle}</h2>
           {children}
           <div className={styles.div__buttons}>
-            <FunctionalButton
-              action={back}
-              buttonType="form__button"
-              buttonColor="red"
-              title="Go back"
-            />
+            {!isInModal && (
+              <FunctionalButton
+                action={back}
+                buttonType="form__button"
+                buttonColor="red"
+                title="Go back"
+              />
+            )}
+
             <FunctionalButton
               buttonType="form__button"
               buttonColor="green"
               type="submit"
               title={buttonMessage}
             />
-            <FunctionalButton
-              buttonType="form__button"
-              buttonColor="blue"
-              type="button"
-              title="Reset"
-              action={resetFunction}
-            />
+            {!isInModal && (
+              <FunctionalButton
+                buttonType="form__button"
+                buttonColor="blue"
+                type="button"
+                title="Reset"
+                action={resetFunction}
+              />
+            )}
           </div>
         </form>
       </div>

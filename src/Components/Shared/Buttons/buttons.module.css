@@ -9,6 +9,7 @@
   font-weight: 400;
   transition: 0.5s;
   padding: 5px 10px;
+  border-radius: 2px;
   border: none;
   cursor: pointer;
 }

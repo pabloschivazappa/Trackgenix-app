@@ -109,9 +109,10 @@ function ProjectTable() {
           }}
           edit="/projects/form"
           employeeId={employeeId}
-          setHours={() => {
+          setHours={(projectId) => {
+            setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent(<TimesheetsFormToProjects />));
+            dispatch(setModalContent(<TimesheetsFormToProjects projectId={projectId} />));
             setModalDisplay(true);
             setIsToConfirm(false);
             setIsForm(true);
