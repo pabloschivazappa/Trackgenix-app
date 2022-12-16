@@ -64,7 +64,7 @@ function Header() {
           <div className={styles.sign}>
             {authenticated ? (
               <>
-                <div>
+                <div className={styles.logout}>
                   <RedirectButton path="/" title="Logout" action={() => quit()} />
                 </div>
               </>
