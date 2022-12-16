@@ -1,11 +1,10 @@
 import React from 'react';
-import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import Form from 'Components/Shared/Form';
 import Input from 'Components/Shared/Input';
 import Select from 'Components/Shared/Select';
 import styles from './timesheets.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTimesheet } from 'redux/timeSheets/thunks';
 import { getTasks } from 'redux/tasks/thunks';
@@ -13,10 +12,9 @@ import { useForm } from 'react-hook-form';
 import { schema } from 'Components/TimeSheets/FormToProjects/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-const TimesheetsFormToProjects = ({ projectId }) => {
-  const { children, modalTitle, fetching } = useSelector((state) => state.timeSheets);
+const TimesheetsFormToProjects = ({ setModalDisplay, projectId }) => {
+  const { fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
-  const [modalDisplay, setModalDisplay] = useState('');
   const { id: employeeId } = useSelector((state) => state.auth);
   const { list: tasksList } = useSelector((state) => state.tasks);
 
@@ -46,11 +44,7 @@ const TimesheetsFormToProjects = ({ projectId }) => {
 
   return (
     <>
-      <Form
-        onSubmitFunction={handleSubmit(onSubmit)}
-        buttonMessage={'Create'}
-        formTitle={'Create Timesheet'}
-      >
+      <Form onSubmitFunction={handleSubmit(onSubmit)} buttonMessage={'Create'} isInModal={true}>
         {!fetching ? (
           <>
             <Input
@@ -83,11 +77,6 @@ const TimesheetsFormToProjects = ({ projectId }) => {
           <Spinner />
         )}
       </Form>
-      {modalDisplay ? (
-        <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
-          {children}
-        </Modal>
-      ) : null}
     </>
   );
 };

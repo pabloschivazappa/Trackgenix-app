@@ -3,7 +3,14 @@ import styles from 'Components/Shared/Form/form.module.css';
 import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import { useHistory } from 'react-router-dom';
 
-const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, resetFunction }) => {
+const Form = ({
+  onSubmitFunction,
+  children,
+  buttonMessage,
+  formTitle,
+  resetFunction,
+  isInModal = false
+}) => {
   let history = useHistory();
   const back = (e) => {
     e.preventDefault();
@@ -11,7 +18,7 @@ const Form = ({ onSubmitFunction, children, buttonMessage, formTitle, resetFunct
   };
 
   return (
-    <div className={styles.form__container}>
+    <div className={`${styles.form__container} ${isInModal && styles.form__container}`}>
       <div className={styles.box}>
         <form onSubmit={onSubmitFunction} className={styles.form}>
           <h2>{formTitle}</h2>

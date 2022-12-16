@@ -17,7 +17,14 @@ function ProjectTable() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
-  const { list: projects, fetching, error, modalTitle } = useSelector((state) => state.projects);
+  const [isForm, setIsForm] = useState(false);
+  const {
+    list: projects,
+    fetching,
+    error,
+    children,
+    modalTitle
+  } = useSelector((state) => state.projects);
   const { data } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -98,15 +105,16 @@ function ProjectTable() {
             setIsToConfirm(true);
             setModalDisplay(true);
             setProjectId(projectId);
+            setIsForm(false);
           }}
           edit="/projects/form"
           employeeId={employeeId}
-          setHours={(projectId) => {
-            setProjectId(projectId);
+          setHours={() => {
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent('HOURS'));
+            dispatch(setModalContent(<TimesheetsFormToProjects />));
             setModalDisplay(true);
             setIsToConfirm(false);
+            setIsForm(true);
           }}
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
@@ -122,8 +130,9 @@ function ProjectTable() {
           onClickFunction={() => {
             removeProject(projectId);
           }}
+          isForm={isForm}
         >
-          <TimesheetsFormToProjects projectId={projectId} />
+          {children}
         </Modal>
       ) : null}
     </section>
