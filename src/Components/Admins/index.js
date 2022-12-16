@@ -4,7 +4,7 @@ import Table from 'Components/Shared/Table';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
+import { getAdmins, editAdmin } from 'redux/admins/thunks';
 import { setModalTitle, setModalContent } from 'redux/admins/actions';
 
 const Admins = () => {
@@ -25,7 +25,22 @@ const Admins = () => {
   }, []);
 
   const removeAdmins = (id) => {
-    dispatch(deleteAdmin(id));
+    const foundAdmin = adminsList.find((admin) => admin._id === id);
+    dispatch(
+      editAdmin(
+        id,
+        {
+          name: foundAdmin.name,
+          lastName: foundAdmin.lastName,
+          email: foundAdmin.email,
+          dni: foundAdmin.dni,
+          phone: foundAdmin.phone,
+          firebaseUid: foundAdmin.firebaseUid,
+          active: false
+        },
+        true
+      )
+    );
     setIsToConfirm(false);
     setModalDisplay(true);
   };
