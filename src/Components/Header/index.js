@@ -11,7 +11,6 @@ import { logout } from 'redux/auth/thunks';
 
 function Header() {
   const { authenticated, fetching, data } = useSelector((state) => state.auth);
-  console.log(data);
   const quit = async () => {
     store.dispatch(logout());
   };
@@ -55,9 +54,11 @@ function Header() {
             <li>
               <a href="/employees/profile">My Profile</a>
             </li>
-            <li>
-              <a href="/employees/projects">My Projects</a>
-            </li>
+            {data === 'EMPLOYEES' ?? (
+              <li>
+                <a href="/employees/projects">My Projects</a>
+              </li>
+            )}
           </ul>
         )}
 

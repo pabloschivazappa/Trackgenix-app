@@ -10,7 +10,8 @@ import {
   postAdminsError,
   putAdminsPending,
   putAdminsSuccess,
-  putAdminsError
+  putAdminsError,
+  setModalContent
 } from './actions';
 
 const token = sessionStorage.getItem('token');
@@ -75,7 +76,7 @@ export const createAdmin = (admin) => {
   };
 };
 
-export const editAdmin = (id, admin) => {
+export const editAdmin = (id, admin, isForDelete = false) => {
   return async (dispatch) => {
     dispatch(putAdminsPending());
     try {
@@ -87,6 +88,8 @@ export const editAdmin = (id, admin) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
+        isForDelete === true && dispatch(setModalContent('Project deleted'));
+        dispatch(getAdmins());
       } else {
         dispatch(putAdminsError(data.message));
       }
