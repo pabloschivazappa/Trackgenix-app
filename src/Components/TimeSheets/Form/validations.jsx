@@ -35,17 +35,17 @@ export const schema = joi.object({
 
   // Validations to check that a value has been selected in selectors
   task: joi.string().alphanum().required().messages({
-    'string.alphanum': 'Task is required and must not contain special characters.',
+    'string.alphanum': 'You must select a task.',
     'string.empty': 'Task must not be an empty field.',
     'any.required': 'Task is required.'
   }),
   employee: joi.string().alphanum().required().messages({
-    'string.alphanum': 'Employee is required and must not contain special characters.',
+    'string.alphanum': 'You must select an employee.',
     'string.empty': 'Employee must not be an empty field.',
     'any.required': 'Employee is required.'
   }),
   project: joi.string().alphanum().required().messages({
-    'string.alphanum': 'Project is required and must not contain special characters.',
+    'string.alphanum': 'You must select a project.',
     'string.empty': 'Project must not be an empty field.',
     'any.required': 'Project is required.'
   })
