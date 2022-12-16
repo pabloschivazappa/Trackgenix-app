@@ -19,6 +19,7 @@ const Admins = () => {
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const { data } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getAdmins());
@@ -52,7 +53,7 @@ const Admins = () => {
     { heading: 'Email', value: 'email' },
     { heading: 'DNI', value: 'dni' },
     { heading: 'Phone', value: 'phone' },
-    { heading: 'Actions' }
+    data === 'SUPER_ADMIN' && { heading: 'Actions' }
   ];
 
   return (
@@ -72,6 +73,7 @@ const Admins = () => {
               setId(id);
             }}
             edit="/admins/form"
+            canCreate={data === 'SUPER_ADMIN'}
           />
         </>
       ) : (
