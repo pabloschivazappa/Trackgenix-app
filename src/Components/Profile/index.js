@@ -107,7 +107,7 @@ function EmployeesProfile() {
             <div className={styles.profilePicture__container}>
               <img
                 className={styles.profilePicture}
-                src="https://avatars.githubusercontent.com/u/53354878?v=4"
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                 alt="Profile Picture"
               />
             </div>

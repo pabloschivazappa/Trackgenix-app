@@ -4,10 +4,6 @@ import { RedirectButton } from 'Components/Shared';
 import store from 'redux/store';
 import { useSelector } from 'react-redux';
 import { logout } from 'redux/auth/thunks';
-// const urlParams = new URLSearchParams(window.location.search);
-// const employeeId = urlParams.get('id');
-// const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-// const rowId = idRegEx.test(employeeId);
 
 function Header() {
   const { authenticated, fetching, data } = useSelector((state) => state.auth);
@@ -28,33 +24,35 @@ function Header() {
           </a>
         </div>
         {authenticated && (
-          <ul className={styles.rutes}>
+          <ul className={styles.routes}>
             {data === 'SUPER_ADMIN' && (
               <li>
                 <a href="/super-admins">super admins</a>
               </li>
             )}
             {(data === 'SUPER_ADMIN' || data === 'ADMIN') && (
-              <li>
-                <a href="/admins">admins</a>
-              </li>
+              <>
+                <li>
+                  <a href="/admins">admins</a>
+                </li>
+                <li>
+                  <a href="/employees">employees</a>
+                </li>
+                <li>
+                  <a href="/projects">projects</a>
+                </li>
+                <li>
+                  <a href="/time-sheets">timesheets</a>
+                </li>
+                <li>
+                  <a href="/tasks">tasks</a>
+                </li>
+              </>
             )}
-            <li>
-              <a href="/employees">employees</a>
-            </li>
-            <li>
-              <a href="/projects">projects</a>
-            </li>
-            <li>
-              <a href="/time-sheets">timesheets</a>
-            </li>
-            <li>
-              <a href="/tasks">tasks</a>
-            </li>
             <li>
               <a href="/employees/profile">My Profile</a>
             </li>
-            {data === 'EMPLOYEES' ?? (
+            {data === 'EMPLOYEE' && (
               <li>
                 <a href="/employees/projects">My Projects</a>
               </li>

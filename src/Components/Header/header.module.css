@@ -20,14 +20,14 @@ header i {
   transform: scale(1.03);
 }
 
-.rutes {
+.routes {
   display: flex;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.rutes > li > a {
+.routes > li > a {
   position: relative;
   margin: 5px;
   text-decoration: none;
@@ -39,7 +39,7 @@ header i {
   color: #a0a0a0;
 }
 
-.rutes > li > a::after {
+.routes > li > a::after {
   content: "";
   position: absolute;
   background-color: #fff;
@@ -50,11 +50,11 @@ header i {
   transition: 0.3s;
 }
 
-.rutes > li > a:hover {
+.routes > li > a:hover {
   color: #fff;
 }
 
-.rutes > li > a:hover:after {
+.routes > li > a:hover:after {
   width: 100%;
 }
 
