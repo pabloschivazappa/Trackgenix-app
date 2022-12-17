@@ -61,7 +61,7 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = fal
             return (
               <td key={index}>
                 {item.employees.map((e) => {
-                  return e.employee._id === employeeId && e.employee && e.rate;
+                  return e.employee?._id === employeeId && e.employee && e.rate;
                 })}
               </td>
             );
