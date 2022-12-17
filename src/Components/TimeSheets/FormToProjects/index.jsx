@@ -12,8 +12,7 @@ import { useForm } from 'react-hook-form';
 import { schema } from 'Components/TimeSheets/FormToProjects/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-const TimesheetsFormToProjects = ({ setModalDisplay, projectId }) => {
-  console.log('Project Id: ', projectId);
+const TimesheetsFormToProjects = ({ setIsForm, projectId }) => {
   const { fetching } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
   const { id: employeeId } = useSelector((state) => state.auth);
@@ -34,12 +33,12 @@ const TimesheetsFormToProjects = ({ setModalDisplay, projectId }) => {
 
   const addTimesheet = (data) => {
     dispatch(createTimesheet(data));
-    setModalDisplay(true);
   };
 
   const onSubmit = async (data) => {
     console.log('Data: ', data);
     console.log('Data 2: ', { ...data, employee: employeeId, project: projectId });
+    setIsForm(false);
     addTimesheet({ ...data, employee: employeeId, project: projectId });
   };
 

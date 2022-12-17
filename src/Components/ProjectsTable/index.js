@@ -25,6 +25,7 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const { children: timesheetsChildren } = useSelector((state) => state.timeSheets);
   const { data } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -112,7 +113,11 @@ function ProjectTable() {
           setHours={(projectId) => {
             setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent(<TimesheetsFormToProjects projectId={projectId} />));
+            dispatch(
+              setModalContent(
+                <TimesheetsFormToProjects projectId={projectId} setIsForm={setIsForm} />
+              )
+            );
             setModalDisplay(true);
             setIsToConfirm(false);
             setIsForm(true);
@@ -133,7 +138,7 @@ function ProjectTable() {
           }}
           isForm={isForm}
         >
-          {children}
+          {timesheetsChildren ? timesheetsChildren : children}
         </Modal>
       ) : null}
     </section>
