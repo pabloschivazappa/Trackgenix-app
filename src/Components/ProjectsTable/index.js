@@ -6,6 +6,7 @@ import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
+import TimesheetsFormToProjects from 'Components/TimeSheets/FormToProjects';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
@@ -16,6 +17,7 @@ function ProjectTable() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
+  const [isForm, setIsForm] = useState(false);
   const {
     list: projects,
     fetching,
@@ -23,6 +25,7 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const { children: timesheetsChildren } = useSelector((state) => state.timeSheets);
   const { data } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -103,14 +106,21 @@ function ProjectTable() {
             setIsToConfirm(true);
             setModalDisplay(true);
             setProjectId(projectId);
+            setIsForm(false);
           }}
           edit="/projects/form"
           employeeId={employeeId}
-          setHours={() => {
+          setHours={(projectId) => {
+            setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent('HOURS'));
+            dispatch(
+              setModalContent(
+                <TimesheetsFormToProjects projectId={projectId} setIsForm={setIsForm} />
+              )
+            );
             setModalDisplay(true);
             setIsToConfirm(false);
+            setIsForm(true);
           }}
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
@@ -126,8 +136,9 @@ function ProjectTable() {
           onClickFunction={() => {
             removeProject(projectId);
           }}
+          isForm={isForm}
         >
-          {children}
+          {timesheetsChildren ? timesheetsChildren : children}
         </Modal>
       ) : null}
     </section>
