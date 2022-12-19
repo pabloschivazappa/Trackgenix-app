@@ -3,7 +3,16 @@ import FunctionalButton from 'Components/Shared/Buttons/FunctionalButton';
 import RedirectButton from 'Components/Shared/Buttons/RedirectButton';
 import styles from 'Components/Shared/Table/table.module.css';
 
-const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = false, setHours }) => {
+const TableRow = ({
+  item,
+  columns,
+  deleteItem,
+  edit,
+  employeeId,
+  inProfile = false,
+  setHours,
+  isPM = false
+}) => {
   return (
     <>
       <tr>
@@ -11,13 +20,15 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = fal
           if (columnItem.heading === 'Actions') {
             return (
               <td className={styles.icons} key={index}>
-                {inProfile ? (
+                {inProfile && (
                   <FunctionalButton
                     action={() => setHours(item._id)}
                     icon={<i className="fa-regular fa-clock"></i>}
                     buttonType="list__button"
                   />
-                ) : (
+                )}
+
+                {(!inProfile || isPM) && (
                   <RedirectButton
                     path={`${edit}?id=${item._id}`}
                     icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
@@ -61,7 +72,7 @@ const TableRow = ({ item, columns, deleteItem, edit, employeeId, inProfile = fal
             return (
               <td key={index}>
                 {item.employees.map((e) => {
-                  return e.employee._id === employeeId && e.employee && e.rate;
+                  return e.employee?._id === employeeId && e.employee && e.rate;
                 })}
               </td>
             );

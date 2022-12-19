@@ -13,7 +13,8 @@ const Table = ({
   employeeId,
   inProfile = false,
   setHours,
-  canCreate = true
+  canCreate = true,
+  boolList
 }) => {
   if (!data) return null;
   return (
@@ -40,6 +41,7 @@ const Table = ({
                   employeeId={employeeId}
                   setHours={setHours}
                   inProfile={inProfile}
+                  isPM={boolList && boolList[index]}
                 />
               );
             })}

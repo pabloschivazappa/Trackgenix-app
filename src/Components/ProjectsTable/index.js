@@ -6,16 +6,17 @@ import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
+import TimesheetsForm from 'Components/TimeSheets/Form/TimesheetsForm';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
   const { id: employeeId } = useSelector((state) => state.auth);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
+  const [isForm, setIsForm] = useState(false);
   const {
     list: projects,
     fetching,
@@ -23,20 +24,29 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const [roleList, setRoleList] = useState([]);
   const { data } = useSelector((state) => state.auth);
+  const { children: timesheetChildren } = useSelector((state) => state.timeSheets);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProjects());
   }, []);
-
   useEffect(() => {
     if (projects.length > 0) {
       setProjectsByEmployee(
         projects.filter((project) =>
           project.employees.some((element) => element?.employee?._id === employeeId)
         )
+      );
+      setRoleList(
+        projects?.map((project) => {
+          console.log('project', project.employees);
+          return project.employees.filter((employee) => {
+            return employee.role === 'PM' && employee.employee?._id == employeeId;
+          });
+        })
       );
     }
   }, [projects]);
@@ -96,6 +106,7 @@ function ProjectTable() {
           title="My Projects"
           data={projectsByEmployee}
           columns={columns}
+          boolList={roleList?.map((e) => e.length > 0)}
           error={!projectsByEmployee.length ? `You don't have any project` : error}
           deleteItem={(projectId) => {
             dispatch(setModalTitle('Quit project'));
@@ -103,14 +114,17 @@ function ProjectTable() {
             setIsToConfirm(true);
             setModalDisplay(true);
             setProjectId(projectId);
+            setIsForm(false);
           }}
           edit="/projects/form"
           employeeId={employeeId}
-          setHours={() => {
+          setHours={(projectId) => {
+            setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent('HOURS'));
+            dispatch(setModalContent(<TimesheetsForm projectId={projectId} />));
             setModalDisplay(true);
             setIsToConfirm(false);
+            setIsForm(true);
           }}
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
@@ -126,8 +140,9 @@ function ProjectTable() {
           onClickFunction={() => {
             removeProject(projectId);
           }}
+          isForm={isForm}
         >
-          {children}
+          {timesheetChildren ? timesheetChildren : children}
         </Modal>
       ) : null}
     </section>
