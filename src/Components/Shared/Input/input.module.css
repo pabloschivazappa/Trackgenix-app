@@ -4,8 +4,7 @@
   font-family: var(--font-family);
   font-size: 0.8rem;
   color: #AE67FA;
-  gap: 2px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .label input {

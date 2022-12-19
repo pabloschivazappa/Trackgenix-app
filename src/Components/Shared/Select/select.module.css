@@ -2,9 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-weight: 600;
-  gap: 5px;
-  margin-top: 3px;
+  margin-top: 15px;
   }
 
 .select {
@@ -12,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  border: 1px solid transparent;
+  border: transparent;
   padding: 9px 8px;
   border-radius: 8px;
   background-color: #21252e6b;
@@ -33,5 +31,5 @@ select:hover {
 
 .label p {
   color: #b00058;
-  font-size: 12px;
+  font-size: 0.7rem;
   }
