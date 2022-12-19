@@ -28,11 +28,20 @@ const TableRow = ({
                   />
                 )}
 
-                {(!inProfile || isPM) && (
+                {!inProfile || isPM ? (
                   <RedirectButton
                     path={`${edit}?id=${item._id}`}
                     icon={<i className="fa-solid fa-pen-to-square fa-lg"></i>}
                     buttonType="list__button"
+                  />
+                ) : (
+                  <FunctionalButton
+                    buttonType="list__button"
+                    icon={
+                      <i
+                        className={`fa-solid fa-pen-to-square fa-lg ${styles.grey} ${styles.not__allowed}`}
+                      ></i>
+                    }
                   />
                 )}
 

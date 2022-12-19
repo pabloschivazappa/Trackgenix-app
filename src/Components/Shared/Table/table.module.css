@@ -22,6 +22,14 @@
   color: #81AFDD;
 }
 
+.not__allowed {
+  cursor: not-allowed;
+}
+
+.grey {
+  color: grey !important;
+}
+
 .icons a:hover {
   color: #fff;
   transition: 0.5s;
