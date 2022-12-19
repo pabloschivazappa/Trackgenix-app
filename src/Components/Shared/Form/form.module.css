@@ -134,3 +134,7 @@
 .form select option {
   background-color: rgb(8, 22, 36);
 }
+
+.form label select {
+  margin-top: 5px;
+}
