@@ -19,7 +19,10 @@
 }
 
 .employee__form label {
+  margin-top: 15px;
   color: #AE67FA;
+  font-weight: 400;
+  gap: 0;
 }
 
 .employee__form button{

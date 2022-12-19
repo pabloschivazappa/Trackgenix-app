@@ -183,6 +183,7 @@ const ProjectForm = () => {
                     objectN={registerOptions.rate}
                   />
                   <label className={formStyles.label}>
+                    Role
                     <select
                       className={formStyles.select}
                       {...register(`employees[${index}].role`, registerOptions.role)}
@@ -192,7 +193,6 @@ const ProjectForm = () => {
                         <option key={index}>{role}</option>
                       ))}
                     </select>
-                    Role
                   </label>
                   <FunctionalButton
                     title="Delete"

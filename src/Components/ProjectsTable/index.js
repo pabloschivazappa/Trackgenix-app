@@ -6,7 +6,7 @@ import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
-import TimesheetsForm from 'Components/TimeSheets/Form/TimesheetsForm';
+import TimesheetsFormToProjects from 'Components/TimeSheets/FormToProjects';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
@@ -25,8 +25,8 @@ function ProjectTable() {
     modalTitle
   } = useSelector((state) => state.projects);
   const [roleList, setRoleList] = useState([]);
+  const { children: timesheetsChildren } = useSelector((state) => state.timeSheets);
   const { data } = useSelector((state) => state.auth);
-  const { children: timesheetChildren } = useSelector((state) => state.timeSheets);
 
   const dispatch = useDispatch();
 
@@ -121,7 +121,11 @@ function ProjectTable() {
           setHours={(projectId) => {
             setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent(<TimesheetsForm projectId={projectId} />));
+            dispatch(
+              setModalContent(
+                <TimesheetsFormToProjects projectId={projectId} setIsForm={setIsForm} />
+              )
+            );
             setModalDisplay(true);
             setIsToConfirm(false);
             setIsForm(true);
@@ -142,7 +146,7 @@ function ProjectTable() {
           }}
           isForm={isForm}
         >
-          {timesheetChildren ? timesheetChildren : children}
+          {timesheetsChildren ? timesheetsChildren : children}
         </Modal>
       ) : null}
     </section>
