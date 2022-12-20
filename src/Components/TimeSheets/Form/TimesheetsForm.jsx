@@ -38,7 +38,7 @@ const TimesheetsForm = () => {
     hours: '',
     date: '',
     task: '- Select task -',
-    employee: '- Select employees -',
+    employee: '- Select employee -',
     project: '- Select project -'
   });
 

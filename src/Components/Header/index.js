@@ -74,9 +74,7 @@ function Header() {
                 <div className={styles.login}>
                   <RedirectButton path="login" title="Login" />
                 </div>
-                <button type="button" className={styles.signup__button}>
-                  <RedirectButton path="sign-up" title="Sign up" />
-                </button>
+                <RedirectButton path="sign-up" title="Sign up" buttonColor="signup__button" />
               </>
             )}
           </div>

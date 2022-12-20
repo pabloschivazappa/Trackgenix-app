@@ -232,6 +232,30 @@
   color: var(--hover-close-color);
 }
 
+.signup__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 82px;
+  height: 40px;
+  left: 1153px;
+  top: 55px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background: #ff4820;
+  border-radius: 5px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.signup__button:hover {
+  box-shadow: #ff4820 1px 1px 10px;
+}
+
 
 :root {
   --main-color: #373867;
