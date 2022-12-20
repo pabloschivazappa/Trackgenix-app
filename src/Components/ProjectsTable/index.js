@@ -41,15 +41,18 @@ function ProjectTable() {
           project.employees.some((element) => element?.employee?._id === employeeId)
         )
       );
-      setRoleList(
-        projects?.map((project) => {
-          return project.employees.filter((employee) => {
-            return employee.role === 'PM' && employee.employee?._id == employeeId;
-          });
-        })
-      );
     }
   }, [projects]);
+
+  useEffect(() => {
+    setRoleList(
+      projectsByEmployee?.map((project) => {
+        return project.employees.filter((employee) => {
+          return employee.role === 'PM' && employee.employee?._id == employeeId;
+        });
+      })
+    );
+  }, [projectsByEmployee]);
 
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
