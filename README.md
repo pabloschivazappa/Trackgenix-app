@@ -32,6 +32,11 @@ You will also see any lint errors in the console.
 
 <br>
 
+### Run Test
+    npm run wdio
+
+<br>
+
 ### Members
 
 |Photo | Name  | Mail | Github

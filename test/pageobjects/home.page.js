@@ -1,14 +1,14 @@
 class HomePage {
   get loginBtn() {
-    return $('#root > div > section > h3:nth-child(2) > a');
+    return $('#root > div > header > nav > div.header_sign__JSZ0m > div > a > div');
   }
 
   get signUpBtn() {
-    return $('#root > div > section > h3:nth-child(3) > a');
+    return $('#root > div > header > nav > div.header_sign__JSZ0m > button');
   }
 
   get headerHomePage() {
-    return $('#root > div > header > div');
+    return $('#root > div > header');
   }
 
   get navBarHomePage() {
@@ -16,7 +16,7 @@ class HomePage {
   }
 
   get sectionHomePage() {
-    return $('#root > div > section');
+    return $('#root > div');
   }
 
   get footerHomePage() {
@@ -24,15 +24,15 @@ class HomePage {
   }
 
   get linkFacebookHomePage() {
-    return $('#root > div > header > div > div:nth-child(2) > a:nth-child(1)');
+    return $('#root > div > footer > div > div.footer_social_networks__VQJPw > a:nth-child(1) > i');
   }
 
   get linkTwitter() {
-    return $('#root > div > header > div > div:nth-child(2) > a:nth-child(2)');
+    return $('#root > div > footer > div > div.footer_social_networks__VQJPw > a:nth-child(2) > i');
   }
 
   get linkInstagram() {
-    return $('#root > div > header > div > div:nth-child(2) > a:nth-child(3)');
+    return $('#root > div > footer > div > div.footer_social_networks__VQJPw > a:nth-child(3) > i');
   }
 }
 

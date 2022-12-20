@@ -1,32 +1,21 @@
+const superAdminPage = require('../pageobjects/admin.page');
 const HomePage = require('../pageobjects/home.page');
+const LoginPage = require('../pageobjects/login.page');
 
 describe('Create, update and delete Admin', () => {
   beforeAll('Navigate to url', async () => {
     browser.url('https://alfon-b-trackgenix-app.vercel.app/home');
   });
 
-  it('To have url title', async () => {
-    await expect(browser).toHaveTitle('TRACKgenix');
+  it('Should login super admin with valid credentials', async () => {
+    await HomePage.loginBtn.click();
+    await browser.url('https://alfon-b-trackgenix-app.vercel.app/login');
+    await LoginPage.loginSuperAdmin('superadmin@superadmin.com', 'superadmin');
   });
 
-  it('Home page should be displayed', async () => {
-    await expect(HomePage.headerHomePage).toBeDisplayed();
-    await expect(HomePage.navBarHomePage).toBeDisplayed();
-    await expect(HomePage.sectionHomePage).toBeDisplayed();
-    await expect(HomePage.footerHomePage).toBeDisplayed();
-  });
-
-  it('Button login to be clickable', async () => {
-    await expect(HomePage.loginBtn).toBeClickable();
-  });
-
-  it('Button sign up to be clickable', async () => {
-    await expect(HomePage.signUpBtn).toBeClickable();
-  });
-
-  it('Social media buttons to be clickable', async () => {
-    await expect(HomePage.linkFacebookHomePage).toBeClickable();
-    await expect(HomePage.linkTwitter).toBeClickable();
-    await expect(HomePage.linkInstagram).toBeClickable();
+  it('Should can create admin', async () => {
+    await browser.url('https://alfon-b-trackgenix-app.vercel.app/super-admins');
+    await superAdminPage.adminBtn.click();
+    await browser.url('https://alfon-b-trackgenix-app.vercel.app/admins');
   });
 });
