@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalTitle, setModalContent, setFetching } from 'redux/projects/actions';
+import { setModalTitle, setModalContent } from 'redux/projects/actions';
 import { getProjects, editProject } from 'redux/projects/thunks';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
 import TimesheetsFormToProjects from 'Components/TimeSheets/FormToProjects';
+import { Spinner } from 'Components/Shared';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
@@ -34,7 +35,6 @@ function ProjectTable() {
   }, []);
 
   useEffect(() => {
-    dispatch(setFetching(true));
     if (projects.length > 0) {
       setProjectsByEmployee(
         projects.filter((project) =>
@@ -43,14 +43,12 @@ function ProjectTable() {
       );
       setRoleList(
         projects?.map((project) => {
-          console.log('project', project.employees);
           return project.employees.filter((employee) => {
             return employee.role === 'PM' && employee.employee?._id == employeeId;
           });
         })
       );
     }
-    dispatch(setFetching(false));
   }, [projects]);
 
   const removeProject = (projectId) => {
@@ -103,7 +101,7 @@ function ProjectTable() {
 
   return (
     <section className={styles.container}>
-      {!fetching && (
+      {!fetching ? (
         <Table
           title="My Projects"
           data={projectsByEmployee}
@@ -135,6 +133,8 @@ function ProjectTable() {
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
+      ) : (
+        <Spinner />
       )}
 
       {modalDisplay ? (
