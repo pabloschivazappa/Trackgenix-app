@@ -6,6 +6,7 @@ import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
 import TimesheetsFormToProjects from 'Components/TimeSheets/FormToProjects';
+import { Spinner } from 'Components/Shared';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
@@ -100,7 +101,7 @@ function ProjectTable() {
 
   return (
     <section className={styles.container}>
-      {!fetching && (
+      {!fetching ? (
         <Table
           title="My Projects"
           data={projectsByEmployee}
@@ -132,6 +133,8 @@ function ProjectTable() {
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
+      ) : (
+        <Spinner />
       )}
 
       {modalDisplay ? (
