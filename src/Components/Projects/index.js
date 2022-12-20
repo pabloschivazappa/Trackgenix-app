@@ -4,7 +4,7 @@ import Table from 'Components/Shared/Table';
 import Modal from 'Components/Shared/Modal';
 import Spinner from 'Components/Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { getProjects, editProject } from 'redux/projects/thunks';
 import { setModalTitle, setModalContent } from 'redux/projects/actions';
 
 function Projects() {
@@ -20,13 +20,35 @@ function Projects() {
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const { data } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getProjects());
   }, []);
 
   const removeAdmins = (id) => {
-    dispatch(deleteProject(id));
+    const foundProject = projects.find((project) => project._id === id);
+    dispatch(
+      editProject(
+        id,
+        {
+          name: foundProject.name,
+          clientName: foundProject.clientName,
+          description: foundProject.description,
+          startDate: foundProject.startDate,
+          endDate: foundProject.endDate,
+          employees: foundProject.employees.map((item) => {
+            return {
+              rate: item.rate,
+              role: item?.role,
+              employee: item.employee?._id
+            };
+          }),
+          active: false
+        },
+        true
+      )
+    );
     setIsToConfirm(false);
     setModalDisplay(true);
   };
@@ -38,7 +60,7 @@ function Projects() {
     { heading: 'Start Date', value: 'startDate' },
     { heading: 'End Date', value: 'endDate' },
     { heading: 'Employees', value: 'employees' },
-    { heading: 'Actions' }
+    data !== 'EMPLOYEE' && { heading: 'Actions' }
   ];
 
   return (
@@ -59,6 +81,7 @@ function Projects() {
                 setId(id);
               }}
               edit="/projects/form"
+              canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
             />
           </>
         ) : (

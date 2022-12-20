@@ -12,8 +12,11 @@ const Table = ({
   error,
   employeeId,
   inProfile = false,
-  setHours
+  setHours,
+  canCreate = true,
+  boolList
 }) => {
+  if (!data) return null;
   return (
     <>
       <h2 className={styles.entity}>{title}</h2>
@@ -38,20 +41,23 @@ const Table = ({
                   employeeId={employeeId}
                   setHours={setHours}
                   inProfile={inProfile}
+                  isPM={boolList && boolList[index]}
                 />
               );
             })}
           </tbody>
         </table>
       ) : (
-        <h3>{error}</h3>
+        <h3 className={styles.white}>{error}</h3>
       )}
-      <RedirectButton
-        buttonType="create__button"
-        buttonColor="green"
-        title="Create"
-        path={`${edit}`}
-      />
+      {canCreate && (
+        <RedirectButton
+          buttonType="create__button"
+          buttonColor="green"
+          title="Create"
+          path={`${edit}`}
+        />
+      )}
     </>
   );
 };

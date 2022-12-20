@@ -81,7 +81,7 @@ const timeSheetsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fetching: false,
-        children: action.payload,
+        children: 'Timesheet not created',
         list: [],
         modalTitle: 'Error'
       };

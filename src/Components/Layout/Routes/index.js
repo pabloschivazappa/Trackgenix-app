@@ -18,11 +18,10 @@ const TimesheetsForm = React.lazy(() => import('Components/TimeSheets/Form/Times
 const ProjectsForm = React.lazy(() => import('Components/Projects/Form/index'));
 const TasksForm = React.lazy(() => import('Components/Tasks/Form'));
 const ProjectTable = React.lazy(() => import('Components/ProjectsTable'));
-const EmployeesProfile = React.lazy(() => import('Components/Employees/Profile'));
+const EmployeesProfile = React.lazy(() => import('Components/Profile'));
 
 const Routes = () => {
   useEffect(() => {
-    console.log('Checkeo de token listener');
     tokenListener();
   }, []);
 
@@ -69,12 +68,12 @@ const Routes = () => {
         component={Projects}
       />
       <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form"
         component={ProjectsForm}
       />
       <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form?id="
         component={ProjectsForm}
       />
