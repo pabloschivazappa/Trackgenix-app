@@ -33,9 +33,8 @@ export const tokenListener = () => {
         } = await user.getIdTokenResult();
         if (token) {
           store.dispatch(setLoggedIn(role, email));
+          sessionStorage.setItem('token', token);
         }
-        sessionStorage.setItem('token', token);
-
         await fetch(`${process.env.REACT_APP_API_URL}/${selectUrl(role)}/fuid/${user_id}`, {
           headers: { token }
         })
