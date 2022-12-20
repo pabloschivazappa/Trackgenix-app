@@ -79,7 +79,7 @@ function EmployeesProfile() {
   }, [values]);
 
   const putEmployee = (data) => {
-    dispatch(editEmployee(product, data));
+    dispatch(editEmployee(product, data, true));
     setModalDisplay(true);
   };
 

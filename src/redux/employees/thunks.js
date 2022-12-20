@@ -78,15 +78,18 @@ export const createEmployee = (employee) => {
   };
 };
 
-export const editEmployee = (id, employee) => {
+export const editEmployee = (id, employee, profile = false) => {
   return async (dispatch) => {
     dispatch(putEmployeesLoading());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', token },
-        body: JSON.stringify(employee)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/employees/${profile ? 'profile/' : ''}${id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', token },
+          body: JSON.stringify(employee)
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         dispatch(putEmployeesSuccess(data.data));
