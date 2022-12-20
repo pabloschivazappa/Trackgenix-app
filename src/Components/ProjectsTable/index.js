@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalTitle, setModalContent } from 'redux/projects/actions';
+import { setModalTitle, setModalContent, setFetching } from 'redux/projects/actions';
 import { getProjects, editProject } from 'redux/projects/thunks';
-import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
@@ -33,7 +32,9 @@ function ProjectTable() {
   useEffect(() => {
     dispatch(getProjects());
   }, []);
+
   useEffect(() => {
+    dispatch(setFetching(true));
     if (projects.length > 0) {
       setProjectsByEmployee(
         projects.filter((project) =>
@@ -49,6 +50,7 @@ function ProjectTable() {
         })
       );
     }
+    dispatch(setFetching(false));
   }, [projects]);
 
   const removeProject = (projectId) => {
@@ -101,7 +103,7 @@ function ProjectTable() {
 
   return (
     <section className={styles.container}>
-      {!fetching ? (
+      {!fetching && (
         <Table
           title="My Projects"
           data={projectsByEmployee}
@@ -133,9 +135,8 @@ function ProjectTable() {
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
-      ) : (
-        <Spinner />
       )}
+
       {modalDisplay ? (
         <Modal
           title={modalTitle}

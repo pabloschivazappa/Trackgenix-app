@@ -35,13 +35,14 @@ const TableRow = ({
                     buttonType="list__button"
                   />
                 ) : (
-                  <FunctionalButton
-                    buttonType="list__button"
+                  <RedirectButton
+                    path={'#'}
                     icon={
                       <i
                         className={`fa-solid fa-pen-to-square fa-lg ${styles.grey} ${styles.not__allowed}`}
                       ></i>
                     }
+                    buttonType="list__button"
                   />
                 )}
 
