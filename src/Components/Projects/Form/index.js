@@ -22,7 +22,7 @@ const ProjectForm = () => {
   const dispatch = useDispatch();
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
-  const roles = ['QA', 'DEV', 'TL'];
+  const roles = ['QA', 'DEV', 'TL', 'PM'];
   const [modalDisplay, setModalDisplay] = useState('');
   const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({

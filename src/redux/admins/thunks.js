@@ -10,8 +10,7 @@ import {
   postAdminsError,
   putAdminsPending,
   putAdminsSuccess,
-  putAdminsError,
-  setModalContent
+  putAdminsError
 } from './actions';
 
 const token = sessionStorage.getItem('token');
@@ -44,7 +43,7 @@ export const deleteAdmin = (id) => {
         headers: { token }
       });
       if (response.ok) {
-        dispatch(deleteAdminsSuccess(id));
+        dispatch(deleteAdminsSuccess());
       } else {
         dispatch(deleteAdminsError());
       }
@@ -88,13 +87,13 @@ export const editAdmin = (id, admin, isForDelete = false) => {
       const data = await response.json();
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
-        isForDelete === true && dispatch(setModalContent('Project deleted'));
-        dispatch(getAdmins());
+        isForDelete === true && dispatch(deleteAdminsSuccess());
       } else {
         dispatch(putAdminsError(data.message));
       }
     } catch (error) {
       dispatch(putAdminsError(error.toString()));
     }
+    dispatch(getAdmins());
   };
 };

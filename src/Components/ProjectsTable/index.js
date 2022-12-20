@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalTitle, setModalContent } from 'redux/projects/actions';
+import { setModalTitle, setModalContent, setFetching } from 'redux/projects/actions';
 import { getProjects, editProject } from 'redux/projects/thunks';
-import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
@@ -13,7 +12,6 @@ function ProjectTable() {
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
   const { id: employeeId } = useSelector((state) => state.auth);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -25,6 +23,7 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const [roleList, setRoleList] = useState([]);
   const { children: timesheetsChildren } = useSelector((state) => state.timeSheets);
   const { data } = useSelector((state) => state.auth);
 
@@ -35,13 +34,23 @@ function ProjectTable() {
   }, []);
 
   useEffect(() => {
+    dispatch(setFetching(true));
     if (projects.length > 0) {
       setProjectsByEmployee(
         projects.filter((project) =>
           project.employees.some((element) => element?.employee?._id === employeeId)
         )
       );
+      setRoleList(
+        projects?.map((project) => {
+          console.log('project', project.employees);
+          return project.employees.filter((employee) => {
+            return employee.role === 'PM' && employee.employee?._id == employeeId;
+          });
+        })
+      );
     }
+    dispatch(setFetching(false));
   }, [projects]);
 
   const removeProject = (projectId) => {
@@ -94,11 +103,12 @@ function ProjectTable() {
 
   return (
     <section className={styles.container}>
-      {!fetching ? (
+      {!fetching && (
         <Table
           title="My Projects"
           data={projectsByEmployee}
           columns={columns}
+          boolList={roleList?.map((e) => e.length > 0)}
           error={!projectsByEmployee.length ? `You don't have any project` : error}
           deleteItem={(projectId) => {
             dispatch(setModalTitle('Quit project'));
@@ -125,9 +135,8 @@ function ProjectTable() {
           inProfile={true}
           canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
-      ) : (
-        <Spinner />
       )}
+
       {modalDisplay ? (
         <Modal
           title={modalTitle}

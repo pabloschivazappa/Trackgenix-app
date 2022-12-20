@@ -36,8 +36,6 @@ const TimesheetsFormToProjects = ({ setIsForm, projectId }) => {
   };
 
   const onSubmit = async (data) => {
-    console.log('Data: ', data);
-    console.log('Data 2: ', { ...data, employee: employeeId, project: projectId });
     setIsForm(false);
     addTimesheet({ ...data, employee: employeeId, project: projectId });
   };

@@ -68,12 +68,12 @@ const Routes = () => {
         component={Projects}
       />
       <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form"
         component={ProjectsForm}
       />
       <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form?id="
         component={ProjectsForm}
       />

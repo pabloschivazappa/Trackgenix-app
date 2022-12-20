@@ -3,7 +3,6 @@ import styles from './profile.module.css';
 import Modal from '../Shared/Modal';
 import Form from '../Shared/Form';
 import Input from '../Shared/Input';
-import Spinner from '../Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { editEmployee } from '../../redux/employees/thunks';
 import { setFetching } from '../../redux/employees/actions';
@@ -102,45 +101,31 @@ function EmployeesProfile() {
         formTitle={'My Profile'}
         resetFunction={() => resetForm()}
       >
-        {!fetching ? (
-          <>
-            <div className={styles.profilePicture__container}>
-              <img
-                className={styles.profilePicture}
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                alt="Profile Picture"
+        <>
+          <div className={styles.profilePicture__container}>
+            <img
+              className={styles.profilePicture}
+              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+              alt="Profile Picture"
+            />
+          </div>
+          <div className={styles.formInputs}>
+            <div className={styles.formColumn}>
+              <Input name="name" title="Name" register={register} error={errors.name?.message} />
+              <Input
+                name="lastName"
+                title="Last Name"
+                register={register}
+                error={errors.lastName?.message}
               />
+              <Input name="email" title="Email" register={register} error={errors.email?.message} />
             </div>
-            <div className={styles.formInputs}>
-              <div className={styles.formColumn}>
-                <Input name="name" title="Name" register={register} error={errors.name?.message} />
-                <Input
-                  name="lastName"
-                  title="Last Name"
-                  register={register}
-                  error={errors.lastName?.message}
-                />
-                <Input
-                  name="email"
-                  title="Email"
-                  register={register}
-                  error={errors.email?.message}
-                />
-              </div>
-              <div className={styles.formColumn}>
-                <Input name="dni" title="DNI" register={register} error={errors.dni?.message} />
-                <Input
-                  name="phone"
-                  title="Phone"
-                  register={register}
-                  error={errors.phone?.message}
-                />
-              </div>
+            <div className={styles.formColumn}>
+              <Input name="dni" title="DNI" register={register} error={errors.dni?.message} />
+              <Input name="phone" title="Phone" register={register} error={errors.phone?.message} />
             </div>
-          </>
-        ) : (
-          <Spinner />
-        )}
+          </div>
+        </>
       </Form>
       {modalDisplay && !fetching ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>

@@ -42,10 +42,9 @@ export const deleteAdminsPending = () => {
   };
 };
 
-export const deleteAdminsSuccess = (payload) => {
+export const deleteAdminsSuccess = () => {
   return {
-    type: DELETE_ADMINS_SUCCESS,
-    payload
+    type: DELETE_ADMINS_SUCCESS
   };
 };
 
