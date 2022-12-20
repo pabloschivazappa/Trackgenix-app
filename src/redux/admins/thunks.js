@@ -82,7 +82,7 @@ export const editAdmin = (id, admin, isForDelete = false) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', token },
-        body: JSON.stringify(admin)
+        body: JSON.stringify({ ...admin, active: true })
       });
       const data = await response.json();
       if (response.ok) {
