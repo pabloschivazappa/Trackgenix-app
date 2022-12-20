@@ -82,6 +82,9 @@ thead{
   background: rgba(85, 85, 85, 0.356);
   transition: 0.5s;
 }
+.white {
+  color: white;
+}
 
 .table__button {
   padding: 0 8px;

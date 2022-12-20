@@ -4,6 +4,7 @@ import { RedirectButton } from 'Components/Shared';
 import store from 'redux/store';
 import { useSelector } from 'react-redux';
 import { logout } from 'redux/auth/thunks';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const { authenticated, fetching, data } = useSelector((state) => state.auth);
@@ -15,46 +16,46 @@ function Header() {
     <header>
       <nav className={styles.navbar}>
         <div>
-          <a href="/home">
+          <Link to="/home">
             <img
               src={TrackgenixLogo}
               alt="TrackGENIX Logo"
               className={styles.trackgenix_logo}
             ></img>
-          </a>
+          </Link>
         </div>
         {authenticated && (
           <ul className={styles.routes}>
             {data === 'SUPER_ADMIN' && (
               <li>
-                <a href="/super-admins">super admins</a>
+                <Link to="/super-admins">super admins</Link>
               </li>
             )}
             {(data === 'SUPER_ADMIN' || data === 'ADMIN') && (
               <>
                 <li>
-                  <a href="/admins">admins</a>
+                  <Link to="/admins">admins</Link>
                 </li>
                 <li>
-                  <a href="/employees">employees</a>
+                  <Link to="/employees">employees</Link>
                 </li>
                 <li>
-                  <a href="/projects">projects</a>
+                  <Link to="/projects">projects</Link>
                 </li>
                 <li>
-                  <a href="/time-sheets">timesheets</a>
+                  <Link to="/time-sheets">timesheets</Link>
                 </li>
                 <li>
-                  <a href="/tasks">tasks</a>
+                  <Link to="/tasks">tasks</Link>
                 </li>
               </>
             )}
             <li>
-              <a href="/employees/profile">My Profile</a>
+              <Link to="/employees/profile">My Profile</Link>
             </li>
             {data === 'EMPLOYEE' && (
               <li>
-                <a href="/employees/projects">My Projects</a>
+                <Link to="/employees/projects">My Projects</Link>
               </li>
             )}
           </ul>
