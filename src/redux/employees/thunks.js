@@ -83,7 +83,7 @@ export const editEmployee = (id, employee, profile = false) => {
     dispatch(putEmployeesLoading());
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/employees/${profile && 'profile/'}${id}`,
+        `${process.env.REACT_APP_API_URL}/employees/${profile ? 'profile/' : ''}${id}`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', token },
