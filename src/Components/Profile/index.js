@@ -5,6 +5,8 @@ import Form from '../Shared/Form';
 import Input from '../Shared/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { editEmployee } from '../../redux/employees/thunks';
+import { editAdmin } from 'redux/admins/thunks';
+import { editSuperAdmin } from 'redux/superAdmins/thunks';
 import { setFetching } from '../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
 import { schema } from 'Components/Profile/validations';
@@ -78,13 +80,24 @@ function EmployeesProfile() {
     reset(values);
   }, [values]);
 
-  const putEmployee = (data) => {
-    dispatch(editEmployee(product, data, true));
+  const putEmployee = (data, role) => {
+    switch (role) {
+      case 'EMPLOYEE':
+        dispatch(editEmployee(product, data, true));
+        break;
+      case 'ADMIN':
+        dispatch(editAdmin(product, { ...data, active: true }, true));
+        break;
+      case 'SUPER_ADMIN':
+        dispatch(editSuperAdmin(product, data));
+        break;
+    }
+
     setModalDisplay(true);
   };
 
   const onSubmit = async (data) => {
-    putEmployee(data);
+    putEmployee(data, role);
     setValues(data);
   };
 
