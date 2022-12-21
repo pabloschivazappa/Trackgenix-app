@@ -99,9 +99,9 @@ const TableRow = ({
           if (columnItem.heading === 'PM') {
             return (
               <td key={index}>
-                {item.employees?.map((e) => {
-                  return e?.role === 'PM' && e?.employee?.name;
-                })}
+                {item.employees?.map(
+                  (e) => e.role === 'PM' && e.employee?.name + ' ' + e.employee?.lastName
+                )}
               </td>
             );
           }
