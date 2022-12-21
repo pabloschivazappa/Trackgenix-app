@@ -37,8 +37,7 @@ const MyTimesheets = () => {
     { heading: 'Project', value: 'project' },
     { heading: 'Task', value: 'task' },
     { heading: 'Employee', value: 'employee' },
-    { heading: 'Hours', value: 'hours' },
-    { heading: 'Actions' }
+    { heading: 'Hours', value: 'hours' }
   ];
 
   return (
