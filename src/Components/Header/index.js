@@ -54,9 +54,14 @@ function Header() {
               <Link to="/employees/profile">My Profile</Link>
             </li>
             {data === 'EMPLOYEE' && (
-              <li>
-                <Link to="/employees/projects">My Projects</Link>
-              </li>
+              <>
+                <li>
+                  <Link to="/employees/projects">My Projects</Link>
+                </li>
+                <li>
+                  <Link to="/my-timesheets">My Timesheets</Link>
+                </li>
+              </>
             )}
           </ul>
         )}
