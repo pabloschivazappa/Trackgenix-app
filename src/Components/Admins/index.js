@@ -27,21 +27,14 @@ const Admins = () => {
 
   const removeAdmins = (id) => {
     const foundAdmin = adminsList.find((admin) => admin._id === id);
-    dispatch(
-      editAdmin(
-        id,
-        {
-          name: foundAdmin.name,
-          lastName: foundAdmin.lastName,
-          email: foundAdmin.email,
-          dni: foundAdmin.dni,
-          phone: foundAdmin.phone,
-          firebaseUid: foundAdmin.firebaseUid,
-          active: false
-        },
-        true
-      )
-    );
+    const foundAdminWithoutId = {
+      name: foundAdmin.name,
+      lastName: foundAdmin.lastName,
+      email: foundAdmin.email,
+      dni: foundAdmin.dni,
+      phone: foundAdmin.phone
+    };
+    dispatch(editAdmin(id, foundAdminWithoutId, true));
     setIsToConfirm(false);
     setModalDisplay(true);
   };

@@ -61,7 +61,7 @@ const TableRow = ({
                 {item.employees.map((e) => {
                   return (
                     e.employee &&
-                    e.employee.name + ' ' + e.employee.lastName + ' (' + e.role + ')\n'
+                    e.employee.name + ' ' + e.employee?.lastName + ' (' + e.role + ')\n'
                   );
                 })}
               </td>
@@ -99,8 +99,8 @@ const TableRow = ({
           if (columnItem.heading === 'PM') {
             return (
               <td key={index}>
-                {item.employees.map((e) => {
-                  return e.role === 'PM' && e.employee.name;
+                {item.employees?.map((e) => {
+                  return e?.role === 'PM' && e?.employee?.name;
                 })}
               </td>
             );
