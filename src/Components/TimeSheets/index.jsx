@@ -8,6 +8,11 @@ import { getTimesheets, deleteTimesheet } from 'redux/timeSheets/thunks';
 import { setModalTitle, setModalContent } from 'redux/timeSheets/actions';
 
 const TimeSheets = () => {
+  const urlValues = window.location.search;
+  const urlParams = new URLSearchParams(urlValues);
+  const projectId = urlParams.get('id');
+  const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+  const haveId = idRegEx.test(projectId);
   const {
     list: timesheetsList,
     fetching,
@@ -46,7 +51,11 @@ const TimeSheets = () => {
         {!fetching ? (
           <Table
             title="Timesheets"
-            data={timesheetsList}
+            data={
+              !haveId
+                ? timesheetsList
+                : timesheetsList.filter((ts) => ts.project?._id === projectId)
+            }
             error={error}
             columns={columns}
             deleteItem={(id) => {
