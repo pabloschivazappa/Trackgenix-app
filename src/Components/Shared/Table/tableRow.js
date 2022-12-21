@@ -11,7 +11,8 @@ const TableRow = ({
   employeeId,
   inProfile = false,
   setHours,
-  isPM = false
+  isPM = false,
+  inProjects
 }) => {
   return (
     <>
@@ -24,6 +25,14 @@ const TableRow = ({
                   <FunctionalButton
                     action={() => setHours(item._id)}
                     icon={<i className="fa-regular fa-clock"></i>}
+                    buttonType="list__button"
+                  />
+                )}
+
+                {inProjects && (
+                  <RedirectButton
+                    path={`/time-sheets?id=${item._id}`}
+                    icon={<i className="fa-regular fa-file fa-lg"></i>}
                     buttonType="list__button"
                   />
                 )}

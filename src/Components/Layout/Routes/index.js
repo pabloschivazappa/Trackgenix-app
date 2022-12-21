@@ -94,6 +94,11 @@ const Routes = () => {
         component={TimesheetsForm}
       />
       <PrivateRoute
+        role={['ADMIN', 'SUPER_ADMIN']}
+        path="/projects/time-sheets?id="
+        component={TimeSheets}
+      />
+      <PrivateRoute
         role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
         path="/employees/projects"
         component={ProjectTable}

@@ -80,6 +80,7 @@ function Projects() {
                 setModalDisplay(true);
                 setId(id);
               }}
+              inProjects={true}
               edit="/projects/form"
               canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
             />
