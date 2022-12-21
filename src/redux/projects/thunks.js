@@ -14,9 +14,8 @@ import {
   setModalContent
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getProjects = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getProjectsPending());
     try {
@@ -36,6 +35,7 @@ export const getProjects = () => {
 };
 
 export const deleteProject = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteProjectsPending());
     try {
@@ -55,6 +55,7 @@ export const deleteProject = (id) => {
 };
 
 export const createProject = (project) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(postProjectsPending());
     try {
@@ -76,6 +77,7 @@ export const createProject = (project) => {
 };
 
 export const editProject = (id, project, isForDelete = false) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putProjectsPending());
     try {

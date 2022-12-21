@@ -13,9 +13,8 @@ import {
   putEmployeesError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getEmployees = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getEmployeesLoading());
     try {
@@ -35,6 +34,7 @@ export const getEmployees = () => {
 };
 
 export const deleteEmployees = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteEmployeesLoading());
     try {
@@ -79,6 +79,7 @@ export const createEmployee = (employee) => {
 };
 
 export const editEmployee = (id, employee, profile = false) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putEmployeesLoading());
     try {

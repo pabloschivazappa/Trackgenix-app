@@ -13,9 +13,8 @@ import {
   putTimesheetsError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getTimesheets = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getTimesheetsPending());
     try {
@@ -35,6 +34,7 @@ export const getTimesheets = () => {
 };
 
 export const deleteTimesheet = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteTimesheetsPending());
     try {
@@ -55,6 +55,7 @@ export const deleteTimesheet = (id) => {
 };
 
 export const createTimesheet = (timesheet) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(postTimesheetsPending());
     try {
@@ -76,6 +77,7 @@ export const createTimesheet = (timesheet) => {
 };
 
 export const editTimesheet = (id, timesheet) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putTimesheetsPending());
     try {
