@@ -13,9 +13,8 @@ import {
   putAdminsError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getAdmins = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getAdminsPending());
     try {
@@ -35,6 +34,7 @@ export const getAdmins = () => {
 };
 
 export const deleteAdmin = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteAdminsPending());
     try {
@@ -43,7 +43,7 @@ export const deleteAdmin = (id) => {
         headers: { token }
       });
       if (response.ok) {
-        dispatch(deleteAdminsSuccess(id));
+        dispatch(deleteAdminsSuccess());
       } else {
         dispatch(deleteAdminsError());
       }
@@ -55,6 +55,7 @@ export const deleteAdmin = (id) => {
 };
 
 export const createAdmin = (admin) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(postAdminsPending());
     try {
@@ -75,23 +76,30 @@ export const createAdmin = (admin) => {
   };
 };
 
-export const editAdmin = (id, admin) => {
+export const editAdmin = (id, admin, isForDelete = false, isToProfile = false) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', token },
-        body: JSON.stringify(admin)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/admins/${isToProfile ? 'profile/' : ''}${id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', token },
+          body: JSON.stringify({ ...admin, active: !isForDelete })
+        }
+      );
       const data = await response.json();
+      console.log('Data: ', data.data);
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
+        isForDelete === true && dispatch(deleteAdminsSuccess());
       } else {
         dispatch(putAdminsError(data.message));
       }
     } catch (error) {
       dispatch(putAdminsError(error.toString()));
     }
+    dispatch(getAdmins());
   };
 };

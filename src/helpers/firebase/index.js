@@ -16,6 +16,13 @@ export const firebaseApp = initializeApp(fireBaseConfig);
 
 export const auth = getAuth(firebaseApp);
 
+const selectUrl = (role) => {
+  if (role === 'EMPLOYEE') return 'employees';
+  if (role === 'ADMIN') return 'admins';
+  if (role === 'SUPER_ADMIN') return 'super-admins';
+  return null;
+};
+
 export const tokenListener = () => {
   onIdTokenChanged(auth, async (user) => {
     if (user) {
@@ -26,18 +33,15 @@ export const tokenListener = () => {
         } = await user.getIdTokenResult();
         if (token) {
           store.dispatch(setLoggedIn(role, email));
+          sessionStorage.setItem('token', token);
         }
-        sessionStorage.setItem('token', token);
-        if (role === 'EMPLOYEE') {
-          await fetch(`${process.env.REACT_APP_API_URL}/employees/fuid/${user_id}`, {
-            headers: { token }
-          })
-            .then((res) => res.json())
-            .then((response) => {
-              sessionStorage.setItem('id', response.data[0]._id);
-              store.dispatch(setIdValue(response.data[0]._id));
-            });
-        }
+        await fetch(`${process.env.REACT_APP_API_URL}/${selectUrl(role)}/fuid/${user_id}`, {
+          headers: { token }
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            store.dispatch(setIdValue(response.data[0]._id));
+          });
       } catch (error) {
         console.error(error);
       }

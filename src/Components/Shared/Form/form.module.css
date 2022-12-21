@@ -35,6 +35,9 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.form__padding {
   padding: 60px 0;
 }
 
@@ -130,4 +133,8 @@
 
 .form select option {
   background-color: rgb(8, 22, 36);
+}
+
+.form label select {
+  margin-top: 5px;
 }

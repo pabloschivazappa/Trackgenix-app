@@ -7,12 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTimesheets, deleteTimesheet } from 'redux/timeSheets/thunks';
 import { setModalTitle, setModalContent } from 'redux/timeSheets/actions';
 
-const TimeSheets = () => {
-  const urlValues = window.location.search;
-  const urlParams = new URLSearchParams(urlValues);
-  const projectId = urlParams.get('id');
-  const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-  const haveId = idRegEx.test(projectId);
+const MyTimesheets = () => {
   const {
     list: timesheetsList,
     fetching,
@@ -24,6 +19,7 @@ const TimeSheets = () => {
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
   const [id, setId] = useState('');
+  const { id: employeeId } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getTimesheets());
@@ -41,8 +37,7 @@ const TimeSheets = () => {
     { heading: 'Project', value: 'project' },
     { heading: 'Task', value: 'task' },
     { heading: 'Employee', value: 'employee' },
-    { heading: 'Hours', value: 'hours' },
-    { heading: 'Actions' }
+    { heading: 'Hours', value: 'hours' }
   ];
 
   return (
@@ -51,11 +46,7 @@ const TimeSheets = () => {
         {!fetching ? (
           <Table
             title="Timesheets"
-            data={
-              !haveId
-                ? timesheetsList
-                : timesheetsList.filter((ts) => ts.project?._id === projectId)
-            }
+            data={timesheetsList.filter((ts) => ts.employee?._id === employeeId)}
             error={error}
             columns={columns}
             deleteItem={(id) => {
@@ -66,6 +57,7 @@ const TimeSheets = () => {
               dispatch(setModalContent('Are you sure you want to delete it?'));
             }}
             edit="/time-sheets/form"
+            canCreate={false}
           />
         ) : (
           <Spinner />
@@ -85,4 +77,4 @@ const TimeSheets = () => {
   );
 };
 
-export default TimeSheets;
+export default MyTimesheets;

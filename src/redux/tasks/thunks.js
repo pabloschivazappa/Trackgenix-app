@@ -13,9 +13,8 @@ import {
   putTasksError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getTasks = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getTasksPending());
     try {
@@ -35,6 +34,7 @@ export const getTasks = () => {
 };
 
 export const deleteTasks = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteTasksPending());
     try {
@@ -55,6 +55,7 @@ export const deleteTasks = (id) => {
 };
 
 export const createTasks = (task) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(postTasksPending());
     try {
@@ -79,6 +80,7 @@ export const createTasks = (task) => {
 };
 
 export const editTasks = (id, task) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putTasksPending());
     try {

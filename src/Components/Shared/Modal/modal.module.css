@@ -10,15 +10,19 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 30.15%;
-  left: 37.5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   align-items: center;
   min-height: 10em;
   width: 25%;
-  background-color: rgb(8, 22, 36);
   border-radius: 10px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.432);
   z-index: 2;
+}
+
+.background {
+  background-color: rgb(8, 22, 36);
 }
 
 .header {

@@ -4,13 +4,10 @@ import { RedirectButton } from 'Components/Shared';
 import store from 'redux/store';
 import { useSelector } from 'react-redux';
 import { logout } from 'redux/auth/thunks';
-// const urlParams = new URLSearchParams(window.location.search);
-// const employeeId = urlParams.get('id');
-// const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
-// const rowId = idRegEx.test(employeeId);
+import { Link } from 'react-router-dom';
 
 function Header() {
-  const { authenticated, fetching } = useSelector((state) => state.auth);
+  const { authenticated, fetching, data } = useSelector((state) => state.auth);
   const quit = async () => {
     store.dispatch(logout());
   };
@@ -19,45 +16,61 @@ function Header() {
     <header>
       <nav className={styles.navbar}>
         <div>
-          <a href="/home">
+          <Link to="/home">
             <img
               src={TrackgenixLogo}
               alt="TrackGENIX Logo"
               className={styles.trackgenix_logo}
             ></img>
-          </a>
+          </Link>
         </div>
-        <ul className={styles.rutes}>
-          <li>
-            <a href="/admins">admins</a>
-          </li>
-          <li>
-            <a href="/super-admins">super admins</a>
-          </li>
-          <li>
-            <a href="/employees">employees</a>
-          </li>
-          <li>
-            <a href="/projects">projects</a>
-          </li>
-          <li>
-            <a href="/time-sheets">timesheets</a>
-          </li>
-          <li>
-            <a href="/tasks">tasks</a>
-          </li>
-          <li>
-            <a href="/employees/profile">My Profile</a>
-          </li>
-          <li>
-            <a href="/employees/projects">My Projects</a>
-          </li>
-        </ul>
+        {authenticated && (
+          <ul className={styles.routes}>
+            {data === 'SUPER_ADMIN' && (
+              <li>
+                <Link to="/super-admins">super admins</Link>
+              </li>
+            )}
+            {(data === 'SUPER_ADMIN' || data === 'ADMIN') && (
+              <>
+                <li>
+                  <Link to="/admins">admins</Link>
+                </li>
+                <li>
+                  <Link to="/employees">employees</Link>
+                </li>
+                <li>
+                  <Link to="/projects">projects</Link>
+                </li>
+                <li>
+                  <Link to="/time-sheets">timesheets</Link>
+                </li>
+                <li>
+                  <Link to="/tasks">tasks</Link>
+                </li>
+              </>
+            )}
+            <li>
+              <Link to="/employees/profile">My Profile</Link>
+            </li>
+            {data === 'EMPLOYEE' && (
+              <>
+                <li>
+                  <Link to="/employees/projects">My Projects</Link>
+                </li>
+                <li>
+                  <Link to="/my-timesheets">My Timesheets</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        )}
+
         {!fetching && (
           <div className={styles.sign}>
             {authenticated ? (
               <>
-                <div>
+                <div className={styles.logout}>
                   <RedirectButton path="/" title="Logout" action={() => quit()} />
                 </div>
               </>
@@ -66,9 +79,7 @@ function Header() {
                 <div className={styles.login}>
                   <RedirectButton path="login" title="Login" />
                 </div>
-                <button type="button" className={styles.signup__button}>
-                  <RedirectButton path="sign-up" title="Sign up" />
-                </button>
+                <RedirectButton path="sign-up" title="Sign up" buttonColor="signup__button" />
               </>
             )}
           </div>

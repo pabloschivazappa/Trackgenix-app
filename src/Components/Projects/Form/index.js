@@ -22,7 +22,7 @@ const ProjectForm = () => {
   const dispatch = useDispatch();
   const { children, modalTitle, fetching } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
-  const roles = ['QA', 'DEV', 'TL'];
+  const roles = ['QA', 'DEV', 'TL', 'PM'];
   const [modalDisplay, setModalDisplay] = useState('');
   const token = sessionStorage.getItem('token');
   const [values, setValues] = useState({
@@ -183,6 +183,7 @@ const ProjectForm = () => {
                     objectN={registerOptions.rate}
                   />
                   <label className={formStyles.label}>
+                    Role
                     <select
                       className={formStyles.select}
                       {...register(`employees[${index}].role`, registerOptions.role)}
@@ -192,7 +193,6 @@ const ProjectForm = () => {
                         <option key={index}>{role}</option>
                       ))}
                     </select>
-                    Role
                   </label>
                   <FunctionalButton
                     title="Delete"

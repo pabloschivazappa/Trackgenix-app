@@ -12,6 +12,13 @@
   margin-bottom: 5px;
 }
 
+.table {
+  border-collapse: collapse;
+  width: 65%;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.651);
+}
+
 .icons {
   display: flex;
   justify-content: space-evenly;
@@ -20,6 +27,14 @@
 .icons a {
   background: transparent;
   color: #81AFDD;
+}
+
+.not__allowed {
+  cursor: not-allowed;
+}
+
+.grey {
+  color: grey !important;
 }
 
 .icons a:hover {
@@ -37,8 +52,11 @@
   transition: 0.5s;
 }
 
+thead{
+  border-radius: 10px;
+}
+
 .tHead tr {
-  padding-block: 10.48px;
   background: rgb(8, 22, 36);
   color: #cb7cbd;
 }
@@ -64,6 +82,9 @@
   background: rgba(85, 85, 85, 0.356);
   transition: 0.5s;
 }
+.white {
+  color: white;
+}
 
 .table__button {
   padding: 0 8px;
@@ -73,15 +94,4 @@
   cursor: pointer;
 }
 
-.table {
-  border-collapse: collapse;
-  color: var(--main-color);
-  width: var(--table-width);
-  margin-bottom: 20px;
-}
 
-:root {
-  --main-color: #373867;
-  --table-width: 65%;
-  --header-table-color: #EBECF0
-}

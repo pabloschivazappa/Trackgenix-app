@@ -25,7 +25,7 @@ export const registerOptions = {
       message: 'Description must be no longer than 50 characters.'
     },
     pattern: {
-      value: /^[a-zA-Z0-9]+$/i,
+      value: /^[a-zA-Z0-9_ ]+$/i,
       message: 'Description must not contain special characters.'
     }
   },
@@ -67,7 +67,7 @@ export const registerOptions = {
   role: {
     required: 'Role is required',
     pattern: {
-      value: /(DEV|QA|TL)\b/i,
+      value: /(DEV|QA|TL|PM)\b/i,
       message: 'Role must be DEV, QA or TL only.'
     }
   }

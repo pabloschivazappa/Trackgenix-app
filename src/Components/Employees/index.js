@@ -15,6 +15,7 @@ function Employees() {
     error,
     modalTitle
   } = useSelector((state) => state.employees);
+  const { data } = useSelector((state) => state.auth);
 
   const [modalDisplay, setModalDisplay] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
@@ -38,7 +39,7 @@ function Employees() {
     { heading: 'Email', value: 'email' },
     { heading: 'DNI', value: 'dni' },
     { heading: 'Phone', value: 'phone' },
-    { heading: 'Actions' }
+    data !== 'EMPLOYEE' && { heading: 'Actions' }
   ];
 
   return (
@@ -58,6 +59,7 @@ function Employees() {
               setId(id);
             }}
             edit="/employees/form"
+            canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
           />
         </>
       ) : (

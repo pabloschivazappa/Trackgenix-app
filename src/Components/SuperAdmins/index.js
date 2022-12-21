@@ -36,8 +36,7 @@ const SuperAdmins = () => {
     { heading: 'Last Name', value: 'lastName' },
     { heading: 'Email', value: 'email' },
     { heading: 'DNI', value: 'dni' },
-    { heading: 'Phone', value: 'phone' },
-    { heading: 'Actions' }
+    { heading: 'Phone', value: 'phone' }
   ];
 
   return (
@@ -57,6 +56,7 @@ const SuperAdmins = () => {
               setId(id);
             }}
             edit="/super-admins/form"
+            canCreate={false}
           />
         </>
       ) : (

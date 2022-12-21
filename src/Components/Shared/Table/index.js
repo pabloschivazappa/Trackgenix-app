@@ -12,7 +12,10 @@ const Table = ({
   error,
   employeeId,
   inProfile = false,
-  setHours
+  setHours,
+  canCreate = true,
+  boolList,
+  inProjects = false
 }) => {
   if (!data) return null;
   return (
@@ -39,20 +42,26 @@ const Table = ({
                   employeeId={employeeId}
                   setHours={setHours}
                   inProfile={inProfile}
+                  isPM={boolList && boolList[index]}
+                  inProjects={inProjects}
                 />
               );
             })}
           </tbody>
         </table>
       ) : (
-        <h3>{error}</h3>
+        <h3 className={styles.white}>
+          {error ? error : `This ${title.toLowerCase()} list is empty`}
+        </h3>
       )}
-      <RedirectButton
-        buttonType="create__button"
-        buttonColor="green"
-        title="Create"
-        path={`${edit}`}
-      />
+      {canCreate && (
+        <RedirectButton
+          buttonType="create__button"
+          buttonColor="green"
+          title="Create"
+          path={`${edit}`}
+        />
+      )}
     </>
   );
 };

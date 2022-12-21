@@ -38,15 +38,5 @@ export const schema = joi.object({
     'string.alphanum': 'You must select a task.',
     'string.empty': 'Task must not be an empty field.',
     'any.required': 'Task is required.'
-  }),
-  employee: joi.string().alphanum().required().messages({
-    'string.alphanum': 'You must select an employee.',
-    'string.empty': 'Employee must not be an empty field.',
-    'any.required': 'Employee is required.'
-  }),
-  project: joi.string().alphanum().required().messages({
-    'string.alphanum': 'You must select a project.',
-    'string.empty': 'Project must not be an empty field.',
-    'any.required': 'Project is required.'
   })
 });

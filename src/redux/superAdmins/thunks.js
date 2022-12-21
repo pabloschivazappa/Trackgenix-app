@@ -13,9 +13,8 @@ import {
   putSuperAdminsError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSuperAdmins = () => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
@@ -35,6 +34,7 @@ export const getSuperAdmins = () => {
 };
 
 export const deleteSuperAdmin = (id) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(deleteSuperAdminsPending());
     try {
@@ -55,6 +55,7 @@ export const deleteSuperAdmin = (id) => {
 };
 
 export const createSuperAdmin = (superAdmin) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(postSuperAdminsPending());
     try {
@@ -76,6 +77,7 @@ export const createSuperAdmin = (superAdmin) => {
 };
 
 export const editSuperAdmin = (id, superAdmin) => {
+  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(putSuperAdminsPending());
     try {

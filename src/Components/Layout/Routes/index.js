@@ -18,7 +18,8 @@ const TimesheetsForm = React.lazy(() => import('Components/TimeSheets/Form/Times
 const ProjectsForm = React.lazy(() => import('Components/Projects/Form/index'));
 const TasksForm = React.lazy(() => import('Components/Tasks/Form'));
 const ProjectTable = React.lazy(() => import('Components/ProjectsTable'));
-const EmployeesProfile = React.lazy(() => import('Components/Employees/Profile'));
+const EmployeesProfile = React.lazy(() => import('Components/Profile'));
+const MyTimesheets = React.lazy(() => import('Components/MyTimesheets/index'));
 
 const Routes = () => {
   useEffect(() => {
@@ -40,12 +41,7 @@ const Routes = () => {
         path="/admins/form?id="
         component={FormAdmins}
       />
-      <PrivateRoute
-        exact
-        path="/employees"
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-        component={Employees}
-      />
+      <PrivateRoute exact path="/employees" role={['ADMIN', 'SUPER_ADMIN']} component={Employees} />
       <PrivateRoute
         role={['ADMIN', 'SUPER_ADMIN']}
         path="/employees/form"
@@ -61,19 +57,14 @@ const Routes = () => {
         path="/employees/profile"
         component={EmployeesProfile}
       />
+      <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} exact path="/projects" component={Projects} />
       <PrivateRoute
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-        exact
-        path="/projects"
-        component={Projects}
-      />
-      <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form"
         component={ProjectsForm}
       />
       <PrivateRoute
-        role={['ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
         path="/projects/form?id="
         component={ProjectsForm}
       />
@@ -84,29 +75,35 @@ const Routes = () => {
         path="/super-admins/form?id="
         component={SuperAdminsForm}
       />
-      <PrivateRoute
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-        exact
-        path="/tasks"
-        component={Tasks}
-      />
+      <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} exact path="/tasks" component={Tasks} />
       <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} path="/tasks/form" component={TasksForm} />
       <PrivateRoute role={['ADMIN', 'SUPER_ADMIN']} path="/tasks/form?id=" component={TasksForm} />
       <PrivateRoute
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN']}
         exact
         path="/time-sheets"
         component={TimeSheets}
       />
       <PrivateRoute
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
+        exact
+        path="/my-timesheets"
+        component={MyTimesheets}
+      />
+      <PrivateRoute
+        role={['ADMIN', 'SUPER_ADMIN']}
         path="/time-sheets/form"
         component={TimesheetsForm}
       />
       <PrivateRoute
-        role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
+        role={['ADMIN', 'SUPER_ADMIN']}
         path="/time-sheets/form?id="
         component={TimesheetsForm}
+      />
+      <PrivateRoute
+        role={['ADMIN', 'SUPER_ADMIN']}
+        path="/projects/time-sheets?id="
+        component={TimeSheets}
       />
       <PrivateRoute
         role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}

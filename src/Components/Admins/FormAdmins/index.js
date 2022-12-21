@@ -98,13 +98,13 @@ const FormAdmins = () => {
       >
         {!fetching ? (
           <>
+            <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input
               register={register}
               name="lastName"
               title="Last Name"
               error={errors.lastName?.message}
             />
-            <Input register={register} name="name" title="Name" error={errors.name?.message} />
             <Input register={register} name="email" title="Email" error={errors.email?.message} />
             {!rowId && (
               <Input
@@ -112,6 +112,7 @@ const FormAdmins = () => {
                 name="password"
                 title="Password"
                 error={errors.password?.message}
+                type="password"
               />
             )}
             <Input register={register} name="dni" title="DNI" error={errors.dni?.message} />

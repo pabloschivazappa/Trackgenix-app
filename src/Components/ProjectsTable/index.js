@@ -2,20 +2,21 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalTitle, setModalContent } from 'redux/projects/actions';
 import { getProjects, editProject } from 'redux/projects/thunks';
-import { Spinner } from 'Components/Shared';
 import Modal from 'Components/Shared/Modal';
 import Table from 'Components/Shared/Table';
 import styles from 'Components/ProjectsTable/project.table.module.css';
+import TimesheetsFormToProjects from 'Components/TimeSheets/FormToProjects';
+import { Spinner } from 'Components/Shared';
 
 function ProjectTable() {
   const [employeesFiltered, setEmployeesFiltered] = useState([]);
   const [unpopulatedEmployees, setUnpopulatedEmployees] = useState([]);
   const [projectsByEmployee, setProjectsByEmployee] = useState([]);
   const { id: employeeId } = useSelector((state) => state.auth);
-
   const [modalDisplay, setModalDisplay] = useState('');
   const [projectId, setProjectId] = useState('');
   const [isToConfirm, setIsToConfirm] = useState(false);
+  const [isForm, setIsForm] = useState(false);
   const {
     list: projects,
     fetching,
@@ -23,6 +24,9 @@ function ProjectTable() {
     children,
     modalTitle
   } = useSelector((state) => state.projects);
+  const [roleList, setRoleList] = useState([]);
+  const { children: timesheetsChildren } = useSelector((state) => state.timeSheets);
+  const { data } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -39,6 +43,16 @@ function ProjectTable() {
       );
     }
   }, [projects]);
+
+  useEffect(() => {
+    setRoleList(
+      projectsByEmployee?.map((project) => {
+        return project.employees.filter((employee) => {
+          return employee.role === 'PM' && employee.employee?._id == employeeId;
+        });
+      })
+    );
+  }, [projectsByEmployee]);
 
   const removeProject = (projectId) => {
     const projectFindById = projects.find((project) => project._id === projectId);
@@ -75,6 +89,7 @@ function ProjectTable() {
 
   const columns = [
     { heading: 'Project name', value: 'name' },
+    { heading: 'PM', value: 'name' },
     {
       heading: 'Role',
       value: 'role'
@@ -95,6 +110,7 @@ function ProjectTable() {
           title="My Projects"
           data={projectsByEmployee}
           columns={columns}
+          boolList={roleList?.map((e) => e.length > 0)}
           error={!projectsByEmployee.length ? `You don't have any project` : error}
           deleteItem={(projectId) => {
             dispatch(setModalTitle('Quit project'));
@@ -102,20 +118,29 @@ function ProjectTable() {
             setIsToConfirm(true);
             setModalDisplay(true);
             setProjectId(projectId);
+            setIsForm(false);
           }}
           edit="/projects/form"
           employeeId={employeeId}
-          setHours={() => {
+          setHours={(projectId) => {
+            setProjectId(projectId);
             dispatch(setModalTitle('Add Hours'));
-            dispatch(setModalContent('HOURS'));
+            dispatch(
+              setModalContent(
+                <TimesheetsFormToProjects projectId={projectId} setIsForm={setIsForm} />
+              )
+            );
             setModalDisplay(true);
             setIsToConfirm(false);
+            setIsForm(true);
           }}
           inProfile={true}
+          canCreate={data === 'ADMIN' || data === 'SUPER_ADMIN'}
         />
       ) : (
         <Spinner />
       )}
+
       {modalDisplay ? (
         <Modal
           title={modalTitle}
@@ -124,8 +149,9 @@ function ProjectTable() {
           onClickFunction={() => {
             removeProject(projectId);
           }}
+          isForm={isForm}
         >
-          {children}
+          {timesheetsChildren ? timesheetsChildren : children}
         </Modal>
       ) : null}
     </section>
