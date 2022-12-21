@@ -142,7 +142,11 @@ function EmployeesProfile() {
       </Form>
       {modalDisplay && !fetching ? (
         <Modal title={modalTitle} setModalDisplay={setModalDisplay}>
-          {children}
+          {role === 'ADMIN'
+            ? 'Admin edited successfully'
+            : role === 'SUPER_ADMIN'
+            ? 'Super admin edited successfully'
+            : children}
         </Modal>
       ) : null}
     </>
