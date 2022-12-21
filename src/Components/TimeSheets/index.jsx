@@ -13,7 +13,6 @@ const TimeSheets = () => {
   const projectId = urlParams.get('id');
   const idRegEx = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
   const haveId = idRegEx.test(projectId);
-  console.log(projectId);
   const {
     list: timesheetsList,
     fetching,
@@ -45,7 +44,6 @@ const TimeSheets = () => {
     { heading: 'Hours', value: 'hours' },
     { heading: 'Actions' }
   ];
-  console.log(timesheetsList);
 
   return (
     <>

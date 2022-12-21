@@ -50,7 +50,9 @@ const Table = ({
           </tbody>
         </table>
       ) : (
-        <h3 className={styles.white}>{error}</h3>
+        <h3 className={styles.white}>
+          {error ? error : `The ${title.toLowerCase()} list is empty`}
+        </h3>
       )}
       {canCreate && (
         <RedirectButton
