@@ -19,6 +19,7 @@ const ProjectsForm = React.lazy(() => import('Components/Projects/Form/index'));
 const TasksForm = React.lazy(() => import('Components/Tasks/Form'));
 const ProjectTable = React.lazy(() => import('Components/ProjectsTable'));
 const EmployeesProfile = React.lazy(() => import('Components/Profile'));
+const MyTimesheets = React.lazy(() => import('Components/MyTimesheets/index'));
 
 const Routes = () => {
   useEffect(() => {
@@ -82,6 +83,12 @@ const Routes = () => {
         exact
         path="/time-sheets"
         component={TimeSheets}
+      />
+      <PrivateRoute
+        role={['ADMIN', 'SUPER_ADMIN', 'EMPLOYEE']}
+        exact
+        path="/my-timesheets"
+        component={MyTimesheets}
       />
       <PrivateRoute
         role={['ADMIN', 'SUPER_ADMIN']}
