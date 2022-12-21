@@ -55,6 +55,7 @@ function Projects() {
 
   const columns = [
     { heading: 'Name', value: 'name' },
+    { heading: 'PM', value: 'name' },
     { heading: 'Description', value: 'description' },
     { heading: 'Client', value: 'clientName' },
     { heading: 'Start Date', value: 'startDate' },

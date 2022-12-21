@@ -89,6 +89,7 @@ function ProjectTable() {
 
   const columns = [
     { heading: 'Project name', value: 'name' },
+    { heading: 'PM', value: 'name' },
     {
       heading: 'Role',
       value: 'role'
