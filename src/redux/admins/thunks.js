@@ -86,10 +86,11 @@ export const editAdmin = (id, admin, isForDelete = false, isToProfile = false) =
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', token },
-          body: JSON.stringify({ ...admin, active: true })
+          body: JSON.stringify({ ...admin, active: !isForDelete })
         }
       );
       const data = await response.json();
+      console.log('Data: ', data.data);
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
         isForDelete === true && dispatch(deleteAdminsSuccess());
