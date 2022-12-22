@@ -11,6 +11,7 @@ import { setFetching } from '../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
 import { schema } from 'Components/Profile/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Profile from '../../assets/profile.jpg';
 
 function EmployeesProfile() {
   const { id: product, data: role } = useSelector((state) => state.auth);
@@ -116,11 +117,7 @@ function EmployeesProfile() {
       >
         <>
           <div className={styles.profilePicture__container}>
-            <img
-              className={styles.profilePicture}
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-              alt="Profile Picture"
-            />
+            <img className={styles.profilePicture} src={Profile} alt="Profile Picture" />
           </div>
           <div className={styles.formInputs}>
             <div className={styles.formColumn}>
