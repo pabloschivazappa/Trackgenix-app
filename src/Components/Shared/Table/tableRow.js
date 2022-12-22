@@ -14,6 +14,10 @@ const TableRow = ({
   isPM = false,
   inProjects
 }) => {
+  const fixDate = (date) => {
+    return date.slice(0, 10);
+  };
+
   return (
     <>
       <tr>
@@ -116,7 +120,15 @@ const TableRow = ({
             );
           }
 
-          return <td key={index}>{item[columnItem.value]}</td>;
+          return (
+            <td key={index}>
+              {columnItem.heading === 'Start Date' ||
+              columnItem.heading === 'Date' ||
+              columnItem.heading === 'End Date'
+                ? fixDate(item[columnItem.value])
+                : item[columnItem.value]}
+            </td>
+          );
         })}
       </tr>
     </>
