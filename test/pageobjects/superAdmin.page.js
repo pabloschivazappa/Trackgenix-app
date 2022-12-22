@@ -1,6 +1,6 @@
 class superAdminPage {
   get adminBtn() {
-    return $('#root > div > header > nav > ul > li:nth-child(1) > a');
+    return $('#root > div > header > nav > ul > li:nth-child(2) > a');
   }
 }
 

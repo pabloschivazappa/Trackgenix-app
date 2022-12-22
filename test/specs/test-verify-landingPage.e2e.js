@@ -20,10 +20,6 @@ describe('Create, update and delete Admin', () => {
     await expect(HomePage.loginBtn).toBeClickable();
   });
 
-  it('Button sign up to be clickable', async () => {
-    await expect(HomePage.signUpBtn).toBeClickable();
-  });
-
   it('Social media buttons to be clickable', async () => {
     await expect(HomePage.linkFacebookHomePage).toBeClickable();
     await expect(HomePage.linkTwitter).toBeClickable();
