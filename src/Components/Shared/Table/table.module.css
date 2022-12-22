@@ -24,6 +24,11 @@
   justify-content: space-evenly;
 }
 
+.margin__right {
+  margin-right: 7px !important;
+  margin-left: 5px;
+}
+
 .icons a {
   background: transparent;
   color: #81AFDD;

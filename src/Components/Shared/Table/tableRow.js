@@ -32,7 +32,7 @@ const TableRow = ({
                 {inProjects && (
                   <RedirectButton
                     path={`/time-sheets?id=${item._id}`}
-                    icon={<i className="fa-regular fa-file fa-lg"></i>}
+                    icon={<i className={`fa-regular fa-file fa-lg ${styles.margin__right}`}></i>}
                     buttonType="list__button"
                   />
                 )}
@@ -54,12 +54,13 @@ const TableRow = ({
                     buttonType="list__button"
                   />
                 )}
-
-                <FunctionalButton
-                  action={() => deleteItem(item._id)}
-                  icon={<i className="fa-solid fa-xmark fa-lg"></i>}
-                  buttonType="list__button"
-                />
+                {!inProfile && (
+                  <FunctionalButton
+                    action={() => deleteItem(item._id)}
+                    icon={<i className="fa-solid fa-xmark fa-lg"></i>}
+                    buttonType="list__button"
+                  />
+                )}
               </td>
             );
           }
