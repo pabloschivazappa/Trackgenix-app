@@ -90,7 +90,6 @@ export const editAdmin = (id, admin, isForDelete = false, isToProfile = false) =
         }
       );
       const data = await response.json();
-      console.log('Data: ', data.data);
       if (response.ok) {
         dispatch(putAdminsSuccess(data.data));
         isForDelete === true && dispatch(deleteAdminsSuccess());
