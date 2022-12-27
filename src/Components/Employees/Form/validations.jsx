@@ -2,14 +2,12 @@ import Joi from 'joi';
 
 export const schemaEdit = Joi.object({
   name: Joi.string()
-    .alphanum()
     .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Name must not contain numbers or special characters.',
       'string.min': 'Name must be at least 3 characters long.',
       'string.max': 'Name must be no longer than 50 characters.',
       'string.pattern.base': 'Name must have only letters.',
@@ -17,14 +15,12 @@ export const schemaEdit = Joi.object({
       'any.required': 'Name is required.'
     }),
   lastName: Joi.string()
-    .alphanum()
     .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Last name must not contain numbers or special characters.',
       'string.min': 'Last name must be at least 3 characters long.',
       'string.max': 'Last name must be no longer than 50 characters.',
       'string.pattern.base': 'Last name must have only letters.',
@@ -59,14 +55,12 @@ export const schemaEdit = Joi.object({
 
 export const schemaCreate = Joi.object({
   name: Joi.string()
-    .alphanum()
     .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Name must not contain numbers or special characters.',
       'string.min': 'Name must be at least 3 characters long.',
       'string.max': 'Name must be no longer than 50 characters.',
       'string.pattern.base': 'Name must have only letters.',
@@ -74,14 +68,12 @@ export const schemaCreate = Joi.object({
       'any.required': 'Name is required.'
     }),
   lastName: Joi.string()
-    .alphanum()
     .trim()
     .min(3)
     .max(50)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
-      'string.alphanum': 'Last name must not contain numbers or special characters.',
       'string.min': 'Last name must be at least 3 characters long.',
       'string.max': 'Last name must be no longer than 50 characters.',
       'string.pattern.base': 'Last name must have only letters.',
